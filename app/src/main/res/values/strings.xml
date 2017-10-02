@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Schedule Planner</string>
+
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="view_text">Home</string>
+
+    <string name="view_sched">View Schedules</string>
+    <string name="generate">Generate Schedule</string>
+    <string name="sort">Sort</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+
+</resources>
