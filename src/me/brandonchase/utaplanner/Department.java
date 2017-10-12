@@ -3,7 +3,6 @@
  * '-'s are replaced with underscores
  */
 
-
 package me.brandonchase.utaplanner;
 
 public enum Department {
