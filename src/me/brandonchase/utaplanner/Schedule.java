@@ -19,6 +19,7 @@ public class Schedule {
 		ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year);
 		
 		//Remove courses that have already been taken
+		//TODO: make sure removing a course doesnt mess up iteration through list
 		for(Course currentCourse : validCourses) {
 			//Remove courses that have already been taken
 			if(this.contains(currentCourse)) { 
