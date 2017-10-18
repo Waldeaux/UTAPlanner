@@ -50,4 +50,8 @@ public class Semester {
 	public boolean isBefore(Semester otherSemester) {
 		return (year <= otherSemester.year && term.ordinal() < otherSemester.term.ordinal());
 	}
+	
+	public boolean equals(Semester otherSemester) {
+		return (this.term == otherSemester.term && this.year == otherSemester.year);
+	}
 }

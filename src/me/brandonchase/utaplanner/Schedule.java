@@ -3,11 +3,25 @@ package me.brandonchase.utaplanner;
 import java.util.ArrayList;
 
 public class Schedule {
+	public Schedule() {
+		semesters = new ArrayList<>();
+	}
 	
 	private ArrayList<Semester> semesters;
 	
 	public void addSemester(Term term, int year) {
 		semesters.add(new Semester(term, year));
+	}
+	
+	public Semester getSemester(Term term, int year) throws Exception {
+		for(Semester s : semesters) {
+			if(s.term == term && s.year == year) {
+				return s;
+			}
+		}
+		
+		//if semester not in schedule, throw exception
+		throw new Exception("Semester not in schedule.");
 	}
 	
 	/*

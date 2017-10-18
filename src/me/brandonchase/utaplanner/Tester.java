@@ -5,6 +5,13 @@ package me.brandonchase.utaplanner;
 
 public class Tester {
 	public static void main(String[] args) {
-		
+		try {
+			Schedule s = new Schedule();
+			s.addSemester(Term.Fall, 2017);
+			s.getSemester(Term.Fall, 2017).add(new Course(Department.AAST, 1100, "Test Name", "Test Desc", CreditCategory.CreativeArts));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
