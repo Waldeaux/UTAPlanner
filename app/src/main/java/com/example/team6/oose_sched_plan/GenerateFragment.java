@@ -68,6 +68,7 @@ public class GenerateFragment extends Fragment {
     //store selected items
     private HashMap<String,String> selected_item;
     private int selected_position;
+    //can be "available" or "current"
 
 
     SharedPreferences sharedPreferences;
@@ -84,7 +85,9 @@ public class GenerateFragment extends Fragment {
         addItemsOnAvailable(view);
         addListenerOnButton(view);
         addItemsOnCurrentSchedule();
-        addListenerOnAddButton();
+        button_add = buttonAdd;
+        button_add.setClickable(true);
+        button_add.setBackgroundResource(R.drawable.b_button_deselected);
 
         alertDegreePlan(view);
         return view;
@@ -172,11 +175,13 @@ public class GenerateFragment extends Fragment {
                                     long arg3) {
                 addItemsOnCourseInfo(list_dynam_Available, position);
                 selected_item = list_dynam_Available.get(position);
+                selected_position = position;
                 if (row != null) {
                     row.setBackgroundResource(R.color.alpha);
                 }
                 row = v;
                 v.setBackgroundResource(R.drawable.b_selected);
+                addListenerOnAddButton();
             }
         });
     }
@@ -198,29 +203,58 @@ public class GenerateFragment extends Fragment {
     }
 
     /* ================================================================
-    ||  ADD Button - gets the SELECTED ITEM and puts it into the schedule.
+    ||  ADD Button - gets the SELECTED ITEM and puts it into the current schedule.
     ||  - does not do any validation currently
     ||=================================================================*/
-    public void addListenerOnAddButton() {
+    public void addListenerOnAddButton( ) {
         button_add = buttonAdd;
+        button_add.setText(R.string.button_add);
+        button_add.setBackgroundResource(R.drawable.b_button_selected);
         button_add.setOnClickListener(new AdapterView.OnClickListener() {
             public void onClick(View arg0) {
                 if (selected_item != null) {
                     list_dynam_Current.add(selected_item);
+                    list_dynam_Available.remove(selected_position);
+                    String[] from = new String[]{"course", "name"};
+                    int nativeLayout = android.R.layout.two_line_list_item;
+                    int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+                    list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
+                    list_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
+                    list_current.setClickable(true);
+                    selected_item = null;
+                    button_add.setBackgroundResource(R.drawable.b_button_deselected);
                 }
-                String[] from = new String[]{"course", "name"};
-                int nativeLayout = android.R.layout.two_line_list_item;
-                int[] to = new int[]{android.R.id.text1, android.R.id.text2};
-                list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
-                list_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
-                list_current.setClickable(true);
-                selected_item = null;
             }
         });
     }
 
+    public void addListenerOnRemoveButton( ) {
+        button_add = buttonAdd;
+        button_add.setText(R.string.button_remove);
+        button_add.setBackgroundResource(R.drawable.b_button_remove);
+        button_add.setOnClickListener(new AdapterView.OnClickListener() {
+            public void onClick(View arg0) {
+                if (selected_item != null) {
+                    list_dynam_Available.add(selected_item);
+                    list_dynam_Current.remove(selected_position);
+                    String[] from = new String[]{"course", "name"};
+                    int nativeLayout = android.R.layout.two_line_list_item;
+                    int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+                    list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
+                    list_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
+                    list_current.setClickable(true);
+                    selected_item = null;
+                    button_add.setBackgroundResource(R.drawable.b_button_deselected);
+
+                }
+
+            }
+        });
+    }
+
+
     /* ================================================================
-    ||  ADD Button - gets info from COURSE INFO
+    ||  ADD TO CURRENT - initializes values and has listener for list item clicks
     ||=================================================================*/
     public void addItemsOnCurrentSchedule() {
         list_current = listCurrent;
@@ -239,11 +273,13 @@ public class GenerateFragment extends Fragment {
                                     long arg3) {
                 addItemsOnCourseInfo(list_dynam_Current, position);
                 selected_item = list_dynam_Current.get(position);
+                selected_position = position;
                 if (row != null) {
                     row.setBackgroundResource(R.color.alpha);
                 }
                 row = v;
                 v.setBackgroundResource(R.drawable.b_selected);
+                addListenerOnRemoveButton();
             }
         });
     }
