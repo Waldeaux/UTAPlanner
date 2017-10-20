@@ -18,4 +18,11 @@
     <string name="major_prompt">Select your major</string>
     <string name="button_remove">Remove</string>
     <string name="button_add">Add</string>
+    <string name="current_semester">Current Semester:</string>
+    <string name="available_courses">Available Courses:</string>
+    <string name="course_information">Course Information</string>
+    <string name="course">Course:</string>
+    <string name="add">Add</string>
+    <string name="description">Description:</string>
+    <string name="credit_hours">Credit Hours:</string>
 </resources>

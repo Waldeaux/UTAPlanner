@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     transaction.commit();
                     return true;
                 case R.id.navigation_generate:
-                    setTitle("Generate Schedules");
+                    setTitle("Generate Schedule");
                     //Toast.makeText(MainActivity.this, "Generate", Toast.LENGTH_SHORT).show();
                     //GenerateFragment fragment2 = new GenerateFragment();
                     transaction = getSupportFragmentManager().beginTransaction();
