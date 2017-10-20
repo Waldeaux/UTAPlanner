@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.fram, new GenerateFragment());
                     transaction.commit();
                     return true;
-                case R.id.navigation_sort:
+                case R.id.navigation_options:
                     return true;
             }
             return false;

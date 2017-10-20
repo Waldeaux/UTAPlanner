@@ -8,10 +8,9 @@
 
     <string name="view_sched">View Schedules</string>
     <string name="generate">Generate Schedule</string>
-    <string name="sort">Sort</string>
+    <string name="options">Options</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_home">Home</string>
     <string name="select">Select</string>

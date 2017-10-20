@@ -27,8 +27,8 @@
         android:title="@string/generate" />
 
     <item
-        android:id="@+id/navigation_sort"
+        android:id="@+id/navigation_options"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/sort" />
+        android:title="@string/options" />
 
 </menu>
