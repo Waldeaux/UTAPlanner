@@ -1,14 +1,16 @@
 package com.example.team6.oose_sched_plan;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     DegreePlanAdapter mDbHelper;
     FragmentTransaction transaction;
+
 
 
     // The OnClick listeners allows for events to occur when buttons on the BottomNaviation are pressed.
@@ -62,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        mDbHelper = new DegreePlanAdapter(this);
+
+        //mDbHelper.close();
+
+        //DegreePlanInfo.PrintDatabase(getApplicationContext());
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

@@ -4,6 +4,7 @@ package com.example.team6.oose_sched_plan;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,8 +37,6 @@ public class GenerateFragment extends Fragment {
     Spinner spinTerm;
     @InjectView(R.id.spin_year)
     Spinner spinYear;
-    @InjectView(R.id.ok_button)
-    Button okButton;
     @InjectView(R.id.list_available)
     ListView listAvailable;
     @InjectView(R.id.c_info_dep_number_field)
@@ -62,16 +61,22 @@ public class GenerateFragment extends Fragment {
     private View row;
 
     // This list_dynam_Available is used to store data to be passed between methods
-    private ArrayList<HashMap<String, String>> list_dynam_Available;
-    private ArrayList<HashMap<String, String>> list_dynam_Current;
+    //  This will be replaced with a class
+    private ArrayList<HashMap<String, String>> list_dynam_Available = new ArrayList<HashMap<String, String>>();
+    private ArrayList<HashMap<String, String>> list_dynam_Current = new ArrayList<>();
+
+    //TODO USING COURSE CLASS
+    //private ArrayList<Course> list_dynamic_available;
+    //private ArrayList<Course> list_dynamic_current;
 
     //store selected items
     private HashMap<String,String> selected_item;
     private int selected_position;
-    //can be "available" or "current"
-
 
     SharedPreferences sharedPreferences;
+    DegreePlanAdapter.FeedReaderDbHelper mDbHelper;
+    SQLiteDatabase db;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,13 +88,12 @@ public class GenerateFragment extends Fragment {
         addItemsOnSpinTerm();
         addItemsOnSpinYear();
         addItemsOnAvailable(view);
-        addListenerOnButton(view);
         addItemsOnCurrentSchedule();
         button_add = buttonAdd;
         button_add.setClickable(true);
         button_add.setBackgroundResource(R.drawable.b_button_deselected);
-
         alertDegreePlan(view);
+
         return view;
     }
 
@@ -126,43 +130,13 @@ public class GenerateFragment extends Fragment {
     }
 
     /* ================================================================
-    ||  SELECT - Listener for "Select" button for degree term/year
-    ||=================================================================*/
-    public void addListenerOnButton(final View view) {
-        button_submit = okButton;
-        button_submit.setOnClickListener(new AdapterView.OnClickListener() {
-            public void onClick(View arg0) {
-                Toast toast = Toast.makeText(view.getContext(), "Course selected", Toast.LENGTH_SHORT);
-                toast.show();
-                sharedPreferences = view.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, view.getContext().MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(Config.SHARED_DEGREE_PLAN, spinner_term.toString());
-                editor.putString(Config.SHARED_DEGREE_YEAR, spinner_year.toString());
-                editor.apply();
-
-            }
-        });
-    }
-
-    /* ================================================================
     ||  AVAILABLE - Gets info and populates "Available courses" list_dynam_Available. Allows user to select Course to update COURSE INFO;
     ||  - Currently added from list_dynam_Available and not database
     ||  - Only department/#, course name implemented
     ||=================================================================*/
     public void addItemsOnAvailable(final View view) {
         list_available = listAvailable;
-        String[][] listview = {
-                {"CSE 1310", "Intro to Programming"},
-                {"CSE 1105", "Intro to CSE"},
-                {"MATH 1426", "Calculus I"},
-                {"PHYS 1443", "Physics I"}};
-        list_dynam_Available = new ArrayList<HashMap<String, String>>(listview.length);
-        for (String[] aListview : listview) {
-            HashMap<String, String> item = new HashMap<String, String>();
-            item.put("course", aListview[0]);
-            item.put("name", aListview[1]);
-            list_dynam_Available.add(item);
-        }
+
         String[] from = new String[]{"course", "name"};
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
@@ -215,7 +189,7 @@ public class GenerateFragment extends Fragment {
                 if (selected_item != null) {
                     list_dynam_Current.add(selected_item);
                     list_dynam_Available.remove(selected_position);
-                    String[] from = new String[]{"course", "name"};
+                    String[] from = new String[]{"course","name"};
                     int nativeLayout = android.R.layout.two_line_list_item;
                     int[] to = new int[]{android.R.id.text1, android.R.id.text2};
                     list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
@@ -237,7 +211,7 @@ public class GenerateFragment extends Fragment {
                 if (selected_item != null) {
                     list_dynam_Available.add(selected_item);
                     list_dynam_Current.remove(selected_position);
-                    String[] from = new String[]{"course", "name"};
+                    String[] from = new String[]{"course","name"};
                     int nativeLayout = android.R.layout.two_line_list_item;
                     int[] to = new int[]{android.R.id.text1, android.R.id.text2};
                     list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
@@ -252,17 +226,16 @@ public class GenerateFragment extends Fragment {
         });
     }
 
-
     /* ================================================================
     ||  ADD TO CURRENT - initializes values and has listener for list item clicks
     ||=================================================================*/
     public void addItemsOnCurrentSchedule() {
         list_current = listCurrent;
-        String[] from = new String[]{"course", "name"};
+        String[] from = new String[]{"course","name"};
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
 
-        list_dynam_Current = new ArrayList<HashMap<String, String>>();
+        //list_dynam_Current = new ArrayList<HashMap<String, String>>();
 
         list_current.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Current, nativeLayout, from, to));
         list_current.setClickable(true);
@@ -284,13 +257,13 @@ public class GenerateFragment extends Fragment {
         });
     }
 
-
     /* ================================================================
     ||  DEGREE PLAN - Alerts user with popup for Degree Plans.
+    ||      TODO this needs to use savedPreferences to avoid reloading of courses
     ||=================================================================*/
     public void alertDegreePlan(final View view) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this.getContext());
-        builderSingle.setTitle("Select a Degree Plan:-");
+        builderSingle.setTitle("Select a Degree Plan: ");
         final ArrayAdapter<String> list_majors = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice);
         list_majors.add("CSE - Computer Science Engineering");
         list_majors.add("SE - Software Engineering");
@@ -305,7 +278,33 @@ public class GenerateFragment extends Fragment {
         builderSingle.setAdapter(list_majors, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String strName = list_majors.getItem(which);
+
+                //Delete all entries to avoid duplicates
+                DegreePlanInfo.DeleteAllEntries(view);
+
+                mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(view.getContext());
+                db = mDbHelper.getWritableDatabase();
+                DegreePlanInfo.PopulateDatabase(db);
+
+
+                //String strName = list_majors.getItem(which);
+                list_dynam_Available = DegreePlanInfo.QueryDegreePlans(view.getContext(), mDbHelper,db, list_dynam_Available );
+
+                //Update list
+                String[] from = new String[]{"course","name"};
+                int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+                int nativeLayout = android.R.layout.two_line_list_item;
+                list_available.setAdapter(new SimpleAdapter(view.getContext(), list_dynam_Available, nativeLayout, from, to));
+
+                /*
+                switch (which)
+                {
+                    case 1:
+                        list_dynam_Available = DegreePlanInfo.QueryDegreePlans(view.getContext(), mDbHelper,db, list_dynam_Available );
+                }
+                */
+
+                mDbHelper.close();
             }
         });
         builderSingle.show();

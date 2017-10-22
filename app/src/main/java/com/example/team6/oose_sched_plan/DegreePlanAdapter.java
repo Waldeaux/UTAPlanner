@@ -10,96 +10,50 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.provider.BaseColumns;
 
 public class DegreePlanAdapter {
 
-    // Declare our keys
-    public static final String KEY_ROWID = "rowid _id,*";
-    public static final String KEY_COURSE_DEPART = "department";
-    public static final String KEY_YEAR = "year";
-    public static final String KEY_COURSE_NUM = "number";
-    public static final String KEY_DEGREE_NAME = "degree";
-    public static final String KEY_SEARCH = "searchData";
+    public static class CourseEntry implements BaseColumns{
+        public static final String TABLE_NAME = "Courses";
+        public static final String COURSE_DEPARTMENT = "CourseDepartment";
+        public static final String COURSE_NAME = "CourseName";
+        public static final String COURSE_NUMBER = "CourseNumber";
 
-    private static final String TAG = "DegreePlanAdapter";
-    private DatabaseHelper mDbHelper;
-    private SQLiteDatabase mDb;
+    }
 
-    private static final String DATABASE_NAME = "DegreePlanData";
-    private static final String FTS_VIRTUAL_TABLE = "DegreePlans";
-    private static final int DATABASE_VERSION = 1;
+    private static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE " + CourseEntry.TABLE_NAME + " (" +
+                    CourseEntry._ID + " INTEGER PRIMARY KEY, " +
+                    CourseEntry.COURSE_DEPARTMENT + " TEXT, " +
+                    CourseEntry.COURSE_NAME + " TEXT, " +
+                    CourseEntry.COURSE_NUMBER + " TEXT)";
 
-    //Create a FTS3 Virtual Table for fast searches
-    private static final String DATABASE_CREATE =
-            "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE + " USING fts3(" +
-                    //KEY_ROWID + "integer PRIMARY KEY autoincrement," +
-                    KEY_COURSE_DEPART + "," +
-                    KEY_YEAR + "," +
-                    KEY_COURSE_NUM + "," +
-                    KEY_DEGREE_NAME + "," +
-                    KEY_SEARCH + "," +
-                    " UNIQUE (" + KEY_YEAR + "));";
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + CourseEntry.TABLE_NAME;
 
 
-    private final Context mCtx;
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
+    public static class FeedReaderDbHelper extends SQLiteOpenHelper {
+        // If you change the database schema, you must increment the database version.
+        public static final int DATABASE_VERSION = 1;
+        public static final String DATABASE_NAME = "Scheduler.db";
 
-        DatabaseHelper(Context context) {
+        public FeedReaderDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
-
-        @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.w(TAG, DATABASE_CREATE);
-            db.execSQL(DATABASE_CREATE);
+            db.execSQL(SQL_CREATE_ENTRIES);
         }
-
-        @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-                    + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + FTS_VIRTUAL_TABLE);
+            // This database is only a cache for online data, so its upgrade policy is
+            // to simply to discard the data and start over
+            db.execSQL(SQL_DELETE_ENTRIES);
             onCreate(db);
         }
-    }
-
-    public DegreePlanAdapter(Context ctx) {
-        this.mCtx = ctx;
-    }
-
-    public DegreePlanAdapter open() throws SQLException {
-        mDbHelper = new DatabaseHelper(mCtx);
-        mDb = mDbHelper.getWritableDatabase();
-        return this;
-    }
-
-    public void close() {
-        if (mDbHelper != null) {
-            mDbHelper.close();
+        public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            onUpgrade(db, oldVersion, newVersion);
         }
-    }
-
-    public long createDegree(String department, String year, String major) {
-
-        ContentValues initialValues = new ContentValues();
-        String searchValue =     department + " " +
-                year + " " + major;
-        initialValues.put(KEY_COURSE_DEPART, department);
-        initialValues.put(KEY_YEAR, year);
-        initialValues.put(KEY_COURSE_NUM, major);
-        initialValues.put(KEY_SEARCH, searchValue);
-        return mDb.insert(FTS_VIRTUAL_TABLE, null, initialValues);
-    }
-
-
-    public boolean deleteDegree() {
-
-        int doneDelete = 0;
-        doneDelete = mDb.delete(FTS_VIRTUAL_TABLE, null , null);
-        Log.w(TAG, Integer.toString(doneDelete));
-        return doneDelete > 0;
-
     }
 
 }

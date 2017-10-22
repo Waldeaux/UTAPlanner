@@ -27,27 +27,28 @@
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/select_term"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
                 <Spinner
                     android:id="@+id/spin_term"
-                    android:layout_width="225dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp" />
 
                 <Spinner
                     android:id="@+id/spin_year"
-                    android:layout_width="100dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent" />
 
-                <Button
-                    android:id="@+id/ok_button"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/green"
-                    android:elevation="1dp"
-                    android:padding="5dp"
-                    android:text="@string/select" />
             </TableRow>
 
             <TableRow
