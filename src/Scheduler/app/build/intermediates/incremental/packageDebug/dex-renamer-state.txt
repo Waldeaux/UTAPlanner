@@ -1,0 +1,7 @@
+#Sat Oct 21 13:26:22 CDT 2017
+base.0=C\:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_ded3b71d50dedb1974d133c6c7adba02ea6403b1
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_eaf380413bc5fd6ca899641d59f43ac9d709b6fd\\classes.dex
+base.1=C\:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_eaf380413bc5fd6ca899641d59f43ac9d709b6fd
+file.0=C\:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_ded3b71d50dedb1974d133c6c7adba02ea6403b1\\classes.dex

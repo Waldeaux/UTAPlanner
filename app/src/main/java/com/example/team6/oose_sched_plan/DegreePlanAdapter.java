@@ -4,12 +4,9 @@ package com.example.team6.oose_sched_plan;
  * Created by Thomas on 9/26/2017.
  */
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.provider.BaseColumns;
 
 public class DegreePlanAdapter {
@@ -19,6 +16,12 @@ public class DegreePlanAdapter {
         public static final String COURSE_DEPARTMENT = "CourseDepartment";
         public static final String COURSE_NAME = "CourseName";
         public static final String COURSE_NUMBER = "CourseNumber";
+        public static final String COURSE_PREREQUISITES = "CoursePrerequisites";
+        public static final String COURSE_DESCRIPTION = "CourseDescription";
+        public static final String COURSE_TERM = "CourseTerm";
+        public static final String COURSE_CATEGORY = "CourseCreditCategory";
+        public static final String COURSE_COREQUISITES = "CourseCorequisites";
+
 
     }
 
@@ -27,7 +30,12 @@ public class DegreePlanAdapter {
                     CourseEntry._ID + " INTEGER PRIMARY KEY, " +
                     CourseEntry.COURSE_DEPARTMENT + " TEXT, " +
                     CourseEntry.COURSE_NAME + " TEXT, " +
-                    CourseEntry.COURSE_NUMBER + " TEXT)";
+                    CourseEntry.COURSE_NUMBER + " INT, " +
+                    CourseEntry.COURSE_PREREQUISITES + " TEXT, " +
+                    CourseEntry.COURSE_COREQUISITES + " TEXT, " +
+                    CourseEntry.COURSE_DESCRIPTION+ " TEXT, " +
+                    CourseEntry.COURSE_CATEGORY + " TEXT, " +
+                    CourseEntry.COURSE_TERM + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + CourseEntry.TABLE_NAME;

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_cancel_action.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\layout-v11\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\layout-v11\\notification_template_big_media.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_custom.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\layout-v11\\notification_template_big_media_custom.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_action.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\layout-v11\\notification_media_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow_custom.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\layout-v11\\notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\layout-v11\\notification_template_big_media_narrow.xml"
+    }
+]

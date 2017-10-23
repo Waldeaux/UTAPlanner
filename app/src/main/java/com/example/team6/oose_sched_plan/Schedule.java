@@ -37,9 +37,9 @@ public class Schedule {
 		 * Returns list of courses that are valid for given semester. Currently code in function calls assumes given semester is current semester (which it will be for semester-by-semester)
 		 * but will updated soon so that it is more versatile.
 		 */
-		public ArrayList<Course> generateAvailableCourses(Term term, int year) {
+		public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 			//Get courses offered in specified semester
-			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year);
+			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper);
 
 			//Remove courses that have already been taken
 			//TODO: make sure removing a course doesnt mess up iteration through list
@@ -51,7 +51,7 @@ public class Schedule {
 				}
 
 				//Remove courses that don't have prereqs met.
-				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse);
+				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper);
 				if(!this.meetsPrereqs(prereqs)) {
 					validCourses.remove(currentCourse);
 					continue; //already removed so don't need to check any other conditions for removal
