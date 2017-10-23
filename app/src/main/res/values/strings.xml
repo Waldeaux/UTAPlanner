@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Schedule Planner</string>
+
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="view_text">Home</string>
+
+    <string name="view_sched">View Schedules</string>
+    <string name="generate">Generate Schedule</string>
+    <string name="options">Options</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="select">Select</string>
+
+    <string name="major_prompt">Select your major</string>
+    <string name="button_remove">Remove</string>
+    <string name="button_add">Add</string>
+    <string name="current_semester">Current Semester:</string>
+    <string name="available_courses">Available Courses:</string>
+    <string name="course_information">Course Information</string>
+    <string name="course">Course:</string>
+    <string name="add">Add</string>
+    <string name="description">Description:</string>
+    <string name="credit_hours">Credit Hours:</string>
+    <string name="select_term">Select Term:</string>
+</resources>
