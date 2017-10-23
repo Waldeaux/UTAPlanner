@@ -68,6 +68,18 @@ public class Schedule {
 			return validCourses;
 		}
 
+	//GET COURSES THAT ARE ADDED TO A CERTAIN SEMESTER
+	public ArrayList<Course> getCoursesInSemester(Term term, int year) {
+		Semester s = getSemester(term, year);
+
+		if (s.year != -1) { //oif semester in schedule, return list of its courses
+			return s.getCourses();
+		}
+
+		//if semester not in schedule, return empty list
+		else return new ArrayList<Course>();
+	}
+
 	//MISCELLANEOUS FUNCTIONS THAT MIGHT BE NEEDED
 		public int calculateCreditHours() {
 			int creditHours = 0;

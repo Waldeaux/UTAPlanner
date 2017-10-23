@@ -41,6 +41,8 @@ public class Semester {
 		
 		return creditHours;
 	}
+
+	public ArrayList<Course> getCourses() {return courses;}
 	
 	/*
 	 * Returns whether or not this semester comes before (chronologically) a given semester. Used to for when checking if schedule contains prereqs and only want to check up to previous semester
