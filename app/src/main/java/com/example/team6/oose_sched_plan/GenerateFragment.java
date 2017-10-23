@@ -19,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +57,7 @@ public class GenerateFragment extends Fragment {
     private Spinner spinner_term, spinner_year;
     private ArrayAdapter<String> dataAdapter;
     private ListView list_available, list_current;
-    private Button button_submit, button_add;
-    public String degree_plan;
+    private Button button_add;
     private TextView cInfo_DepartmentNumber, cInfo_CourseName, cInfo_Description, cInfo_credit;
     private View row;
 
@@ -73,7 +74,13 @@ public class GenerateFragment extends Fragment {
     private HashMap<String,String> selected_item;
     private int selected_position;
 
-    SharedPreferences sharedPreferences;
+    // Saving preferences
+    //SharedPreferences sharedPreferences;
+    //SharedPreferences.Editor collection;
+    Gson gson = new Gson();
+    String avail_to_json;
+
+    //Database
     DegreePlanAdapter.FeedReaderDbHelper mDbHelper;
     SQLiteDatabase db;
 
@@ -84,15 +91,32 @@ public class GenerateFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_generate, container, false);
         ButterKnife.inject(this, view);
-        sharedPreferences = view.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, view.getContext().MODE_PRIVATE);
+        TinyDB tinydb = new TinyDB(view.getContext());
+
+        //sharedPreferences = view.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, view.getContext().MODE_PRIVATE);
         addItemsOnSpinTerm();
         addItemsOnSpinYear();
-        addItemsOnAvailable(view);
+
+
         addItemsOnCurrentSchedule();
+
         button_add = buttonAdd;
         button_add.setClickable(true);
         button_add.setBackgroundResource(R.drawable.b_button_deselected);
-        alertDegreePlan(view);
+
+        //alertDegreePlan(view,tinydb);
+        if (tinydb.getString(Config.SHARED_DEGREE_PLAN).equals(""))
+        {
+            alertDegreePlan(view,tinydb);
+        }
+        else{
+            Toast toast = Toast.makeText(view.getContext(), tinydb.getString(Config.SHARED_DEGREE_PLAN), Toast.LENGTH_SHORT);
+            toast.show();
+            String string = tinydb.getString(Config.SHARED_AVAILABLE_COURSELIST);
+            toast = Toast.makeText(view.getContext(), string, Toast.LENGTH_LONG);
+            toast.show();
+        }
+        addItemsOnAvailable(view);
 
         return view;
     }
@@ -235,7 +259,6 @@ public class GenerateFragment extends Fragment {
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
 
-        //list_dynam_Current = new ArrayList<HashMap<String, String>>();
 
         list_current.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Current, nativeLayout, from, to));
         list_current.setClickable(true);
@@ -261,8 +284,8 @@ public class GenerateFragment extends Fragment {
     ||  DEGREE PLAN - Alerts user with popup for Degree Plans.
     ||      TODO this needs to use savedPreferences to avoid reloading of courses
     ||=================================================================*/
-    public void alertDegreePlan(final View view) {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this.getContext());
+    public void alertDegreePlan(final View view, final TinyDB tinydb) {
+        final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this.getContext());
         builderSingle.setTitle("Select a Degree Plan: ");
         final ArrayAdapter<String> list_majors = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice);
         list_majors.add("CSE - Computer Science Engineering");
@@ -286,16 +309,30 @@ public class GenerateFragment extends Fragment {
                 db = mDbHelper.getWritableDatabase();
                 DegreePlanInfo.PopulateDatabase(db);
 
-
-                //String strName = list_majors.getItem(which);
+                //  Run query to find CSE courses
                 list_dynam_Available = DegreePlanInfo.QueryDegreePlans(view.getContext(), mDbHelper,db, list_dynam_Available );
+
+                //Save degreePicked to tinyDB
+                String degreePicked = list_majors.getItem(which);
+                tinydb.putString(Config.SHARED_DEGREE_PLAN, degreePicked);
+
+                //Store dynamic list to json object
+                avail_to_json = gson.toJson(list_dynam_Available);
+                //tinydb.putObject(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
+                tinydb.putString(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
 
                 //Update list
                 String[] from = new String[]{"course","name"};
                 int[] to = new int[]{android.R.id.text1, android.R.id.text2};
                 int nativeLayout = android.R.layout.two_line_list_item;
+
+                // LOADS available list of courses
                 list_available.setAdapter(new SimpleAdapter(view.getContext(), list_dynam_Available, nativeLayout, from, to));
 
+                //Toast toast = Toast.makeText(view.getContext(),degreePicked,Toast.LENGTH_SHORT);
+                //toast.show();
+
+                //TODO do multiple degree plans, not just CSE
                 /*
                 switch (which)
                 {
