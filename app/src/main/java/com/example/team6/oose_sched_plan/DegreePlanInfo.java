@@ -212,7 +212,6 @@ public class DegreePlanInfo {
         DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
         SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
         String text = "";
-        //final TextView helloTextView = (TextView) findViewById(R.id.text_view_id);
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -241,10 +240,6 @@ public class DegreePlanInfo {
             text += itemId;
             text += "\n";
         }
-
-        //Toast toast = Toast.makeText(context,text , Toast.LENGTH_SHORT);
-        //toast.show();
-        //helloTextView.setText(text);
         cursor.close();
         mDbHelper.close();
     }
@@ -290,6 +285,49 @@ public class DegreePlanInfo {
         mDbHelper.close();
         return list_dynam_Available;
     }
+
+    public static ArrayList<Course> QueryDegreePlan(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, SQLiteDatabase dbRead, ArrayList<Course> list_course_available){
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                DegreePlanAdapter.CourseEntry._ID,
+                DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
+                DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
+                DegreePlanAdapter.CourseEntry.COURSE_NAME
+        };
+
+        Cursor cursor = dbRead.query(
+                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
+                projection,                               // The columns to return
+                null,//selection,                                // The columns for the WHERE clause
+                null,//selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                               // The sort order
+        );
+
+        if ( cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        int counter = 0;
+        while(cursor.moveToNext()) {
+            Department query_department = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT)));
+            Integer query_number = Integer.getInteger(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)));
+           String query_name = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME));
+
+           Course course = new Course(query_department,query_number,query_name,"n/a",CreditCategory.Required);
+            list_course_available.add(course);
+            counter +=1;
+        }
+
+        cursor.close();
+        mDbHelper.close();
+        return list_course_available;
+    }
+
+
 
     public static void DeleteAllEntries(View view){
 

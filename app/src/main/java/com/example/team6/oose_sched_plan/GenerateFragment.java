@@ -3,7 +3,6 @@ package com.example.team6.oose_sched_plan;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -56,7 +54,7 @@ public class GenerateFragment extends Fragment {
 
     private Spinner spinner_term, spinner_year;
     private ArrayAdapter<String> dataAdapter;
-    private ListView list_available, list_current;
+    private ListView listview_available, listview_current;
     private Button button_add;
     private TextView cInfo_DepartmentNumber, cInfo_CourseName, cInfo_Description, cInfo_credit;
     private View row;
@@ -67,8 +65,8 @@ public class GenerateFragment extends Fragment {
     private ArrayList<HashMap<String, String>> list_dynam_Current = new ArrayList<>();
 
     //TODO USING COURSE CLASS
-    //private ArrayList<Course> list_dynamic_available;
-    //private ArrayList<Course> list_dynamic_current;
+    private ArrayList<Course> list_course_available = new ArrayList<Course>();
+    private ArrayList<Course> list_course_current;
 
     //store selected items
     private HashMap<String,String> selected_item;
@@ -83,6 +81,9 @@ public class GenerateFragment extends Fragment {
     //Database
     DegreePlanAdapter.FeedReaderDbHelper mDbHelper;
     SQLiteDatabase db;
+
+    //Schedule
+    Schedule schedule;
 
 
     @Override
@@ -104,18 +105,19 @@ public class GenerateFragment extends Fragment {
         button_add.setClickable(true);
         button_add.setBackgroundResource(R.drawable.b_button_deselected);
 
-        //alertDegreePlan(view,tinydb);
-        if (tinydb.getString(Config.SHARED_DEGREE_PLAN).equals(""))
-        {
-            alertDegreePlan(view,tinydb);
-        }
-        else{
-            Toast toast = Toast.makeText(view.getContext(), tinydb.getString(Config.SHARED_DEGREE_PLAN), Toast.LENGTH_SHORT);
-            toast.show();
-            String string = tinydb.getString(Config.SHARED_AVAILABLE_COURSELIST);
-            toast = Toast.makeText(view.getContext(), string, Toast.LENGTH_LONG);
-            toast.show();
-        }
+        alertDegreePlan(view,tinydb);
+//        alertDegreePlan(view,tinydb);
+//        if (tinydb.getString(Config.SHARED_DEGREE_PLAN).equals(""))
+//        {
+//
+//        }
+//        else{
+//            Toast toast = Toast.makeText(view.getContext(), tinydb.getString(Config.SHARED_DEGREE_PLAN), Toast.LENGTH_SHORT);
+//            toast.show();
+//            String string = tinydb.getString(Config.SHARED_AVAILABLE_COURSELIST);
+//            toast = Toast.makeText(view.getContext(), string, Toast.LENGTH_LONG);
+//            toast.show();
+//        }
         addItemsOnAvailable(view);
 
         return view;
@@ -159,14 +161,14 @@ public class GenerateFragment extends Fragment {
     ||  - Only department/#, course name implemented
     ||=================================================================*/
     public void addItemsOnAvailable(final View view) {
-        list_available = listAvailable;
+        listview_available = listAvailable;
 
         String[] from = new String[]{"course", "name"};
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
-        list_available.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Available, nativeLayout, from, to));
-        list_available.setClickable(true);
-        list_available.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview_available.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Available, nativeLayout, from, to));
+        listview_available.setClickable(true);
+        listview_available.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
@@ -216,9 +218,9 @@ public class GenerateFragment extends Fragment {
                     String[] from = new String[]{"course","name"};
                     int nativeLayout = android.R.layout.two_line_list_item;
                     int[] to = new int[]{android.R.id.text1, android.R.id.text2};
-                    list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
-                    list_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
-                    list_current.setClickable(true);
+                    listview_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
+                    listview_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
+                    listview_current.setClickable(true);
                     selected_item = null;
                     button_add.setBackgroundResource(R.drawable.b_button_deselected);
                 }
@@ -226,6 +228,7 @@ public class GenerateFragment extends Fragment {
         });
     }
 
+    //change to remove button
     public void addListenerOnRemoveButton( ) {
         button_add = buttonAdd;
         button_add.setText(R.string.button_remove);
@@ -238,9 +241,9 @@ public class GenerateFragment extends Fragment {
                     String[] from = new String[]{"course","name"};
                     int nativeLayout = android.R.layout.two_line_list_item;
                     int[] to = new int[]{android.R.id.text1, android.R.id.text2};
-                    list_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
-                    list_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
-                    list_current.setClickable(true);
+                    listview_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
+                    listview_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
+                    listview_current.setClickable(true);
                     selected_item = null;
                     button_add.setBackgroundResource(R.drawable.b_button_deselected);
 
@@ -254,19 +257,25 @@ public class GenerateFragment extends Fragment {
     ||  ADD TO CURRENT - initializes values and has listener for list item clicks
     ||=================================================================*/
     public void addItemsOnCurrentSchedule() {
-        list_current = listCurrent;
+        listview_current = listCurrent;
         String[] from = new String[]{"course","name"};
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
 
+        listview_current.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Current, nativeLayout, from, to));
+        listview_current.setClickable(true);
 
-        list_current.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Current, nativeLayout, from, to));
-        list_current.setClickable(true);
-
-        list_current.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview_current.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3) {
+
+                //Get info from spinner term/ year
+                //TODO additional logic checking?
+//                int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+//                Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
+//                schedule.addCourse(spin_term, spin_year, list_course_current.get(position));
+
                 addItemsOnCourseInfo(list_dynam_Current, position);
                 selected_item = list_dynam_Current.get(position);
                 selected_position = position;
@@ -276,13 +285,14 @@ public class GenerateFragment extends Fragment {
                 row = v;
                 v.setBackgroundResource(R.drawable.b_selected);
                 addListenerOnRemoveButton();
+
             }
         });
     }
 
     /* ================================================================
     ||  DEGREE PLAN - Alerts user with popup for Degree Plans.
-    ||      TODO this needs to use savedPreferences to avoid reloading of courses
+    ||
     ||=================================================================*/
     public void alertDegreePlan(final View view, final TinyDB tinydb) {
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this.getContext());
@@ -302,6 +312,9 @@ public class GenerateFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                //Create new schedule
+                schedule = new Schedule();
+
                 //Delete all entries to avoid duplicates
                 DegreePlanInfo.DeleteAllEntries(view);
 
@@ -312,14 +325,17 @@ public class GenerateFragment extends Fragment {
                 //  Run query to find CSE courses
                 list_dynam_Available = DegreePlanInfo.QueryDegreePlans(view.getContext(), mDbHelper,db, list_dynam_Available );
 
-                //Save degreePicked to tinyDB
-                String degreePicked = list_majors.getItem(which);
-                tinydb.putString(Config.SHARED_DEGREE_PLAN, degreePicked);
+                // Uses array list Courses enum
+                list_course_available = DegreePlanInfo.QueryDegreePlan(view.getContext(), mDbHelper,db, list_course_available );
 
-                //Store dynamic list to json object
-                avail_to_json = gson.toJson(list_dynam_Available);
-                //tinydb.putObject(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
-                tinydb.putString(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
+//                Save degreePicked to tinyDB
+//                String degreePicked = list_majors.getItem(which);
+//                tinydb.putString(Config.SHARED_DEGREE_PLAN, degreePicked);
+//
+//                Store dynamic list to json object
+//                avail_to_json = gson.toJson(list_dynam_Available);
+//                tinydb.putObject(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
+//                tinydb.putString(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
 
                 //Update list
                 String[] from = new String[]{"course","name"};
@@ -327,7 +343,7 @@ public class GenerateFragment extends Fragment {
                 int nativeLayout = android.R.layout.two_line_list_item;
 
                 // LOADS available list of courses
-                list_available.setAdapter(new SimpleAdapter(view.getContext(), list_dynam_Available, nativeLayout, from, to));
+                listview_available.setAdapter(new SimpleAdapter(view.getContext(), list_dynam_Available, nativeLayout, from, to));
 
                 //Toast toast = Toast.makeText(view.getContext(),degreePicked,Toast.LENGTH_SHORT);
                 //toast.show();
