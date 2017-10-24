@@ -85,12 +85,12 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1105);
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR-SC");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR_SC");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "Honors Calculus");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1426);
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR-SC");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR_SC");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "Honors Calculus II");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 2425);
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
@@ -357,8 +357,8 @@ public class DegreePlanInfo {
         mDbHelper.close();
     }
 
-    public static ArrayList<HashMap<String,String>> QueryDegreePlans(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, SQLiteDatabase dbRead, ArrayList<HashMap<String, String>> list_dynam_Available){
-
+    public static ArrayList<HashMap<String,String>> QueryDegreePlans(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, ArrayList<HashMap<String, String>> list_dynam_Available){
+        SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
@@ -395,52 +395,9 @@ public class DegreePlanInfo {
 
         //
         cursor.close();
-        mDbHelper.close();
+        //mDbHelper.close();
         return list_dynam_Available;
     }
-
-    public static ArrayList<Course> QueryDegreePlan(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, SQLiteDatabase dbRead, ArrayList<Course> list_course_available){
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                DegreePlanAdapter.CourseEntry._ID,
-                DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
-                DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
-                DegreePlanAdapter.CourseEntry.COURSE_NAME
-        };
-
-        Cursor cursor = dbRead.query(
-                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                null,//selection,                                // The columns for the WHERE clause
-                null,//selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               // The sort order
-        );
-
-        if ( cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        int counter = 0;
-        while(cursor.moveToNext()) {
-            Department query_department = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT)));
-            Integer query_number = Integer.getInteger(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)));
-           String query_name = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME));
-
-           Course course = new Course(query_department,query_number,query_name,"n/a",CreditCategory.Required);
-            list_course_available.add(course);
-            counter +=1;
-        }
-
-        cursor.close();
-        mDbHelper.close();
-        return list_course_available;
-    }
-
-
 
     public static void DeleteAllEntries(View view){
 
