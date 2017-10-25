@@ -85,12 +85,12 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1105);
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR-SC");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR_SC");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "Honors Calculus");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1426);
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR-SC");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "HONR_SC");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "Honors Calculus II");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 2425);
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
@@ -325,7 +325,6 @@ public class DegreePlanInfo {
         DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
         SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
         String text = "";
-        //final TextView helloTextView = (TextView) findViewById(R.id.text_view_id);
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -354,16 +353,12 @@ public class DegreePlanInfo {
             text += itemId;
             text += "\n";
         }
-
-        //Toast toast = Toast.makeText(context,text , Toast.LENGTH_SHORT);
-        //toast.show();
-        //helloTextView.setText(text);
         cursor.close();
         mDbHelper.close();
     }
 
-    public static ArrayList<HashMap<String,String>> QueryDegreePlans(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, SQLiteDatabase dbRead, ArrayList<HashMap<String, String>> list_dynam_Available){
-
+    public static ArrayList<HashMap<String,String>> QueryDegreePlans(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, ArrayList<HashMap<String, String>> list_dynam_Available){
+        SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
@@ -400,7 +395,7 @@ public class DegreePlanInfo {
 
         //
         cursor.close();
-        mDbHelper.close();
+        //mDbHelper.close();
         return list_dynam_Available;
     }
 

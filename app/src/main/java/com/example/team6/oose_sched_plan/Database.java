@@ -1,7 +1,13 @@
 package com.example.team6.oose_sched_plan;
 
+import android.content.ContentResolver;
+import android.database.CharArrayBuffer;
+import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 
@@ -19,36 +25,46 @@ public class Database {
 				DegreePlanAdapter.CourseEntry.COURSE_NUMBER
 		};
 
-		String selection = DegreePlanAdapter.CourseEntry.COURSE_TERM + " = ?";
+		String selection = DegreePlanAdapter.CourseEntry.COURSE_TERM + "";
 		String[] selectionArgs = { term.toString() };
 		String sortOrder =
 				DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " DESC";
 
-        Cursor cursor = db.query(
-                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               		  // The sort order
-        );
+//        Cursor cursor = db.query(
+//                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
+//                projection,                               // The columns to return
+//                selection,                                // The columns for the WHERE clause
+//                selectionArgs,                            // The values for the WHERE clause
+//                null,                                     // don't group the rows
+//                null,                                     // don't filter by row groups
+//                null                               		  // The sort order
+//        );
+
+//		String s = "SELECT * " +
+//				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
+//				" WHERE " + selection + " = " + "Spring";
+//		Cursor cursor = db.rawQuery("SELECT * " +
+//				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
+//				" WHERE " + selection + " = " + "Spring", null);
+		Cursor cursor = db.rawQuery("SELECT * " +
+				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
+
 		while(cursor.moveToNext()) {
             coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.Required));
         }
-        selectionArgs[0] = "";
-        cursor = db.query(
-                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               		  // The sort order
-        );
-        while(cursor.moveToNext()) {
-            coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.Required));
-        }
+//        selectionArgs[0] = "";
+//        cursor = db.query(
+//                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
+//                projection,                               // The columns to return
+//                selection,                                // The columns for the WHERE clause
+//                selectionArgs,                            // The values for the WHERE clause
+//                null,                                     // don't group the rows
+//                null,                                     // don't filter by row groups
+//                null                               		  // The sort order
+//        );
+//        while(cursor.moveToNext()) {
+//            coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.Required));
+//        }
 		return coursesInSemester;
 	}
 	
