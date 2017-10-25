@@ -61,10 +61,10 @@ public class GenerateFragment extends Fragment {
     private TextView cInfo_DepartmentNumber, cInfo_CourseName, cInfo_Description, cInfo_credit, cInfo_CreditCategory;
     private View row;
 
-    // This list_dynam_Available is used to store data to be passed between methods
+    // This list_HashMap_Available is used to store data to be passed between methods
     //  This will be replaced with a class
-    private ArrayList<HashMap<String, String>> list_dynam_Available = new ArrayList<>();
-    private ArrayList<HashMap<String, String>> list_dynam_Current = new ArrayList<>();
+    private ArrayList<HashMap<String, String>> list_HashMap_Available = new ArrayList<>();
+    private ArrayList<HashMap<String, String>> list_HashMap_Current = new ArrayList<>();
 
     //TODO USING COURSE CLASS
     private ArrayList<Course> list_course_available = new ArrayList<Course>();
@@ -125,7 +125,7 @@ public class GenerateFragment extends Fragment {
 
     /* ================================================================
     ||  TERM - Gets info and populates "term" dropdown spinner.
-    ||  - Currently added from list_dynam_Available and not database
+    ||  - Currently added from list_HashMap_Available and not database
     ||=================================================================*/
     public void addItemsOnSpinTerm() {
         spinner_term = spinTerm;
@@ -140,7 +140,7 @@ public class GenerateFragment extends Fragment {
 
     /* ================================================================
     ||  TERM YEAR - Gets info and populates "Year" dropdown spinner.
-    ||  - Currently added from list_dynam_Available and not database
+    ||  - Currently added from list_HashMap_Available and not database
     ||=================================================================*/
     public void addItemsOnSpinYear() {
         spinner_year = spinYear;
@@ -156,8 +156,8 @@ public class GenerateFragment extends Fragment {
     }
 
     /* ================================================================
-    ||  AVAILABLE - Gets info and populates "Available courses" list_dynam_Available. Allows user to select Course to update COURSE INFO;
-    ||  - Currently added from list_dynam_Available and not database
+    ||  AVAILABLE - Gets info and populates "Available courses" list_HashMap_Available. Allows user to select Course to update COURSE INFO;
+    ||  - Currently added from list_HashMap_Available and not database
     ||  - Only department/#, course name implemented
     ||=================================================================*/
     public void addItemsOnAvailable(final View view) {
@@ -166,15 +166,15 @@ public class GenerateFragment extends Fragment {
         String[] from = new String[]{"course", "name"};
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
-        listview_available.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Available, nativeLayout, from, to));
+        listview_available.setAdapter(new SimpleAdapter(this.getContext(), list_HashMap_Available, nativeLayout, from, to));
         listview_available.setClickable(true);
         listview_available.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3) {
-                addItemsOnCourseInfo(list_dynam_Available, position);
-                selected_item = list_dynam_Available.get(position);
+                addItemsOnCourseInfo(list_HashMap_Available, position);
+                selected_item = list_HashMap_Available.get(position);
                 selected_position = position;
 
                 if (row != null) {
@@ -222,13 +222,30 @@ public class GenerateFragment extends Fragment {
         button_add.setOnClickListener(new AdapterView.OnClickListener() {
             public void onClick(View arg0) {
                 if (selected_item != null) {
-                    list_dynam_Current.add(selected_item);
-                    list_dynam_Available.remove(selected_position);
+
+                    //Get info from spinner term/ year
+                    int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                    Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
+
+                    // Add the course to the SCHEDULE
+                    schedule.addCourse(spin_term, spin_year, list_course_available.get(selected_position));
+
+                    // UPDATE CURRENT COURSES
+                    list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
+
+                    // CONVERT SCHEDULE TO HASHMAP
+                    list_HashMap_Current = convertToHashMap(list_course_current, list_HashMap_Current);
+
+                    list_HashMap_Available = convertToHashMap(schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper),list_HashMap_Available);
+
+                    //list_HashMap_Current.add(selected_item);
+                    //list_HashMap_Available.remove(selected_position);
                     String[] from = new String[]{"course", "name"};
                     int nativeLayout = android.R.layout.two_line_list_item;
                     int[] to = new int[]{android.R.id.text1, android.R.id.text2};
-                    listview_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
-                    listview_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
+
+                    listview_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_HashMap_Current, nativeLayout, from, to));
+                    listview_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_HashMap_Available, nativeLayout, from, to));
                     listview_current.setClickable(true);
                     selected_item = null;
                     button_add.setBackgroundResource(R.drawable.b_button_deselected);
@@ -245,13 +262,22 @@ public class GenerateFragment extends Fragment {
         button_add.setOnClickListener(new AdapterView.OnClickListener() {
             public void onClick(View arg0) {
                 if (selected_item != null) {
-                    list_dynam_Available.add(selected_item);
-                    list_dynam_Current.remove(selected_position);
+                    list_HashMap_Available.add(selected_item);
+                    list_HashMap_Current.remove(selected_position);
+
+                    // GET SPINNER INFORMATION
+                    int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                    Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
+                    schedule.removeCourse(spin_term,spin_year,list_course_available.get(selected_position));
+
+                    // ONLY NEEDS COURSE/NAME TO UPDATE THE LISTVIEWS
                     String[] from = new String[]{"course", "name"};
                     int nativeLayout = android.R.layout.two_line_list_item;
                     int[] to = new int[]{android.R.id.text1, android.R.id.text2};
-                    listview_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Current, nativeLayout, from, to));
-                    listview_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_dynam_Available, nativeLayout, from, to));
+
+                    // UPDATE the LISTVIEWS
+                    listview_current.setAdapter(new SimpleAdapter(arg0.getContext(), list_HashMap_Current, nativeLayout, from, to));
+                    listview_available.setAdapter(new SimpleAdapter(arg0.getContext(), list_HashMap_Available, nativeLayout, from, to));
                     listview_current.setClickable(true);
                     selected_item = null;
                     button_add.setBackgroundResource(R.drawable.b_button_deselected);
@@ -263,7 +289,7 @@ public class GenerateFragment extends Fragment {
     }
 
     /* ================================================================
-    ||  ADD TO CURRENT SCHEDULE - initializes values and has listener for list item clicks
+    ||  INITIALIZE CURRENT SCHEDULE - LISTENS FOR ITEM CLICKS ON CURRENT TO UPDATE SELECTION
     ||=================================================================*/
     public void addItemsOnCurrentSchedule() {
         listview_current = listCurrent;
@@ -271,7 +297,7 @@ public class GenerateFragment extends Fragment {
         int[] to = new int[]{android.R.id.text1, android.R.id.text2};
         int nativeLayout = android.R.layout.two_line_list_item;
 
-        listview_current.setAdapter(new SimpleAdapter(this.getContext(), list_dynam_Current, nativeLayout, from, to));
+        listview_current.setAdapter(new SimpleAdapter(this.getContext(), list_HashMap_Current, nativeLayout, from, to));
         listview_current.setClickable(true);
 
         listview_current.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -279,17 +305,9 @@ public class GenerateFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3) {
 
-                //Get info from spinner term/ year
-                //TODO additional logic checking?
-                int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
-                Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
-
-                // Add the course to the SCHEDULE
-                schedule.addCourse(spin_term, spin_year, list_course_available.get(position));
-
                 // Update the COURSE INFO
-                addItemsOnCourseInfo(list_dynam_Current, position);
-                selected_item = list_dynam_Current.get(position);
+                addItemsOnCourseInfo(list_HashMap_Current, position);
+                selected_item = list_HashMap_Current.get(position);
                 selected_position = position;
 
                 if (row != null) {
@@ -336,14 +354,14 @@ public class GenerateFragment extends Fragment {
 
                 // Uses array list Courses enum
                 list_course_available = schedule.generateAvailableCourses(Term.Spring, 2017, mDbHelper);
-                list_dynam_Available = QueryToListView(list_course_available, list_dynam_Available);
+                list_HashMap_Available = convertToHashMap(list_course_available, list_HashMap_Available);
 
 //                Save degreePicked to tinyDB
 //                String degreePicked = list_majors.getItem(which);
 //                tinydb.putString(Config.SHARED_DEGREE_PLAN, degreePicked);
 //
 //                Store dynamic list to json object
-//                avail_to_json = gson.toJson(list_dynam_Available);
+//                avail_to_json = gson.toJson(list_HashMap_Available);
 //                tinydb.putObject(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
 //                tinydb.putString(Config.SHARED_AVAILABLE_COURSELIST, avail_to_json);
 
@@ -353,14 +371,14 @@ public class GenerateFragment extends Fragment {
                 int nativeLayout = android.R.layout.two_line_list_item;
 
                 // LOADS available list of courses
-                listview_available.setAdapter(new SimpleAdapter(view.getContext(), list_dynam_Available, nativeLayout, from, to));
+                listview_available.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Available, nativeLayout, from, to));
 
                 //TODO do multiple degree plans, not just CSE
                 /*
                 switch (which)
                 {
                     case 1:
-                        list_dynam_Available = DegreePlanInfo.QueryDegreePlans(view.getContext(), mDbHelper,db, list_dynam_Available );
+                        list_HashMap_Available = DegreePlanInfo.QueryDegreePlans(view.getContext(), mDbHelper,db, list_HashMap_Available );
                 }
                 */
 
@@ -373,7 +391,8 @@ public class GenerateFragment extends Fragment {
     /* ================================================================
     ||  FUNCTION TO CONVERT - ARRAY LIST<COURSE> -->  ARRAY_LIST<HASHMAP<STRING,STRING>>
     ||=================================================================*/
-    public ArrayList<HashMap<String, String>> QueryToListView(ArrayList<Course> course_list, ArrayList<HashMap<String, String>> list_course_hashmap) {
+    public ArrayList<HashMap<String, String>> convertToHashMap(ArrayList<Course> course_list, ArrayList<HashMap<String, String>> list_course_hashmap) {
+        list_course_hashmap = new ArrayList<>();
         for (Course course : course_list) {
             HashMap<String, String> course_hashmap = new HashMap<>();
             course_hashmap.put("course", String.valueOf(course.department) + String.valueOf(course.number));
