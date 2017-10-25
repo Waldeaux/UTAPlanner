@@ -25,7 +25,7 @@ public class Database {
 				DegreePlanAdapter.CourseEntry.COURSE_NUMBER
 		};
 
-		String selection = DegreePlanAdapter.CourseEntry.COURSE_TERM + " = ?";
+		String selection = DegreePlanAdapter.CourseEntry.COURSE_TERM + "";
 		String[] selectionArgs = { term.toString() };
 		String sortOrder =
 				DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " DESC";
@@ -40,7 +40,14 @@ public class Database {
 //                null                               		  // The sort order
 //        );
 
-		Cursor cursor = db.rawQuery("SELECT * FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
+//		String s = "SELECT * " +
+//				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
+//				" WHERE " + selection + " = " + "Spring";
+//		Cursor cursor = db.rawQuery("SELECT * " +
+//				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
+//				" WHERE " + selection + " = " + "Spring", null);
+		Cursor cursor = db.rawQuery("SELECT * " +
+				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
 
 		while(cursor.moveToNext()) {
             coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.Required));
