@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_light.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_dark.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_search_url_text.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_search_url_text.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_light.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_dark.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\switch_thumb_material_dark.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_secondary_text_material_light.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_hint_foreground_material_dark.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_material_light.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_light.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\tswal\\AndroidStudioProjects\\Scheduler\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
+        "source": "C:\\Users\\tswal\\.android\\build-cache\\5daa5f8fc2a3170c3ca8fb8a7c087acba7d22367\\output\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
+    }
+]

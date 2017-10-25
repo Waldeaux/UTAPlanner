@@ -182,7 +182,7 @@
 
             </TableRow>
 
-            <TableRow
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="145dp"
                 android:layout_marginLeft="10dp"
@@ -191,7 +191,7 @@
                 android:padding="5dp">
 
                 <ScrollView
-                    android:layout_width="match_parent"
+                    android:layout_width="316dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -222,43 +222,31 @@
                             android:layout_below="@+id/course_info"
                             android:ems="10"
                             android:text="@string/course"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/c_info_dep_number_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/c_info_dep_number"
-                            android:layout_alignEnd="@+id/c_info_descript_field"
-                            android:layout_alignRight="@+id/c_info_descript_field"
-                            android:layout_toRightOf="@+id/c_info_coursecredit"
                             android:ems="10"
                             android:text="n/a"
-                            android:textSize="16sp" />
-
-                        <Button
-                            android:id="@+id/button_add"
-                            android:layout_width="70dp"
-                            android:layout_height="45dp"
-                            android:text="@string/add"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
+                            android:textSize="14sp"
+                            android:layout_below="@+id/course_info"
+                            android:layout_alignLeft="@+id/c_info_coursename_field"
+                            android:layout_alignStart="@+id/c_info_coursename_field" />
 
                         <TextView
                             android:id="@+id/c_info_coursename_field"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@+id/c_info_descript_field"
-                            android:layout_alignLeft="@+id/c_info_dep_number_field"
-
-                            android:layout_alignRight="@+id/c_info_descript_field"
-                            android:layout_alignStart="@+id/c_info_dep_number_field"
-                            android:layout_below="@+id/c_info_dep_number_field"
 
                             android:ems="10"
                             android:text="n/a"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:layout_below="@+id/c_info_dep_number_field"
+                            android:layout_alignLeft="@+id/c_info_descript_field"
+                            android:layout_alignStart="@+id/c_info_descript_field" />
 
                         <TextView
                             android:id="@+id/c_info_descript"
@@ -270,29 +258,35 @@
                             android:layout_marginTop="6dp"
                             android:ems="10"
                             android:text="@string/description"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/c_info_descript_field"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/c_info_coursecredit"
-                            android:layout_centerHorizontal="true"
+                            android:layout_alignBottom="@+id/c_info_descript"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toRightOf="@+id/c_info_descript"
                             android:ems="10"
+
                             android:text="n/a"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/c_info_coursecredit"
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_below="@+id/c_info_descript"
                             android:layout_marginTop="6dp"
                             android:layout_toLeftOf="@+id/c_info_descript_field"
-                            android:layout_toStartOf="@+id/c_info_descript_field"
                             android:ems="10"
                             android:text="@string/credit_hours"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/c_info_coursecredit_field"
@@ -300,16 +294,54 @@
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:text="n/a"
-                            android:textSize="16sp"
-                            android:layout_alignBaseline="@+id/c_info_coursecredit"
+                            android:textSize="14sp"
+
                             android:layout_alignBottom="@+id/c_info_coursecredit"
-                            android:layout_toRightOf="@+id/c_info_coursecredit"
-                            android:layout_toEndOf="@+id/c_info_coursecredit" />
+                            android:layout_alignLeft="@+id/c_info_descript_field"
+                            android:layout_alignStart="@+id/c_info_descript_field" />
+
+                        <TextView
+                            android:id="@+id/c_info_creditcategory"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/c_info_coursecredit"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="6dp"
+                            android:layout_toLeftOf="@+id/c_info_creditcategory_field"
+                            android:layout_toStartOf="@+id/c_info_creditcategory_field"
+                            android:ems="10"
+                            android:text="@string/credit_category"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/c_info_creditcategory_field"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:text="n/a"
+                            android:textSize="14sp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignLeft="@+id/c_info_coursecredit_field"
+                            android:layout_alignStart="@+id/c_info_coursecredit_field"
+                            android:layout_marginBottom="6dp" />
+
                     </RelativeLayout>
 
                 </ScrollView>
 
-            </TableRow>
+                <Button
+                    android:id="@+id/button_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:text="@string/add" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
