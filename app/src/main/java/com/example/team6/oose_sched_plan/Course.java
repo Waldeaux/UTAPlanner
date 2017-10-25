@@ -71,8 +71,15 @@ public class Course {
 			return Integer.parseInt(numberBuffer);
 		}
 	
-	public boolean equals(Course otherCourse) {
-		return (department == otherCourse.department && number == otherCourse.number);
+	public boolean equals(Object otherCourse) {
+		if(otherCourse instanceof Course) {
+			Course temp = (Course) otherCourse;
+			return (this.department.equals(temp.department) && this.number == temp.number);
+		}
+
+		else {
+			return false;
+		}
 	}
 
 	//Takes course number and extracts number of credit hours (second digit) by using math properties. IE 1300 returns 3.

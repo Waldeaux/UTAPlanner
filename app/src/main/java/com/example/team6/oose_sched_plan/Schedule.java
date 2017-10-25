@@ -43,10 +43,12 @@ public class Schedule {
 
 			//Remove courses that have already been taken
 			//TODO: make sure removing a course doesnt mess up iteration through list
-			for(Course currentCourse : validCourses) {
+			for(int i = 0; i < validCourses.size(); i++) {
+				Course currentCourse = validCourses.get(i);
 				//Remove courses that have already been taken
 				if(this.contains(currentCourse)) {
 					validCourses.remove(currentCourse);
+					i--;
 					continue; //already removed so don't need to check any other conditions for removal
 				}
 
@@ -54,6 +56,7 @@ public class Schedule {
 				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper);
 				if(!this.meetsPrereqs(prereqs)) {
 					validCourses.remove(currentCourse);
+					i--;
 					continue; //already removed so don't need to check any other conditions for removal
 				}
 
@@ -61,6 +64,7 @@ public class Schedule {
 				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse);
 				if(!this.meetsCoreqs(coreqs)) {
 					validCourses.remove(currentCourse);
+					i--;
 				}
 			}
 
