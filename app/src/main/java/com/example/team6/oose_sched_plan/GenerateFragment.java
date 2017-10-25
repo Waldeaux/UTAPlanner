@@ -235,8 +235,8 @@ public class GenerateFragment extends Fragment {
 
                     // CONVERT SCHEDULE TO HASHMAP
                     list_HashMap_Current = convertToHashMap(list_course_current, list_HashMap_Current);
-
-                    list_HashMap_Available = convertToHashMap(schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper),list_HashMap_Available);
+                    list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
+                    list_HashMap_Available = convertToHashMap(list_course_available, list_HashMap_Available);
 
                     //list_HashMap_Current.add(selected_item);
                     //list_HashMap_Available.remove(selected_position);
