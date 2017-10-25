@@ -62,17 +62,16 @@ public class GenerateFragment extends Fragment {
     private View row;
 
     // This list_HashMap_Available is used to store data to be passed between methods
-    //  This will be replaced with a class
     private ArrayList<HashMap<String, String>> list_HashMap_Available = new ArrayList<>();
     private ArrayList<HashMap<String, String>> list_HashMap_Current = new ArrayList<>();
 
-    //TODO USING COURSE CLASS
     private ArrayList<Course> list_course_available = new ArrayList<Course>();
     private ArrayList<Course> list_course_current;
 
     //store selected items
     private HashMap<String, String> selected_item;
     private int selected_position;
+    private String degreeChosen = "";
 
     // Saving preferences
     //SharedPreferences sharedPreferences;
@@ -95,17 +94,14 @@ public class GenerateFragment extends Fragment {
         TinyDB tinydb = new TinyDB(view.getContext());
 
         //sharedPreferences = view.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, view.getContext().MODE_PRIVATE);
-        addItemsOnSpinTerm();
-        addItemsOnSpinYear();
-
-
         addItemsOnCurrentSchedule();
 
+        //create add button
         button_add = buttonAdd;
-        button_add.setClickable(true);
         button_add.setBackgroundResource(R.drawable.b_button_deselected);
 
         alertDegreePlan(view, tinydb);
+        addItemsOnAvailable(view);
 //        alertDegreePlan(view,tinydb);
 //        if (tinydb.getString(Config.SHARED_DEGREE_PLAN).equals(""))
 //        {
@@ -118,7 +114,8 @@ public class GenerateFragment extends Fragment {
 //            toast = Toast.makeText(view.getContext(), string, Toast.LENGTH_LONG);
 //            toast.show();
 //        }
-        addItemsOnAvailable(view);
+
+
 
         return view;
     }
@@ -136,6 +133,34 @@ public class GenerateFragment extends Fragment {
         dataAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, list_terms);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_term.setAdapter(dataAdapter);
+
+        spinner_term.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
+                list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
+                list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
+
+                // CONVERT SCHEDULE TO HASHMAP
+                list_HashMap_Current = convertToHashMap(list_course_current, list_HashMap_Current);
+                list_HashMap_Available = convertToHashMap(list_course_available, list_HashMap_Available);
+
+                // UPDATE the LISTVIEWS
+                // ONLY NEEDS COURSE/NAME TO UPDATE THE LISTVIEWS
+                String[] from = new String[]{"course", "name"};
+                int nativeLayout = android.R.layout.two_line_list_item;
+                int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+                listview_current.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Current, nativeLayout, from, to));
+                listview_available.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Available, nativeLayout, from, to));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     /* ================================================================
@@ -153,6 +178,33 @@ public class GenerateFragment extends Fragment {
         dataAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, list_years);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_year.setAdapter(dataAdapter);
+
+        spinner_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
+                list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
+                list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
+
+                // CONVERT SCHEDULE TO HASHMAP
+                list_HashMap_Current = convertToHashMap(list_course_current, list_HashMap_Current);
+                list_HashMap_Available = convertToHashMap(list_course_available, list_HashMap_Available);
+
+                // UPDATE the LISTVIEWS
+                // ONLY NEEDS COURSE/NAME TO UPDATE THE LISTVIEWS
+                String[] from = new String[]{"course", "name"};
+                int nativeLayout = android.R.layout.two_line_list_item;
+                int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+                listview_current.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Current, nativeLayout, from, to));
+                listview_available.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Available, nativeLayout, from, to));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     /* ================================================================
@@ -262,13 +314,19 @@ public class GenerateFragment extends Fragment {
         button_add.setOnClickListener(new AdapterView.OnClickListener() {
             public void onClick(View arg0) {
                 if (selected_item != null) {
-                    list_HashMap_Available.add(selected_item);
-                    list_HashMap_Current.remove(selected_position);
-
                     // GET SPINNER INFORMATION
                     int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
                     Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
-                    schedule.removeCourse(spin_term,spin_year,list_course_available.get(selected_position));
+                    schedule.removeCourse(spin_term,spin_year,list_course_current.get(selected_position));
+
+
+                    // UPDATE CURRENT COURSES
+                    list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
+                    list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
+
+                    // CONVERT SCHEDULE TO HASHMAP
+                    list_HashMap_Current = convertToHashMap(list_course_current, list_HashMap_Current);
+                    list_HashMap_Available = convertToHashMap(list_course_available, list_HashMap_Available);
 
                     // ONLY NEEDS COURSE/NAME TO UPDATE THE LISTVIEWS
                     String[] from = new String[]{"course", "name"};
@@ -338,6 +396,7 @@ public class GenerateFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
         builderSingle.setAdapter(list_majors, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -352,12 +411,15 @@ public class GenerateFragment extends Fragment {
                 db = mDbHelper.getWritableDatabase();
                 DegreePlanInfo.PopulateDatabase(db);
 
+                addItemsOnSpinTerm();
+                addItemsOnSpinYear();
+
                 // Uses array list Courses enum
                 list_course_available = schedule.generateAvailableCourses(Term.Spring, 2017, mDbHelper);
                 list_HashMap_Available = convertToHashMap(list_course_available, list_HashMap_Available);
 
 //                Save degreePicked to tinyDB
-//                String degreePicked = list_majors.getItem(which);
+                  degreeChosen = list_majors.getItem(which);
 //                tinydb.putString(Config.SHARED_DEGREE_PLAN, degreePicked);
 //
 //                Store dynamic list to json object
@@ -385,7 +447,9 @@ public class GenerateFragment extends Fragment {
                 mDbHelper.close();
             }
         });
-        builderSingle.show();
+
+            builderSingle.show();
+
     }
 
     /* ================================================================
