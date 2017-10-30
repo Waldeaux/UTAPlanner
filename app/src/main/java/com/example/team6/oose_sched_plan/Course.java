@@ -54,22 +54,22 @@ public class Course {
 			}
 			
 			return Department.valueOf(departmentBuffer);
-		}
+	}
 
 	//Returns number of course from a string identifier that follows pattern "department+number". IE, returns 1105 from "CSE1105".
 	public static int parseNumber(String identifier) {
 			String numberBuffer = "";
-			
+
 			//Go through identifier and pull out number
 			for(int i = 0; i < identifier.length(); i++) {
 				char currentChar = identifier.charAt(i);
 			    if(Character.isDigit(currentChar)) {
 			    	numberBuffer += currentChar;
-			    } 
+			    }
 			}
-			
+
 			return Integer.parseInt(numberBuffer);
-		}
+	}
 	
 	public boolean equals(Object otherCourse) {
 		if(otherCourse instanceof Course) {

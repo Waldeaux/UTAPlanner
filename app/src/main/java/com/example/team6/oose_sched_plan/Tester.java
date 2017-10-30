@@ -22,6 +22,11 @@ public class Tester {
 
 			s.Save("Test.schedule");
 			System.out.println("Saved");
+
+			Schedule s2 = new Schedule();
+			s2.Load("Test.schedule");
+			System.out.println("Loaded");
+			System.out.print(s2.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

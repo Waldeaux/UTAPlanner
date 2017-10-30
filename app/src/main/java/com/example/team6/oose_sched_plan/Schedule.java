@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Schedule {
 	public Schedule() {
@@ -89,7 +91,6 @@ public class Schedule {
 			else return new ArrayList<Course>();
 		}
 
-
 	// SAVE TO FILE
 		public void Save(Context context, String filename) {
 			try {
@@ -109,32 +110,81 @@ public class Schedule {
 				fileWriter.close();
 
 			} catch(Exception e) {
-				System.out.println(e.toString());
+				System.out.println(e.getMessage());
 			}
 		}
 
-	//REMOVE: For use in tester which doesn't have context
-	public void Save(String filename) {
+	//LOAD FROM FILE
+		public void Load(Context context, String filename, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+			try {
+				File file = new File(context.getFilesDir(), filename);
+				FileReader fileReader = new FileReader(file);
+				BufferedReader bufferedReader = new BufferedReader((fileReader));
+
+				//-----Read Data-----
+				//TODO: Read major
+				String line;
+				while((line = bufferedReader.readLine()) != null) {
+					String[] tokens = line.split(",");
+					Term term = Semester.parseTerm(tokens[0]);
+					int year = Semester.parseYear(tokens[0]);
+					Department courseDepartment = Course.parseDepartment(tokens[1]);
+					int courseNumber = Course.parseNumber(tokens[1]);
+
+					Course tempCourse = Database.queryCourse(courseDepartment, courseNumber, mDbHelper);
+					this.addCourse(term, year, tempCourse);
+				}
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+	//For use in tester which doesn't have context
+		public void Save(String filename) {
+			try {
+				File file = new File(filename);
+				FileWriter fileWriter = new FileWriter(file);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+				//-----Write Data-----
+
+				//TODO: Save major (will be stored in semester)
+				for(Semester s : semesters) {
+					for(Course c : s.getCourses()) {
+						bufferedWriter.write(s.toString() + "," + c.toString());
+						bufferedWriter.newLine();
+					}
+				}
+
+				bufferedWriter.close();
+				fileWriter.close();
+
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+	//For use in tester doesn't have context or mdbhelper
+		public void Load(String filename) {
 		try {
 			File file = new File(filename);
-			FileWriter fileWriter = new FileWriter(file);
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader((fileReader));
 
-			//-----Write Data-----
+			//-----Read Data-----
+			//TODO: Read major
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				String[] tokens = line.split(",");
+				Term term = Semester.parseTerm(tokens[0]);
+				int year = Semester.parseYear(tokens[0]);
+				Department courseDepartment = Course.parseDepartment(tokens[1]);
+				int courseNumber = Course.parseNumber(tokens[1]);
 
-			//TODO: Save major (will be stored in semester)
-			for(Semester s : semesters) {
-				for(Course c : s.getCourses()) {
-					bufferedWriter.write(s.toString() + "," + c.toString());
-					bufferedWriter.newLine();
-				}
+				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.Required));
 			}
-
-			bufferedWriter.close();
-			fileWriter.close();
-
 		} catch(Exception e) {
-			System.out.println(e.toString());
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -146,6 +196,18 @@ public class Schedule {
 			}
 
 			return creditHours;
+		}
+
+		//Using in Tester
+		public String toString() {
+			String result = "";
+			for(Semester s : semesters) {
+				for(Course c : s.getCourses()) {
+					result += s.toString() + "," + c.toString() + "\n";
+				}
+			}
+
+			return result;
 		}
 
 		/*

@@ -61,4 +61,37 @@ public class Semester {
 	public boolean equals(Semester otherSemester) {
 		return (this.term == otherSemester.term && this.year == otherSemester.year);
 	}
+
+	//Returns term of semester from a string identifier that follows pattern "term+year".
+	public static Term parseTerm(String identifier) {
+		String termBuffer = "";
+
+		//Go through identifier and pull out department
+		for(int i = 0; i < identifier.length(); i++) {
+			char currentChar = identifier.charAt(i);
+			if(Character.isLetter(currentChar)) {
+				termBuffer += currentChar;
+			} else {
+				break; //once reach number, stop since department has been read. IE, stop after reaching 1 in CSE1300.
+			}
+
+		}
+
+		return Term.valueOf(termBuffer);
+	}
+
+	//Returns year of semester from a string identifier that follows pattern "term+year".
+	public static int parseYear(String identifier) {
+		String yearBuffer = "";
+
+		//Go through identifier and pull out number
+		for(int i = 0; i < identifier.length(); i++) {
+			char currentChar = identifier.charAt(i);
+			if(Character.isDigit(currentChar)) {
+				yearBuffer += currentChar;
+			}
+		}
+
+		return Integer.parseInt(yearBuffer);
+	}
 }
