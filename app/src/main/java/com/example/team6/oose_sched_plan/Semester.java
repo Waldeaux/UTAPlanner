@@ -42,6 +42,11 @@ public class Semester {
 		return creditHours;
 	}
 
+	public String toString() {
+		String result = term.toString() + year;
+		return result;
+	}
+
 	public ArrayList<Course> getCourses() {return courses;}
 	
 	/*

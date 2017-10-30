@@ -1,6 +1,11 @@
 package com.example.team6.oose_sched_plan;
 
+import android.content.Context;
+
 import java.util.ArrayList;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class Schedule {
 	public Schedule() {
@@ -73,15 +78,64 @@ public class Schedule {
 		}
 
 	//GET COURSES THAT ARE ADDED TO A CERTAIN SEMESTER
-	public ArrayList<Course> getCoursesInSemester(Term term, int year) {
-		Semester s = getSemester(term, year);
+		public ArrayList<Course> getCoursesInSemester(Term term, int year) {
+			Semester s = getSemester(term, year);
 
-		if (s.year != -1) { //oif semester in schedule, return list of its courses
-			return s.getCourses();
+			if (s.year != -1) { //oif semester in schedule, return list of its courses
+				return s.getCourses();
+			}
+
+			//if semester not in schedule, return empty list
+			else return new ArrayList<Course>();
 		}
 
-		//if semester not in schedule, return empty list
-		else return new ArrayList<Course>();
+
+	// SAVE TO FILE
+		public void Save(Context context, String filename) {
+			try {
+				File file = new File(context.getFilesDir(), filename);
+				FileWriter fileWriter = new FileWriter(file);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+				//-----Write Data-----
+				for(Semester s : semesters) {
+					for(Course c : s.getCourses()) {
+						bufferedWriter.write(s.toString() + "," + c.toString());
+						bufferedWriter.newLine();
+					}
+				}
+
+				bufferedWriter.close();
+				fileWriter.close();
+
+			} catch(Exception e) {
+				System.out.println(e.toString());
+			}
+		}
+
+	//REMOVE: For use in tester which doesn't have context
+	public void Save(String filename) {
+		try {
+			File file = new File(filename);
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			//-----Write Data-----
+
+			//TODO: Save major (will be stored in semester)
+			for(Semester s : semesters) {
+				for(Course c : s.getCourses()) {
+					bufferedWriter.write(s.toString() + "," + c.toString());
+					bufferedWriter.newLine();
+				}
+			}
+
+			bufferedWriter.close();
+			fileWriter.close();
+
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 
 	//MISCELLANEOUS FUNCTIONS THAT MIGHT BE NEEDED

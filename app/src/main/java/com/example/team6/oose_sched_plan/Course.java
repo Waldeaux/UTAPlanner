@@ -82,6 +82,11 @@ public class Course {
 		}
 	}
 
+	public String toString() {
+		String result = department.toString() + String.valueOf(number);
+		return result;
+	}
+
 	//Takes course number and extracts number of credit hours (second digit) by using math properties. IE 1300 returns 3.
 	private int numberToCreditHours(int number)
 	{
