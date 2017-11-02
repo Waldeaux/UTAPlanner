@@ -1,5 +1,5 @@
+//TODO: Only ask for major if schedule file doesn't exist.
 package com.example.team6.oose_sched_plan;
-
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -102,6 +102,9 @@ public class GenerateFragment extends Fragment {
 
         alertDegreePlan(view, tinydb);
         addItemsOnAvailable(view);
+        schedule = new Schedule();
+        mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(view.getContext());
+        schedule.Load(view.getContext(), Config.FILENAME, mDbHelper);
 //        alertDegreePlan(view,tinydb);
 //        if (tinydb.getString(Config.SHARED_DEGREE_PLAN).equals(""))
 //        {
@@ -281,7 +284,7 @@ public class GenerateFragment extends Fragment {
 
                     // Add the course to the SCHEDULE
                     schedule.addCourse(spin_term, spin_year, list_course_available.get(selected_position));
-
+                    schedule.Save(arg0.getContext(), Config.FILENAME);
                     // UPDATE CURRENT COURSES
                     list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
 
@@ -318,6 +321,7 @@ public class GenerateFragment extends Fragment {
                     int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
                     Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
                     schedule.removeCourse(spin_term,spin_year,list_course_current.get(selected_position));
+                    schedule.Save(arg0.getContext(), Config.FILENAME);
 
 
                     // UPDATE CURRENT COURSES
@@ -400,10 +404,6 @@ public class GenerateFragment extends Fragment {
         builderSingle.setAdapter(list_majors, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                //Create new schedule
-                schedule = new Schedule();
-
                 //Delete all entries to avoid duplicates
                 DegreePlanInfo.DeleteAllEntries(view);
 
@@ -473,5 +473,9 @@ public class GenerateFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+
+    public void updateGUI() {
+
     }
 }

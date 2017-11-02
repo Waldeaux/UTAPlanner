@@ -1,3 +1,4 @@
+//TODO: Add getSemsters() for viewing entire schedule
 package com.example.team6.oose_sched_plan;
 
 import android.content.Context;
@@ -29,6 +30,10 @@ public class Schedule {
 				s.add(course);
 			}
 		}
+
+	//GET SEMESTERS
+		public ArrayList<Semester> getSemesters() {return semesters;}
+
 
 	//REMOVE COURSE
 		public void removeCourse(Term term, int year, Course course) {
@@ -92,6 +97,7 @@ public class Schedule {
 		}
 
 	// SAVE TO FILE
+	//TODO: Save Major and Settings.
 		public void Save(Context context, String filename) {
 			try {
 				File file = new File(context.getFilesDir(), filename);
