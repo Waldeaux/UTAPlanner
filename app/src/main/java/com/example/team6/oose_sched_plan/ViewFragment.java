@@ -29,9 +29,6 @@ public class ViewFragment extends Fragment {
     @InjectView(R.id.pager)
     ViewPager pager;
     public static String[] str_uniqueYears = {};
-//    @InjectView(R.id.sliding_tabs)
-//    TabLayout slidingTabs;
-
     public static Schedule schedule;
     public static FragmentManager manager;
 
@@ -43,7 +40,7 @@ public class ViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view, container, false);
         ButterKnife.inject(this, view);
 
-        uniqueYear(view);
+
         // Set the ViewPagerAdapter into ViewPager
 
         return view;
@@ -53,7 +50,7 @@ public class ViewFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         manager = getChildFragmentManager();
-
+        uniqueYear(view);
         for (String str_uniqueYear : str_uniqueYears) {
             Fragment scheduleFragment = new ViewScheduleFragment();
             //manager = getChildFragmentManager();
@@ -83,18 +80,24 @@ public class ViewFragment extends Fragment {
         //Load the schedule
         schedule.Load(view.getContext(), Config.FILENAME, mDbHelper);
         ArrayList<Semester> semesters = schedule.getSemesters();
-
+        mDbHelper.close();
         // Get every semester in the schedule, add each year to a set
         for (Semester s : semesters) {
             setUniqueYears.add(String.valueOf(s.year));
         }
 
         //Convert Set to String
-        str_uniqueYears = setUniqueYears.toArray(str_uniqueYears);
+        String[] str = {};
+        str= setUniqueYears.toArray(str);
+        //str_uniqueYears= setUniqueYears.toArray(str_uniqueYears);
 
-        int[] array_years = new int[str_uniqueYears.length];
-        for (int i = 0; i < str_uniqueYears.length; i++) {
-            array_years[i] = Integer.parseInt(str_uniqueYears[i]);
+        //String array to int array
+        int[] array_years = new int[str.length];
+        str_uniqueYears = new String[str.length];
+
+
+        for (int i = 0; i < str.length; i++) {
+            array_years[i] = Integer.parseInt(str[i]);
         }
 
         //Sort the int array
@@ -104,7 +107,6 @@ public class ViewFragment extends Fragment {
         for (int i = 0; i < array_years.length; i++) {
             str_uniqueYears[i] = String.valueOf(array_years[i]);
         }
-
-        mDbHelper.close();
+        
     }
 }
