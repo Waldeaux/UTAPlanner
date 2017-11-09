@@ -61,6 +61,8 @@ public class ViewScheduleFragment extends Fragment {
 
         expandableListAdapter = new ExpandableListScheduleAdapter(this.getContext(),expandableListTerm,expandableListCourses);
         expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.expandGroup(0);
+        expandableListView.expandGroup(1);
         expandableListView.expandGroup(2);
 //        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 //

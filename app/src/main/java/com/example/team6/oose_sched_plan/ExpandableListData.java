@@ -2,6 +2,7 @@ package com.example.team6.oose_sched_plan;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -9,23 +10,25 @@ import java.util.List;
  */
 
 public class ExpandableListData {
-    public static HashMap<String, List<String>> getData(String year_instance) {
+    public static LinkedHashMap<String, List<String>> getData(String year_instance) {
 
         Schedule schedule = ViewFragment.schedule;
         ArrayList<Course> spring_Schedule = schedule.getCoursesInSemester(Term.Spring, Integer.parseInt(year_instance));
         ArrayList<Course> summer_Schedule = schedule.getCoursesInSemester(Term.Summer, Integer.parseInt(year_instance));
         ArrayList<Course> fall_Schedule = schedule.getCoursesInSemester(Term.Fall, Integer.parseInt(year_instance));
 
-        HashMap <String, List<String>> expandableListCourses = new HashMap<>();
-
+        LinkedHashMap <String, List<String>> expandableListCourses = new LinkedHashMap<>();
         List<String> spring_Converted = convertToList(spring_Schedule);
-        expandableListCourses.put("Spring", spring_Converted);
-
         List<String> summer_Converted = convertToList(summer_Schedule);
-        expandableListCourses.put("Summer", summer_Converted);
-
         List<String> fall_Converted = convertToList(fall_Schedule);
+
+        expandableListCourses.put("Spring", spring_Converted);
+        expandableListCourses.put("Summer", summer_Converted);
         expandableListCourses.put("Fall", fall_Converted);
+
+
+
+
         return expandableListCourses;
     }
 
