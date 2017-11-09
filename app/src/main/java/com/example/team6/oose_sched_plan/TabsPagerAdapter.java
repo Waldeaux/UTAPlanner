@@ -19,7 +19,8 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // create new viewschedule instance
-        return new ViewScheduleFragment();
+        String getyear = ViewFragment.str_uniqueYears[position];
+        return ViewFragment.newInstance(getyear);
     }
 
     @Override

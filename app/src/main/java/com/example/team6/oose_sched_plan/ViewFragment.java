@@ -32,6 +32,9 @@ public class ViewFragment extends Fragment {
     public static Schedule schedule;
     public static FragmentManager manager;
 
+    public static final String ID = "ID";
+    public static final String YEAR = "YEAR";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,10 +42,7 @@ public class ViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view, container, false);
         ButterKnife.inject(this, view);
-
-
         // Set the ViewPagerAdapter into ViewPager
-
         return view;
     }
 
@@ -52,14 +52,12 @@ public class ViewFragment extends Fragment {
         manager = getChildFragmentManager();
         uniqueYear(view);
         for (String str_uniqueYear : str_uniqueYears) {
-            Fragment scheduleFragment = new ViewScheduleFragment();
-            //manager = getChildFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            Bundle args = new Bundle();
-            //args.putInt(ARG_PAGE_NUMBER, page);
-            scheduleFragment.setArguments(args);
-            transaction.add(R.id.pager, scheduleFragment, str_uniqueYear);
-            transaction.commit();
+            if (str_uniqueYear != null) {
+                Fragment scheduleFragment = newInstance(str_uniqueYear);
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.pager, scheduleFragment, str_uniqueYear);
+                transaction.commit();
+            }
         }
         ViewPager viewPager = pager;
         viewPager.setAdapter(new TabsPagerAdapter(view, getChildFragmentManager()));
@@ -107,6 +105,14 @@ public class ViewFragment extends Fragment {
         for (int i = 0; i < array_years.length; i++) {
             str_uniqueYears[i] = String.valueOf(array_years[i]);
         }
-        
+
+    }
+
+    public static ViewScheduleFragment newInstance(String year) {
+        Bundle bundle = new Bundle();
+        bundle.putString(YEAR, year);
+        ViewScheduleFragment viewScheduleFragment = new ViewScheduleFragment();
+        viewScheduleFragment.setArguments(bundle);
+        return viewScheduleFragment;
     }
 }

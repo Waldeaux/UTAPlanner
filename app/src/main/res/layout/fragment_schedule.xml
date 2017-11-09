@@ -10,26 +10,15 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/b_grey_border2">
 
-        <LinearLayout
+
+        <ExpandableListView
+            android:id="@+id/elist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/b_grey_border2">
-
-                <ExpandableListView
-                    android:id="@+id/elist"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                </ExpandableListView>
-            </ScrollView>
-
-
-        </LinearLayout>
+            android:layout_height="wrap_content">
+        </ExpandableListView>
 
 
     </FrameLayout>
