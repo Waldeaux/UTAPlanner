@@ -45,7 +45,7 @@ public class Course {
 			//Go through identifier and pull out department
 			for(int i = 0; i < identifier.length(); i++) {
 				char currentChar = identifier.charAt(i);
-			    if(Character.isLetter(currentChar)) {
+			    if(Character.isLetter(currentChar) || currentChar == '_') {
 			    	departmentBuffer += currentChar;
 			    } else {
 			    	break; //once reach number, stop since department has been read. IE, stop after reaching 1 in CSE1300.
