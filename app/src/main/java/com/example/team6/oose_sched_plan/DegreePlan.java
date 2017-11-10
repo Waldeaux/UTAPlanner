@@ -1,3 +1,4 @@
+//DISCUSSION: Just move major to schedule and remove this class?
 package com.example.team6.oose_sched_plan;
 
 public class DegreePlan {
