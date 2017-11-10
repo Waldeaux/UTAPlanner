@@ -51,7 +51,7 @@ public class Schedule {
 		 */
 		public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 			//Get courses offered in specified semester
-			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper);
+			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
 
 			//Remove courses that have already been taken
 			//TODO: make sure removing a course doesnt mess up iteration through list
@@ -65,7 +65,7 @@ public class Schedule {
 				}
 
 				//Remove courses that don't have prereqs met.
-				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper);
+				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper); //TODO: change to queryRequisites
 				if(!this.meetsPrereqs(prereqs)) {
 					validCourses.remove(currentCourse);
 					i--;
@@ -73,13 +73,16 @@ public class Schedule {
 				}
 
 				//Remove courses that don't have coreqs met.
-				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse);
+				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse); //TODO: change to queryRequisites
 				if(!this.meetsCoreqs(coreqs)) {
 					validCourses.remove(currentCourse);
 					i--;
 				}
 			}
 
+			//queryRequisites
+			//Check error flag
+			//Returns 2D list of CourseQueryResult
 			//return list of courses that have passed all checks for validity and not been removed from list
 			return validCourses;
 		}

@@ -68,10 +68,15 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        // Initialize the view to View Schedules
-        setTitle("View Schedules");
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fram, new ViewFragment());
-        transaction.commit();
+
+
+        //check for if file exists
+        {
+            // Initialize the view to View Schedules
+            setTitle("View Schedules");
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fram, new ViewFragment());
+            transaction.commit();
+        }
     }
 }
