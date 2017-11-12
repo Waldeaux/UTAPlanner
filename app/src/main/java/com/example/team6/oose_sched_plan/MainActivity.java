@@ -1,7 +1,6 @@
 package com.example.team6.oose_sched_plan;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -52,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
                     transaction.commit();
                     return true;
                 case R.id.navigation_options:
+                    setTitle("Options");
+                    //Toast.makeText(MainActivity.this, "Generate", Toast.LENGTH_SHORT).show();
+                    //GenerateFragment fragment2 = new GenerateFragment();
+                    transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fram, new OptionsFragment());
+                    transaction.commit();
                     return true;
             }
             return false;
