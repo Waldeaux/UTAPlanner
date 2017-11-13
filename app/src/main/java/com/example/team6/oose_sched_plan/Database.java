@@ -148,4 +148,9 @@ public class Database {
         }*/
 		return result;
 	}
+
+	//returns number of courses that must be taken for a certain elective type to be met
+	public static int queryNumberOfElectiveCourses(Course course, DegreePlan major, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+		return -1;//PLACEHOLDER
+	}
 }
