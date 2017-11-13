@@ -8,25 +8,25 @@
                 android:top="8.5px"
                 android:right="8.5px"
                 android:bottom="8.5px"/>
-            <corners android:radius="2dp" />
+            <corners android:radius="5dp" />
             <gradient
                 android:type="radial"
-                android:gradientRadius="40dp"
-                android:centerColor="@color/colorAccent2"
-                android:endColor="@color/colorAccent" />
+                android:gradientRadius="1000dp"
+                android:centerColor="#ff911b"
+                android:endColor="#ff8400" />
 
         </shape>
     </item>
 
     <item >
         <shape android:shape="rectangle">
-            <corners android:radius="2dp" />
+            <corners android:radius="5dp" />
             <gradient
                 android:type="radial"
                 android:gradientRadius="1000dp"
-                android:startColor="#ffddb3"
-                android:centerColor="#ffc48d"
-                android:endColor="#ffbb67" />
+                android:startColor="#ff9829"
+                android:centerColor="#fd8f18"
+                android:endColor="#ff8400" />
 
 
         </shape>

@@ -13,6 +13,9 @@
     <color name="green">#88c48d</color>
     <color name="white">#ffffff</color>
     <color name="colorText">#565656</color>
+    <color name="colorTextDark">#282828</color>
+    <color name="colorTextLight">#696969</color>
+
 
     <color name="colorBackground">#818181</color>
     <color name="colorBackgroundBorder">#454545</color>

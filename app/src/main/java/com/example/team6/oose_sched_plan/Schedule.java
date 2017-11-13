@@ -65,19 +65,19 @@ public class Schedule {
 				}
 
 				//Remove courses that don't have prereqs met.
-				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper); //TODO: change to queryRequisites
-				if(!this.meetsPrereqs(prereqs)) {
-					validCourses.remove(currentCourse);
-					i--;
-					continue; //already removed so don't need to check any other conditions for removal
-				}
-
-				//Remove courses that don't have coreqs met.
-				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse); //TODO: change to queryRequisites
-				if(!this.meetsCoreqs(coreqs)) {
-					validCourses.remove(currentCourse);
-					i--;
-				}
+//				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper); //TODO: change to queryRequisites
+//				if(!this.meetsPrereqs(prereqs)) {
+//					validCourses.remove(currentCourse);
+//					i--;
+//					continue; //already removed so don't need to check any other conditions for removal
+//				}
+//
+//				//Remove courses that don't have coreqs met.
+//				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse); //TODO: change to queryRequisites
+//				if(!this.meetsCoreqs(coreqs)) {
+//					validCourses.remove(currentCourse);
+//					i--;
+//				}
 			}
 
 			//queryRequisites

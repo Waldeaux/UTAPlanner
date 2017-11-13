@@ -46,13 +46,6 @@ public class ViewScheduleFragment extends Fragment {
             year_instance = "-1";
         }
 
-//        if ( args != null) {
-//            year_instance = args.getString("YEAR");
-//        }
-//        else {
-//            year_instance = "-1";
-//        }
-
         // create new hash map with course info
         expandableListCourses = ExpandableListData.getData(year_instance);
         expandableListTerm = new ArrayList<>(expandableListCourses.keySet());
