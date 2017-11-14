@@ -10,7 +10,15 @@ public class Course {
 		
 		this.creditHours = numberToCreditHours(number);
 	}
-	
+
+	public Course(Department department, int number, String name, String description) {
+		this.department = department;
+		this.number = number;
+		this.name = name;
+		this.description = description;
+		creditCategory = CreditCategory.OTHER;
+		this.creditHours = numberToCreditHours(number);
+	}
 	/*
 	 * These values are public final because once they are initialized through constructor, they won't change throughout program execution
 	 * In other words, no one will be updating this info as a result of program execution. 

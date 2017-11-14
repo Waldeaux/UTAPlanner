@@ -1,4 +1,4 @@
-package com.example.team6.oose_sched_plan;
+package com.example.tswal.skeletonprojecttest;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ReqQueryResult {
     public ReqQueryResult() {
-
+        reqs = new ArrayList<ArrayList<ReqCourseEntry>>();
     }
     public ArrayList<ArrayList<ReqCourseEntry>> reqs;
     public int flag;
