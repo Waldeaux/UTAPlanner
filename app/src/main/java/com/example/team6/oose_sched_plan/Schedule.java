@@ -258,7 +258,7 @@ public class Schedule {
 		* Also, just occurred that Major is better name for DegreePlan?
 		*/
 		public int calculateRemainingCreditHours(DegreePlan major) {
-			return (major.totalCreditHours - this.calculateCreditHours());
+			return (degreeplan.getTotalCreditHours() - this.calculateCreditHours());
 		}
 
 		public boolean isValid() {
@@ -280,6 +280,7 @@ public class Schedule {
 	//------------------------------ PRIVATE ------------------------------
 	//---------------------------------------------------------------------
 	private ArrayList<Semester> semesters;
+	private DegreePlan degreeplan;
 
 	private void addSemester(Term term, int year) {
 		semesters.add(new Semester(term, year));
