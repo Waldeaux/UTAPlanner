@@ -1,14 +1,12 @@
-package com.example.tswal.skeletonprojecttest;
+package com.example.team6.oose_sched_plan;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by tswal on 11/9/2017.
@@ -17,6 +15,8 @@ import java.util.HashMap;
 public class DegreePlanInfo {
     public static void PopulateDatabase(SQLiteDatabase db){
         ContentValues values = new ContentValues();
+
+        //Course Entries: Lines 21-890
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "ENGL");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "Rhetoric and Composition");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1301);
@@ -93,7 +93,7 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1104);
         values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "Introduction to basic engineering concepts. Students will become familiar with engineering and its many sub-fields, ethical responsibilities, creativity and design. Corequisite: CSE 1105.");
-        //cse 1105
+
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
@@ -152,7 +152,6 @@ public class DegreePlanInfo {
 
         values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "A practical approach to hands-on computer hardware and software systems in a laboratory environment. Students will be exposed to basic design concepts using off-the-shelf hardware components and to tools that enable the design of complex software systems. Prerequisite: Corequisite CSE 2312.");
-        //cse 1320
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
@@ -161,7 +160,6 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "Computer organization from the viewpoint of software, including: the memory hierarchy, instruction set architectures, memory addressing, input-output, integer and floating-point representation and arithmetic. The relationship of higher-level programming languages to the operating system and to instruction set architecture are explored. Some programming in an assembly language. Prerequisite: CSE 1320.");
 
         values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        //cse 1320
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
         values = new ContentValues();
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
@@ -174,7 +172,6 @@ public class DegreePlanInfo {
         values = new ContentValues();
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "Algorithms and Data Structures");
-        //cse 1320 AND cse 2315
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 2320);
 
         values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
@@ -591,6 +588,31 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
 
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "IE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 3315);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CHEM");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 1465);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "ARCH");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 2300);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
 
         values = new ContentValues();
         values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "ENGL");
@@ -671,7 +693,7 @@ public class DegreePlanInfo {
 
 
         values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "LATIN");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "LATN");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
         values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 2314);
         values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
@@ -817,7 +839,57 @@ public class DegreePlanInfo {
         db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
 
 
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4323);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
 
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4331);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4345);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 3311);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 3313);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4345);
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
+        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
+        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
+
+
+        //Degree Plans: Lines 892 - 927
         values = new ContentValues();
         values.put(DegreePlanAdapter.DegreePlanTable.MAJOR_NAME, "CSE");
         values.put(DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR, 2017);
@@ -826,6 +898,7 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.DegreePlanTable.MATH_ELECTIVE_HOURS, 3);
         values.put(DegreePlanAdapter.DegreePlanTable.SCIENCE_ELECTIVE_HOURS, 4);
         values.put(DegreePlanAdapter.DegreePlanTable.CREATIVE_ARTS_ELECTIVE_HOURS, 3);
+        values.put(DegreePlanAdapter.DegreePlanTable.PHILOSOPHICAL_ELECTIVE_HOURS, 3);
         db.insert(DegreePlanAdapter.DegreePlanTable.TABLE_NAME, null, values);
 
 
@@ -837,6 +910,7 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.DegreePlanTable.MATH_ELECTIVE_HOURS, 3);
         values.put(DegreePlanAdapter.DegreePlanTable.SCIENCE_ELECTIVE_HOURS, 4);
         values.put(DegreePlanAdapter.DegreePlanTable.CREATIVE_ARTS_ELECTIVE_HOURS, 3);
+        values.put(DegreePlanAdapter.DegreePlanTable.PHILOSOPHICAL_ELECTIVE_HOURS, 3);
         db.insert(DegreePlanAdapter.DegreePlanTable.TABLE_NAME, null, values);
 
 
@@ -848,9 +922,11 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.DegreePlanTable.MATH_ELECTIVE_HOURS, 3);
         values.put(DegreePlanAdapter.DegreePlanTable.SCIENCE_ELECTIVE_HOURS, 4);
         values.put(DegreePlanAdapter.DegreePlanTable.CREATIVE_ARTS_ELECTIVE_HOURS, 3);
+        values.put(DegreePlanAdapter.DegreePlanTable.PHILOSOPHICAL_ELECTIVE_HOURS, 3);
         db.insert(DegreePlanAdapter.DegreePlanTable.TABLE_NAME, null, values);
 
 
+        //Electives: Lines 929-2462
         values = new ContentValues();
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_NAME, "CE");
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_YEAR, 2017);
@@ -1225,7 +1301,7 @@ public class DegreePlanInfo {
         values = new ContentValues();
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_NAME, "CE");
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_YEAR, 2017);
-        values.put(DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT, "LATIN");
+        values.put(DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT, "LATN");
         values.put(DegreePlanAdapter.ElectiveTable.COURSE_NUMBER, 2314);
         values.put(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE, "PHILOSOPHICAL");
         db.insert(DegreePlanAdapter.ElectiveTable.TABLE_NAME, null, values);
@@ -1750,7 +1826,7 @@ public class DegreePlanInfo {
         values = new ContentValues();
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_NAME, "CSE");
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_YEAR, 2017);
-        values.put(DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT, "LATIN");
+        values.put(DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT, "LATN");
         values.put(DegreePlanAdapter.ElectiveTable.COURSE_NUMBER, 2314);
         values.put(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE, "PHILOSOPHICAL");
         db.insert(DegreePlanAdapter.ElectiveTable.TABLE_NAME, null, values);
@@ -1887,55 +1963,6 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.ElectiveTable.COURSE_NUMBER, 1343);
         values.put(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE, "CREATIVE_ARTS");
         db.insert(DegreePlanAdapter.ElectiveTable.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4323);
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
-        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4331);
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
-        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
-
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4345);
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
-        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 3311);
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
-        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 3313);
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
-        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NAME, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_NUMBER, 4345);
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_TERM, "");
-        values.put(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION, "");
-        db.insert(DegreePlanAdapter.CourseEntry.TABLE_NAME, null, values);
 
         values = new ContentValues();
         values.put(DegreePlanAdapter.ElectiveTable.MAJOR_NAME, "SE");
@@ -2434,6 +2461,7 @@ public class DegreePlanInfo {
         db.insert(DegreePlanAdapter.ElectiveTable.TABLE_NAME, null, values);
 
 
+        //Required Courses: Lines 2464 - 3165
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CE");
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
@@ -3135,6 +3163,8 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 2312);
         db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
 
+
+        //Requisite Courses: 3167 - 4263
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CHEM");
         values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1441);
@@ -4233,17 +4263,178 @@ public class DegreePlanInfo {
         db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
     }
 
-
-    public static ReqQueryResult QueryPrereqs(Context context, Course course){
-        ReqQueryResult result = new ReqQueryResult();
-
+    /********************************************************************
+     *
+     * @param {String} major - All-caps major department
+     * @param {Int} year - Year for which the degree plan started in
+     * @param {Context} context - Application context
+     * @return
+     */
+    public static ArrayList<Course> QueryCourses(String major, int year, Context context){
+        ArrayList<Course> results = new ArrayList<Course>();
         DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
         SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+
+        //Queries major based on input*****************************************************************************
+        String[] projection = {
+                DegreePlanAdapter.DegreePlanTable.MAJOR_NAME,
+                DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR
+        };
+
+        String selection = DegreePlanAdapter.DegreePlanTable.MAJOR_NAME + " = ? AND " + DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR + " = ?";
+        String[] selectionArgs = {
+                major,
+                String.valueOf(year)
+        };
+
+        Cursor cursor = dbRead.query(
+                DegreePlanAdapter.DegreePlanTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+
+        );
+
+        //If major is found, save information for future queries*************************************************
+        String majorName ="";
+        int majorYear = 0;
+        if(cursor.getCount() == 1) {
+            cursor.moveToNext();
+            majorName = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.MAJOR_NAME));
+            majorYear = cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR));
+        }
+
+        //Course results criteria instantiation******************************************************************
+        String[] courseProjection = {
+                DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
+                DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
+                DegreePlanAdapter.CourseEntry.COURSE_NAME,
+                DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
+        };
+        String courseSelection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " = ?";
+        String[] courseSelectionArgs = new String[2];
+
+        //Nested query criteria instantiation*******************************************************************
+        String[] requiredCourseProjection = {
+                DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT,
+                DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER
+        };
+
+        String requiredCourseSelection = DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME + " = ? AND " + DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR + " = ?";
+        String[] requiredCourseSelectionArgs = {
+                majorName,
+                String.valueOf(majorYear)
+        };
+
+        //Query for courses that are required in input major***************************************************
+        cursor = dbRead.query(
+                DegreePlanAdapter.RequiredCourseTable.TABLE_NAME,
+                requiredCourseProjection,
+                requiredCourseSelection,
+                requiredCourseSelectionArgs,
+                null,
+                null,
+                null
+        );
+
+
+        String courseDepartment;
+        int courseNumber;
+        Cursor nestedCursor;
+
+        //Iterate through each required course and gather that course's information from course entry table**********
+        while(cursor.moveToNext()){
+            courseDepartment = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT));
+            courseNumber = cursor.getInt(cursor.getColumnIndexOrThrow((DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER)));
+            courseSelectionArgs[0] = courseDepartment;
+            courseSelectionArgs[1] = String.valueOf(courseNumber);
+            nestedCursor = dbRead.query(
+                    DegreePlanAdapter.CourseEntry.TABLE_NAME,
+                    courseProjection,
+                    courseSelection,
+                    courseSelectionArgs,
+                    null,
+                    null,
+                    null
+            );
+            nestedCursor.moveToNext();
+            results.add(new Course(
+                    Department.valueOf(nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT))),
+                    nestedCursor.getInt(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)),
+                    nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)),
+                    nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)))
+            );
+        }
+
+        //Set selection criteria to elective table's format***********************************************************
+        requiredCourseProjection[0] = DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT;
+        requiredCourseProjection[1] = DegreePlanAdapter.ElectiveTable.COURSE_NUMBER;
+
+        requiredCourseSelection = DegreePlanAdapter.ElectiveTable.MAJOR_NAME + " = ? AND " + DegreePlanAdapter.ElectiveTable.MAJOR_YEAR + " = ?";
+
+
+        //Query electives for input major****************************************************************************
+        cursor = dbRead.query(
+                DegreePlanAdapter.ElectiveTable.TABLE_NAME,
+                requiredCourseProjection,
+                requiredCourseSelection,
+                requiredCourseSelectionArgs,
+                null,
+                null,
+                null
+        );
+
+        //Iterate through each elective and gather course's information from course entry table*********************
+        while(cursor.moveToNext()){
+            courseDepartment = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT));
+            courseNumber = cursor.getInt(cursor.getColumnIndexOrThrow((DegreePlanAdapter.ElectiveTable.COURSE_NUMBER)));
+            courseSelectionArgs[0] = courseDepartment;
+            courseSelectionArgs[1] = String.valueOf(courseNumber);
+            nestedCursor = dbRead.query(
+                    DegreePlanAdapter.CourseEntry.TABLE_NAME,
+                    courseProjection,
+                    courseSelection,
+                    courseSelectionArgs,
+                    null,
+                    null,
+                    null
+            );
+            nestedCursor.moveToNext();
+            results.add(new Course(
+                    Department.valueOf(nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT))),
+                    nestedCursor.getInt(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)),
+                    nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)),
+                    nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)))
+            );
+        }
+        return results;
+    }
+
+
+    /****************************************************************************
+     *
+     *
+     * @param {FeedReaderHelper} mDbHelper - FeedReaderHelper with the application context
+     * @param {Course} course - Course for which to look up requisites
+     * @return {ReqQueryResult} - Object that has corequisite flag and a 2D list of requisites grouped
+     * together by alternate requirement status
+     */
+
+    public static ReqQueryResult QueryPrereqs(DegreePlanAdapter.FeedReaderDbHelper mDbHelper, Course course){
+        ReqQueryResult result = new ReqQueryResult();
+        SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+
+        //Dummy variables for nested queries********************************************************************
         Department dummyDepartment;
         int dummyNumber;
         String dummyName;
         String dummyDescription;
         int dummyKey = 0;
+
+        //Query criteria instantiation for requested course**************************************************
         String[] projection = {
                 DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,
                 DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,
@@ -4255,16 +4446,15 @@ public class DegreePlanInfo {
         String selection = DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER + " = ?";
         String[] selectionArgs = {course.department.toString(), Integer.toString(course.number)};
 
+        //Query requested course's requisites************************************************************************
         Cursor cursor = dbRead.query(
-                DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                //null,
-                selectionArgs,                            // The values for the WHERE clause
-                //null,
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               // The sort order
+                DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
 
         Cursor nestedCursor;
@@ -4275,6 +4465,7 @@ public class DegreePlanInfo {
         String[] nestedSelectionArgs = new String[2];
         String nestedSelection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " = ?";
 
+        //Gather information of each requisite from course entry table**************************************************
         while(cursor.moveToNext()) {
             dummyDepartment = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT)));
             dummyNumber = cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER));
@@ -4286,15 +4477,13 @@ public class DegreePlanInfo {
             nestedSelectionArgs[1] = Integer.toString(dummyNumber);
 
             nestedCursor = dbRead.query(
-                    DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
-                    nestedProjection,                               // The columns to return
-                    nestedSelection,                                // The columns for the WHERE clause
-                    //null,
-                    nestedSelectionArgs,                            // The values for the WHERE clause
-                    //null,
-                    null,                                     // don't group the rows
-                    null,                                     // don't filter by row groups
-                    null                               // The sort order
+                    DegreePlanAdapter.CourseEntry.TABLE_NAME,
+                    nestedProjection,
+                    nestedSelection,
+                    nestedSelectionArgs,
+                    null,
+                    null,
+                    null
             );
             nestedCursor.moveToNext();
             if(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)) < 0) {
@@ -4304,11 +4493,12 @@ public class DegreePlanInfo {
                 result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), false));
             }
         }
-
         cursor.close();
         dbRead.close();
         return result;
     }
+
+    //Test purposes only
     public static String PrintRequiredCourse(Context context, String department, int number){
         DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
 
@@ -4329,15 +4519,13 @@ public class DegreePlanInfo {
         String[] selectionArgs = {department, Integer.toString(number)};
 
         Cursor cursor = dbRead.query(
-                DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                //null,
-                selectionArgs,                            // The values for the WHERE clause
-                //null,
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               // The sort order
+                DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
 
         while(cursor.moveToNext()) {
@@ -4356,48 +4544,6 @@ public class DegreePlanInfo {
         cursor.close();
         dbRead.close();
         return text;
-    }
-
-    public static ArrayList<HashMap<String,String>> QueryDegreePlans(Context context, DegreePlanAdapter.FeedReaderDbHelper mDbHelper, ArrayList<HashMap<String, String>> list_dynam_Available){
-        SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                DegreePlanAdapter.CourseEntry._ID,
-                DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
-                DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
-                DegreePlanAdapter.CourseEntry.COURSE_NAME
-        };
-
-        Cursor cursor = dbRead.query(
-                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                null,//selection,                                // The columns for the WHERE clause
-                null,//selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               // The sort order
-        );
-
-        int counter = 0;
-        while(cursor.moveToNext()) {
-            HashMap<String, String> item = new HashMap<String, String>();
-            String query_department = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT));
-            String query_number = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER));
-            item.put("course", query_department + " " + query_number);
-            String query_name = cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME));
-            item.put("name", query_name);
-
-            list_dynam_Available.add(item);
-            counter +=1;
-        }
-        Toast toast = Toast.makeText(context, counter + " courses found.", Toast.LENGTH_SHORT);
-        toast.show();
-
-        //
-        cursor.close();
-        //mDbHelper.close();
-        return list_dynam_Available;
     }
 
     public static void DeleteAllEntries(View view){

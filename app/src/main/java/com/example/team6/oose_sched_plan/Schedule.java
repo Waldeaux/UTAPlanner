@@ -51,8 +51,7 @@ public class Schedule {
 		 */
 		public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 			//Get courses offered in specified semester
-			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
-
+			ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
 			//Remove courses that have already been taken
 			//TODO: make sure removing a course doesnt mess up iteration through list
 			for(int i = 0; i < validCourses.size(); i++) {
