@@ -16,8 +16,8 @@ public class ExpandableListData {
 
         if (year_instance.equals("0")) {
             ArrayList<Course> transfer_Schedule = schedule.getCoursesInSemester(Term.TRANSFER, Integer.parseInt(year_instance));
-            ArrayList<Course> highschool_Schedule = schedule.getCoursesInSemester(Term.HIGH_SCHOOL, Integer.parseInt(year_instance));
-            ArrayList<Course> placement_Schedule = schedule.getCoursesInSemester(Term.PLACEMENT_EXAM, Integer.parseInt(year_instance));
+            ArrayList<Course> highschool_Schedule = schedule.getCoursesInSemester(Term.HIGHSCHOOL, Integer.parseInt(year_instance));
+            ArrayList<Course> placement_Schedule = schedule.getCoursesInSemester(Term.PLACEMENTEXAM, Integer.parseInt(year_instance));
 
             LinkedHashMap <String, List<String>> expandableListCourses = new LinkedHashMap<>();
             List<String> transfer_Converted = convertToList(transfer_Schedule);

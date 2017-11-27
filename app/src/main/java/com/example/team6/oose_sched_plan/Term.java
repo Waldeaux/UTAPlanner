@@ -7,6 +7,6 @@ public enum Term {
 	Winter,
 
 	TRANSFER,
-	HIGH_SCHOOL,
-	PLACEMENT_EXAM
+	HIGHSCHOOL,
+	PLACEMENTEXAM
 }

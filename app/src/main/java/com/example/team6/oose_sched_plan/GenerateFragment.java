@@ -512,7 +512,7 @@ public class GenerateFragment extends Fragment {
 
     private String StringToEnum(String str) {
         str = str.toUpperCase();
-        str = str.replace(" ","_");
+        str = str.replace(" ","");
         return str;
     }
 }
