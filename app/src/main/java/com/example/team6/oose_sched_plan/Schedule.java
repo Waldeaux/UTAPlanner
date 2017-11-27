@@ -262,7 +262,7 @@ public class Schedule {
 		}
 		
 		//if semester not in schedule, return error semester
-		return new Semester(Term.Fall, -1);
+		return new Semester(Term.FALL, -1);
 	}
 	
 	public boolean contains(Course course) {
