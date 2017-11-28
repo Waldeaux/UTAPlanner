@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Database {
 	
 	// Returns list of courses that are offered in specified term. Used when getting courses that user can add to a certain semester.
-	public static ArrayList<Course> queryCoursesInTerm(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper)
+	public static ArrayList<Course> queryCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper)
 	{
 		SQLiteDatabase db = mDbHelper.getReadableDatabase();
 		ArrayList<Course> coursesInSemester = new ArrayList<>();
@@ -50,7 +50,7 @@ public class Database {
 				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
 
 		while(cursor.moveToNext()) {
-            coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.Required));
+            coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.OTHER));
         }
 //        selectionArgs[0] = "";
 //        cursor = db.query(
@@ -147,5 +147,10 @@ public class Database {
             prereqs.add(new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.Required ));
         }*/
 		return result;
+	}
+
+	//returns number of courses that must be taken for a certain elective type to be met
+	public static int queryNumberOfElectiveCourses(Course course, DegreePlan major, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+		return -1;//PLACEHOLDER
 	}
 }

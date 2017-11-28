@@ -13,9 +13,9 @@ public class ExpandableListData {
     public static LinkedHashMap<String, List<String>> getData(String year_instance) {
 
         Schedule schedule = ViewFragment.schedule;
-        ArrayList<Course> spring_Schedule = schedule.getCoursesInSemester(Term.Spring, Integer.parseInt(year_instance));
-        ArrayList<Course> summer_Schedule = schedule.getCoursesInSemester(Term.Summer, Integer.parseInt(year_instance));
-        ArrayList<Course> fall_Schedule = schedule.getCoursesInSemester(Term.Fall, Integer.parseInt(year_instance));
+        ArrayList<Course> spring_Schedule = schedule.getCoursesInSemester(Term.SPRING, Integer.parseInt(year_instance));
+        ArrayList<Course> summer_Schedule = schedule.getCoursesInSemester(Term.SUMMER, Integer.parseInt(year_instance));
+        ArrayList<Course> fall_Schedule = schedule.getCoursesInSemester(Term.FALL, Integer.parseInt(year_instance));
 
         LinkedHashMap <String, List<String>> expandableListCourses = new LinkedHashMap<>();
         List<String> spring_Converted = convertToList(spring_Schedule);
