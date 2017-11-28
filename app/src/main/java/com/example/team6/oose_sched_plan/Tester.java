@@ -3,11 +3,12 @@
  */
 package com.example.team6.oose_sched_plan;
 
+import java.util.*;
+
 public class Tester {
 	public static void main(String[] args) {
 		try {
 			Schedule s = new Schedule();
-      
 			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1100, "test1", "testdesc1", CreditCategory.OTHER));
 			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1200, "test1", "testdesc1", CreditCategory.OTHER));
 			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1300, "test1", "testdesc1", CreditCategory.OTHER));

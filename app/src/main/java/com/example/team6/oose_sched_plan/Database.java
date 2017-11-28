@@ -42,10 +42,10 @@ public class Database {
 
 //		String s = "SELECT * " +
 //				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
-//				" WHERE " + selection + " = " + "SPRING";
+//				" WHERE " + selection + " = " + "Spring";
 //		Cursor cursor = db.rawQuery("SELECT * " +
 //				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
-//				" WHERE " + selection + " = " + "SPRING", null);
+//				" WHERE " + selection + " = " + "Spring", null);
 		Cursor cursor = db.rawQuery("SELECT * " +
 				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
 
