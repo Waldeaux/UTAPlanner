@@ -4560,6 +4560,4 @@ public class DegreePlanInfo {
 
         dbRead.execSQL(("DELETE FROM " + DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME));
     }
-
-
 }

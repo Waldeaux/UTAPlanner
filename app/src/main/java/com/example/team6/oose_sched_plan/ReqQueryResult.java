@@ -1,4 +1,4 @@
-package com.example.team6.oose_sched_plan;
+package com.example.tswal.skeletonprojecttest;
 
 import java.util.ArrayList;
 
