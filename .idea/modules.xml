@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Brandon\AndroidStudioProjects\UTAPlanner\OOSE_sched_plan.iml" filepath="C:\Users\Brandon\AndroidStudioProjects\UTAPlanner\OOSE_sched_plan.iml" />
+      <module fileurl="file://C:\Users\Awesome-O\Downloads\UTAPlanner\OOSE_sched_plan.iml" filepath="C:\Users\Awesome-O\Downloads\UTAPlanner\OOSE_sched_plan.iml" />
       <module fileurl="file://$PROJECT_DIR$/UTAPlanner.iml" filepath="$PROJECT_DIR$/UTAPlanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

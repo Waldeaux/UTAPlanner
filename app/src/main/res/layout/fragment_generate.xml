@@ -114,7 +114,8 @@
                                         android:padding="5dp"
                                         android:id="@+id/list_current"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent" />
+                                        android:layout_height="match_parent"
+                                        android:listSelector="@drawable/b_selected"/>
                                 </TableRow>
 
                             </LinearLayout>
@@ -170,7 +171,8 @@
                                         android:id="@+id/list_available"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:padding="10dp" />
+                                        android:padding="10dp"
+                                        android:listSelector="@drawable/b_selected"/>
                                 </TableRow>
 
                             </LinearLayout>

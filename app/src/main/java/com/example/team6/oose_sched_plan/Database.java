@@ -42,10 +42,10 @@ public class Database {
 
 //		String s = "SELECT * " +
 //				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
-//				" WHERE " + selection + " = " + "Spring";
+//				" WHERE " + selection + " = " + "SPRING";
 //		Cursor cursor = db.rawQuery("SELECT * " +
 //				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME +
-//				" WHERE " + selection + " = " + "Spring", null);
+//				" WHERE " + selection + " = " + "SPRING", null);
 		Cursor cursor = db.rawQuery("SELECT * " +
 				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
 
@@ -94,10 +94,10 @@ public class Database {
 		return new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.valueOf("Required")); //REMOVE: just here to remove error that result may not be initialized;
 	}
 	
-	public static ArrayList<Course> queryPrereqs(Course course, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+	public static ReqQueryResult queryReqs(Course course, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 
-		ArrayList<Course> prereqs = new ArrayList<>();
-        //Need case for alternate credits
+		ReqQueryResult result = new ReqQueryResult();
+		//Need case for alternate credits
         /*
         SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
 
@@ -146,12 +146,6 @@ public class Database {
             cursor.moveToNext();
             prereqs.add(new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.Required ));
         }*/
-		return prereqs;
-	}
-	
-	public static ArrayList<Course> queryCoreqs(Course course) {
-		ArrayList<Course> coreqs = new ArrayList<>();
-		//SQL QUERY
-		return coreqs;
+		return result;
 	}
 }

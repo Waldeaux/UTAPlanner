@@ -45,7 +45,7 @@ public class Course {
 			//Go through identifier and pull out department
 			for(int i = 0; i < identifier.length(); i++) {
 				char currentChar = identifier.charAt(i);
-			    if(Character.isLetter(currentChar)) {
+			    if(Character.isLetter(currentChar) || currentChar == '_') {
 			    	departmentBuffer += currentChar;
 			    } else {
 			    	break; //once reach number, stop since department has been read. IE, stop after reaching 1 in CSE1300.
@@ -54,22 +54,22 @@ public class Course {
 			}
 			
 			return Department.valueOf(departmentBuffer);
-		}
+	}
 
 	//Returns number of course from a string identifier that follows pattern "department+number". IE, returns 1105 from "CSE1105".
 	public static int parseNumber(String identifier) {
 			String numberBuffer = "";
-			
+
 			//Go through identifier and pull out number
 			for(int i = 0; i < identifier.length(); i++) {
 				char currentChar = identifier.charAt(i);
 			    if(Character.isDigit(currentChar)) {
 			    	numberBuffer += currentChar;
-			    } 
+			    }
 			}
-			
+
 			return Integer.parseInt(numberBuffer);
-		}
+	}
 	
 	public boolean equals(Object otherCourse) {
 		if(otherCourse instanceof Course) {
@@ -80,6 +80,11 @@ public class Course {
 		else {
 			return false;
 		}
+	}
+
+	public String toString() {
+		String result = department.toString() + String.valueOf(number);
+		return result;
 	}
 
 	//Takes course number and extracts number of credit hours (second digit) by using math properties. IE 1300 returns 3.

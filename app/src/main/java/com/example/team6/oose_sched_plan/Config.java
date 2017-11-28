@@ -14,6 +14,7 @@ public class Config {
     public static final String SHARED_PREF_NAME = "preferences";
     public static final String SHARED_DEGREE_PLAN = "mydegree";
     public static final String SHARED_DEGREE_YEAR = "degreeyear";
+    public static final String FILENAME = "test.schedule";
 
     public static final String SHARED_CURRENT_COURSELIST = "currentcourses";
     public static final String SHARED_AVAILABLE_COURSELIST = "availablecourses";

@@ -1,6 +1,14 @@
+//TODO: Add getSemsters() for viewing entire schedule
 package com.example.team6.oose_sched_plan;
 
+import android.content.Context;
+
 import java.util.ArrayList;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Schedule {
 	public Schedule() {
@@ -23,6 +31,10 @@ public class Schedule {
 			}
 		}
 
+	//GET SEMESTERS
+		public ArrayList<Semester> getSemesters() {return semesters;}
+
+
 	//REMOVE COURSE
 		public void removeCourse(Term term, int year, Course course) {
 			Semester s = getSemester(term, year);
@@ -39,7 +51,7 @@ public class Schedule {
 		 */
 		public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 			//Get courses offered in specified semester
-			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper);
+			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
 
 			//Remove courses that have already been taken
 			//TODO: make sure removing a course doesnt mess up iteration through list
@@ -53,35 +65,136 @@ public class Schedule {
 				}
 
 				//Remove courses that don't have prereqs met.
-				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper);
-				if(!this.meetsPrereqs(prereqs)) {
-					validCourses.remove(currentCourse);
-					i--;
-					continue; //already removed so don't need to check any other conditions for removal
-				}
-
-				//Remove courses that don't have coreqs met.
-				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse);
-				if(!this.meetsCoreqs(coreqs)) {
-					validCourses.remove(currentCourse);
-					i--;
-				}
+//				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper); //TODO: change to queryRequisites
+//				if(!this.meetsPrereqs(prereqs)) {
+//					validCourses.remove(currentCourse);
+//					i--;
+//					continue; //already removed so don't need to check any other conditions for removal
+//				}
+//
+//				//Remove courses that don't have coreqs met.
+//				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse); //TODO: change to queryRequisites
+//				if(!this.meetsCoreqs(coreqs)) {
+//					validCourses.remove(currentCourse);
+//					i--;
+//				}
 			}
 
+			//queryRequisites
+			//Check error flag
+			//Returns 2D list of CourseQueryResult
 			//return list of courses that have passed all checks for validity and not been removed from list
 			return validCourses;
 		}
 
 	//GET COURSES THAT ARE ADDED TO A CERTAIN SEMESTER
-	public ArrayList<Course> getCoursesInSemester(Term term, int year) {
-		Semester s = getSemester(term, year);
+		public ArrayList<Course> getCoursesInSemester(Term term, int year) {
+			Semester s = getSemester(term, year);
 
-		if (s.year != -1) { //oif semester in schedule, return list of its courses
-			return s.getCourses();
+			if (s.year != -1) { //oif semester in schedule, return list of its courses
+				return s.getCourses();
+			}
+
+			//if semester not in schedule, return empty list
+			else return new ArrayList<Course>();
 		}
 
-		//if semester not in schedule, return empty list
-		else return new ArrayList<Course>();
+	// SAVE TO FILE
+	//TODO: Save Major and Settings.
+		public void Save(Context context, String filename) {
+			try {
+				File file = new File(context.getFilesDir(), filename);
+				FileWriter fileWriter = new FileWriter(file);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+				//-----Write Data-----
+				for(Semester s : semesters) {
+					for(Course c : s.getCourses()) {
+						bufferedWriter.write(s.toString() + "," + c.toString());
+						bufferedWriter.newLine();
+					}
+				}
+
+				bufferedWriter.close();
+				fileWriter.close();
+
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+	//LOAD FROM FILE
+		public void Load(Context context, String filename, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+			try {
+				File file = new File(context.getFilesDir(), filename);
+				FileReader fileReader = new FileReader(file);
+				BufferedReader bufferedReader = new BufferedReader((fileReader));
+
+				//-----Read Data-----
+				//TODO: Read major
+				String line;
+				while((line = bufferedReader.readLine()) != null) {
+					String[] tokens = line.split(",");
+					Term term = Semester.parseTerm(tokens[0]);
+					int year = Semester.parseYear(tokens[0]);
+					Department courseDepartment = Course.parseDepartment(tokens[1]);
+					int courseNumber = Course.parseNumber(tokens[1]);
+
+					Course tempCourse = Database.queryCourse(courseDepartment, courseNumber, mDbHelper);
+					this.addCourse(term, year, tempCourse);
+				}
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+	//For use in tester which doesn't have context
+		public void Save(String filename) {
+			try {
+				File file = new File(filename);
+				FileWriter fileWriter = new FileWriter(file);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+				//-----Write Data-----
+
+				//TODO: Save major (will be stored in semester)
+				for(Semester s : semesters) {
+					for(Course c : s.getCourses()) {
+						bufferedWriter.write(s.toString() + "," + c.toString());
+						bufferedWriter.newLine();
+					}
+				}
+
+				bufferedWriter.close();
+				fileWriter.close();
+
+			} catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+	//For use in tester doesn't have context or mdbhelper
+		public void Load(String filename) {
+		try {
+			File file = new File(filename);
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader((fileReader));
+
+			//-----Read Data-----
+			//TODO: Read major
+			String line;
+			while((line = bufferedReader.readLine()) != null) {
+				String[] tokens = line.split(",");
+				Term term = Semester.parseTerm(tokens[0]);
+				int year = Semester.parseYear(tokens[0]);
+				Department courseDepartment = Course.parseDepartment(tokens[1]);
+				int courseNumber = Course.parseNumber(tokens[1]);
+
+				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.Required));
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	//MISCELLANEOUS FUNCTIONS THAT MIGHT BE NEEDED
@@ -92,6 +205,18 @@ public class Schedule {
 			}
 
 			return creditHours;
+		}
+
+		//Using in Tester
+		public String toString() {
+			String result = "";
+			for(Semester s : semesters) {
+				for(Course c : s.getCourses()) {
+					result += s.toString() + "," + c.toString() + "\n";
+				}
+			}
+
+			return result;
 		}
 
 		/*
@@ -137,7 +262,7 @@ public class Schedule {
 		}
 		
 		//if semester not in schedule, return error semester
-		return new Semester(Term.Fall, -1);
+		return new Semester(Term.FALL, -1);
 	}
 	
 	public boolean contains(Course course) {
