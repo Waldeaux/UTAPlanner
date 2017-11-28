@@ -1,4 +1,4 @@
-package com.example.tswal.skeletonprojecttest;
+package com.example.team6.oose_sched_plan;
 
 /**
  * Created by Brand on 11/10/2017.

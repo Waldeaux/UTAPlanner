@@ -1,4 +1,4 @@
-package com.example.tswal.skeletonprojecttest;
+package com.example.team6.oose_sched_plan;
 
 public enum CreditCategory {
 	TECHNICAL,
