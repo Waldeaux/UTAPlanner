@@ -13,7 +13,7 @@ public class ExpandableListData {
 
 
         Schedule schedule = ViewFragment.schedule;
-
+      
         if (year_instance.equals("0")) {
             ArrayList<Course> transfer_Schedule = schedule.getCoursesInSemester(Term.TRANSFER, Integer.parseInt(year_instance));
             ArrayList<Course> highschool_Schedule = schedule.getCoursesInSemester(Term.HIGHSCHOOL, Integer.parseInt(year_instance));
@@ -30,7 +30,7 @@ public class ExpandableListData {
 
             return expandableListCourses;
         }
-
+      
         ArrayList<Course> spring_Schedule = schedule.getCoursesInSemester(Term.SPRING, Integer.parseInt(year_instance));
         ArrayList<Course> summer_Schedule = schedule.getCoursesInSemester(Term.SUMMER, Integer.parseInt(year_instance));
         ArrayList<Course> fall_Schedule = schedule.getCoursesInSemester(Term.FALL, Integer.parseInt(year_instance));

@@ -51,40 +51,76 @@ public class Schedule {
 		 */
 		public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 			//Get courses offered in specified semester
-			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
 
+			ArrayList<Course> validCourses = Database.queryCourses(term, year, mDbHelper); //TODO: Change to queryAllCourses
+      //*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
+      
+			//Loop through courses and remove invalid courses
 			//Remove courses that have already been taken
 			//TODO: make sure removing a course doesnt mess up iteration through list
 			for(int i = 0; i < validCourses.size(); i++) {
 				Course currentCourse = validCourses.get(i);
+
 				//Remove courses that have already been taken
 				if(this.contains(currentCourse)) {
 					validCourses.remove(currentCourse);
 					i--;
 					continue; //already removed so don't need to check any other conditions for removal
 				}
+				
+				/* -----DONT DO THIS FOR THE TIME BEING-----
+				//Remove courses that don't have requisites met
+				//if reqsuities toggle is on
+				ReqQueryResult requisiteGroups = Database.queryReqs(currentCourse, mDbHelper);//List of list of courses; Outer list is list of requisite credits for curse, each inner list is course options that meet each requisite credit
+				if(requisiteGroups.flag == 4000) {
+					//if professional toggle on
+					//check for professional program met
+				} else { //DISCUSSION: only other options is hours requirement?
+					if(this.calculateCreditHours() < requisiteGroups.flag) {
+						validCourses.remove(currentCourse);
+						i--;
+						continue;
+					}
+				}
 
-				//Remove courses that don't have prereqs met.
-//				ArrayList<Course> prereqs = Database.queryPrereqs(currentCourse, mDbHelper); //TODO: change to queryRequisites
-//				if(!this.meetsPrereqs(prereqs)) {
-//					validCourses.remove(currentCourse);
-//					i--;
-//					continue; //already removed so don't need to check any other conditions for removal
-//				}
-//
-//				//Remove courses that don't have coreqs met.
-//				ArrayList<Course> coreqs = Database.queryCoreqs(currentCourse); //TODO: change to queryRequisites
-//				if(!this.meetsCoreqs(coreqs)) {
-//					validCourses.remove(currentCourse);
-//					i--;
-//				}
+				boolean requisitesMet = true; //assume true till proven false
+				for(ArrayList<ReqCourseEntry> requisiteGroup : requisiteGroups.reqs) {
+					boolean requisiteGroupMet = false;
+
+					//loop through requisite options in group and check if schedule contains any of them
+					for(ReqCourseEntry requisite : requisiteGroup) {
+						if(requisite.coreq) { //requisite is a coreq
+							if(this.meetsCoreq(requisite.course, term, year)) {
+								requisiteGroupMet = true;
+							}
+						} else { //requisite is a prereq
+							if(this.meetsPrereq(requisite.course, term, year)) {
+								requisiteGroupMet = true;
+							}
+						}
+					}
+
+					if(!requisiteGroupMet) {
+						requisitesMet = false;
+						break;
+					}
+				}
+
+				if(!requisitesMet) {
+					validCourses.remove(currentCourse); //not all reqs met for course
+					i--;
+					continue;
+				}
+
+				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
+				//use crouse.creditCategory
+				//Database.queryNumberOfElectiveCourses(currentCourse, major, mDbHelper);
+				//this.hasMetElectiveHours(int hours)
+				//remove if above function returns false
+				*/
 			}
 
-			//queryRequisites
-			//Check error flag
-			//Returns 2D list of CourseQueryResult
-			//return list of courses that have passed all checks for validity and not been removed from list
-			return validCourses;
+			return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
 		}
 
 	//GET COURSES THAT ARE ADDED TO A CERTAIN SEMESTER
@@ -190,7 +226,7 @@ public class Schedule {
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
 				int courseNumber = Course.parseNumber(tokens[1]);
 
-				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.Required));
+				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.OTHER));
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -226,7 +262,7 @@ public class Schedule {
 		* Also, just occurred that Major is better name for DegreePlan?
 		*/
 		public int calculateRemainingCreditHours(DegreePlan major) {
-			return (major.totalCreditHours - this.calculateCreditHours());
+			return (degreeplan.getTotalCreditHours() - this.calculateCreditHours());
 		}
 
 		public boolean isValid() {
@@ -248,6 +284,7 @@ public class Schedule {
 	//------------------------------ PRIVATE ------------------------------
 	//---------------------------------------------------------------------
 	private ArrayList<Semester> semesters;
+	private DegreePlan degreeplan;
 
 	private void addSemester(Term term, int year) {
 		semesters.add(new Semester(term, year));
@@ -278,50 +315,40 @@ public class Schedule {
 	}
 	
 	//TODO: Adjust for if not doing semester by semester building (get passed term and year and only check up to semester before it)
-	private boolean meetsPrereqs(ArrayList<Course> prereqs) {
-		boolean containsAllPrereqs = true; //assume true and be proven false by semester that doesn't contain coreq
-		
-		//check that schedule contains each coreq
-		for(Course prereq : prereqs) {
-			boolean containsPrereq = false;
-			//loop through all semesters  except current one since courses in current semester can't satisfy prereq conditions
-			for(int i = 0; i < semesters.size() - 1; i++) {
-				if(semesters.get(i).contains(prereq)) {
+	private boolean meetsPrereq(Course prereq, Term term, int year) {
+		Semester endMarker = new Semester(term, year); //used to tell when to stop searching schedule
+		boolean containsPrereq = false;
+		//loop through all semesters  except current one since courses in current semester can't satisfy prereq conditions
+		for(Semester s : semesters) {
+			if(s.isBefore(endMarker)) {
+				if (s.contains(prereq)) {
 					containsPrereq = true;
 					break; //found prereq so stop searching for it in schedule
 				}
-			}
-			
-			if(!containsPrereq) {
-				containsAllPrereqs = false;
-				break; //schedule did not contain specified coreq, so stop checking any more coreqs and return that schedule doesn't meet coreq 
+			} else {
+				break; //reached end semester so exit
 			}
 		}
 		
-		return containsAllPrereqs;
+		return containsPrereq;
 	}
 	
 	//TODO: Adjust for if not doing semester by semester building (get passed term and year and only check up to that semester)
-	private boolean meetsCoreqs(ArrayList<Course> coreqs) {
-		boolean containsAllCoreqs = true; //assume true and be proven false by semester that doesn't contain coreq
-		
-		//check that schedule contains each coreq
-		for(Course coreq : coreqs) {
-			boolean containsCoreq = false;
-			//loop through all semesters since current semester can also contain coreq
-			for(Semester currentSemester : semesters) {
-				if(currentSemester.contains(coreq)) {
+	private boolean meetsCoreq(Course coreq, Term term, int year) {
+		Semester endMarker = new Semester(term, year); //used to tell when to stop searching schedule
+		boolean containsCoreq = false;
+		//loop through all semesters  except current one since courses in current semester can't satisfy prereq conditions
+		for(Semester s : semesters) {
+			if(s.isBefore(endMarker) || s.equals(endMarker)) {
+				if (s.contains(coreq)) {
 					containsCoreq = true;
-					break; //found coreq so stop searching for it in schedule
+					break; //found prereq so stop searching for it in schedule
 				}
-			}
-			
-			if(!containsCoreq) {
-				containsAllCoreqs = false;
-				break; //schedule did not contain specified coreq, so stop checking any more coreqs and return that schedule doesn't meet coreq 
+			} else {
+				break; //reached end semester so exit
 			}
 		}
-		
-		return containsAllCoreqs;
+
+		return containsCoreq;
 	}
 }
