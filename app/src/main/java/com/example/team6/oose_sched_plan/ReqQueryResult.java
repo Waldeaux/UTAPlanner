@@ -10,6 +10,7 @@ public class ReqQueryResult {
     public ReqQueryResult() {
         //DISCUSSION: Set to -1 as code that there are no flags?
         flag = -1;
+        reqs = new ArrayList<ArrayList<ReqCourseEntry>>();
     }
     public ArrayList<ArrayList<ReqCourseEntry>> reqs;
     public int flag;

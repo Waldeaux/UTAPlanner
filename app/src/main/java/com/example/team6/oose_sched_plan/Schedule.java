@@ -51,7 +51,7 @@ public class Schedule {
 		 */
 		public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 			//Get courses offered in specified semester
-			ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
+			ArrayList<Course> validCourses = Database.queryCourses(term, year, mDbHelper); //TODO: Change to queryAllCourses
 
 			//Loop through courses and remove invalid courses
 			for(int i = 0; i < validCourses.size(); i++) {
@@ -222,7 +222,7 @@ public class Schedule {
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
 				int courseNumber = Course.parseNumber(tokens[1]);
 
-				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.Required));
+				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.OTHER));
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -295,7 +295,7 @@ public class Schedule {
 		}
 		
 		//if semester not in schedule, return error semester
-		return new Semester(Term.Fall, -1);
+		return new Semester(Term.FALL, -1);
 	}
 	
 	public boolean contains(Course course) {

@@ -380,7 +380,7 @@ public class GenerateFragment extends Fragment {
         addItemsOnSpinYear();
 
         // Uses array list Courses enum
-        list_course_available = schedule.generateAvailableCourses(Term.Spring, 2017, mDbHelper);
+        list_course_available = schedule.generateAvailableCourses(Term.SPRING, 2017, mDbHelper);
         list_HashMap_Available = convertToHashMap(list_course_available);
 
 //              Save degreePicked to tinyDB
