@@ -8,9 +8,11 @@ public class DegreePlan {
 		this.totalCreditHours = totalCreditHours;
 	}
 
-	public int getTotalCreditHours() { return totalCreditHours; }
+	public String major; //DISCUSSION: Can this be the enum department or will that not always work? Maybe not since Software Engineering isn't a department
+	public int startingYear; //DISCUSSION: As mentioned earlier, could we replace this by just getting first semester year?
+	public int totalCreditHours;
 
-	private String major;
-	private int startingYear;
-	private int totalCreditHours;
+	public String toString() {
+		return major+","+ String.valueOf(startingYear) + "," + String.valueOf(totalCreditHours);
+	}
 }
