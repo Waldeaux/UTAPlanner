@@ -59,24 +59,25 @@ public class Schedule {
 		 * Returns list of courses that are valid for given semester. Currently code in function calls assumes given semester is current semester (which it will be for semester-by-semester)
 		 * but will updated soon so that it is more versatile.
 		 */
-	public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
-		//Get courses offered in specified semester
+public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+			//Get courses offered in specified semester
 
-		ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
-		//*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
-
-		//Loop through courses and remove invalid courses
-		//Remove courses that have already been taken
-		for(int i = 0; i < validCourses.size(); i++) {
-			Course currentCourse = validCourses.get(i);
-
+			ArrayList<Course> validCourses = Database.queryCourses(term, year, mDbHelper); //TODO: Change to queryAllCourses
+      //*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
+      
+			//Loop through courses and remove invalid courses
 			//Remove courses that have already been taken
-			if(this.contains(currentCourse)) {
-				validCourses.remove(currentCourse);
-				i--;
-				continue; //already removed so don't need to check any other conditions for removal
-			}
+			//TODO: make sure removing a course doesnt mess up iteration through list
+			for(int i = 0; i < validCourses.size(); i++) {
+				Course currentCourse = validCourses.get(i);
 
+				//Remove courses that have already been taken
+				if(this.contains(currentCourse)) {
+					validCourses.remove(currentCourse);
+					i--;
+					continue; //already removed so don't need to check any other conditions for removal
+				}
+				
 				/* COMMENT OUT FOR NOW SINCE QUERY ISN'T WORKING
 				//Remove courses that don't have requisites met
 				if(checkReqs) {
@@ -132,11 +133,9 @@ public class Schedule {
 						i--;
 						continue;
 					}
-				}
-		}
 
-		return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
-	}
+			return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
+		}
 
 	//GET COURSES THAT ARE ADDED TO A CERTAIN SEMESTER
 	public ArrayList<Course> getCoursesInSemester(Term term, int year) {
@@ -286,7 +285,7 @@ public class Schedule {
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
 				int courseNumber = Course.parseNumber(tokens[1]);
 
-				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.Required));
+				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.OTHER));
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -312,7 +311,6 @@ public class Schedule {
 				result += s.toString() + "," + c.toString() + "\n";
 			}
 		}
-
 		return result;
 	}
 
@@ -416,7 +414,7 @@ public class Schedule {
 				break; //reached end semester so exit
 			}
 		}
-
+    
 		return containsPrereq;
 	}
 

@@ -3,20 +3,22 @@
  */
 package com.example.team6.oose_sched_plan;
 
+import java.util.*;
+
 public class Tester {
 	public static void main(String[] args) {
 		try {
-			Schedule s = new Schedule(new DegreePlan("Computer Science", 2017, 120));
-			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1100, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1200, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1300, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.SPRING, 2018, new Course(Department.CSE, 1400, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.SPRING, 2018, new Course(Department.CSE, 1500, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.SPRING, 2018, new Course(Department.CSE, 1600, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2100, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2200, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2300, "test1", "testdesc1", CreditCategory.Required));
-			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2400, "test1", "testdesc1", CreditCategory.Required));
+			Schedule s = new Schedule();
+			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1100, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1200, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1300, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.SPRING, 2018, new Course(Department.CSE, 1400, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.SPRING, 2018, new Course(Department.CSE, 1500, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.SPRING, 2018, new Course(Department.CSE, 1600, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2100, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2200, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2300, "test1", "testdesc1", CreditCategory.OTHER));
+			s.addCourse(Term.FALL, 2018, new Course(Department.CSE, 2400, "test1", "testdesc1", CreditCategory.OTHER));
 
 			s.Save("Test.schedule");
 			System.out.println("Saved");

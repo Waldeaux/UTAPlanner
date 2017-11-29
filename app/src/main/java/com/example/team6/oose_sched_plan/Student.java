@@ -8,4 +8,3 @@ public class Student {
 	DegreePlan degreePlan;
 	Schedule schedule;
 }
-*/
