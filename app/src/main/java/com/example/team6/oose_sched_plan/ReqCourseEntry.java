@@ -5,6 +5,10 @@ package com.example.team6.oose_sched_plan;
  */
 
 public class ReqCourseEntry {
+    public ReqCourseEntry(Course course, boolean coreq){
+        this.course = course;
+        this.coreq = coreq;
+    }
     public Course course;
     public boolean coreq;
 }

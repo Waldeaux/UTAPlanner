@@ -1,14 +1,43 @@
 package com.example.team6.oose_sched_plan;
 
 public class Course {
+	public Course(Department department, int number, String name, String description, CreditCategory creditCategory, Term recommendedTerm) {
+		this.department = department;
+		this.number = number;
+		this.name = name;
+		this.description = description;
+		this.creditCategory = creditCategory;
+		this.creditHours = numberToCreditHours(number);
+		this.recommendedTerm = recommendedTerm;
+	}
 	public Course(Department department, int number, String name, String description, CreditCategory creditCategory) {
 		this.department = department;
 		this.number = number;
 		this.name = name;
 		this.description = description;
 		this.creditCategory = creditCategory;
-		
 		this.creditHours = numberToCreditHours(number);
+		this.recommendedTerm = Term.NA;
+	}
+
+	public Course(Department department, int number, String name, String description, Term recommendedTerm){
+		this.department = department;
+		this.number = number;
+		this.name = name;
+		this.description = description;
+		creditCategory = CreditCategory.OTHER;
+		this.creditHours = numberToCreditHours(number);
+		this.recommendedTerm = recommendedTerm;
+	}
+
+	public Course(Department department, int number, String name, String description) {
+		this.department = department;
+		this.number = number;
+		this.name = name;
+		this.description = description;
+		creditCategory = CreditCategory.OTHER;
+		this.creditHours = numberToCreditHours(number);
+		this.recommendedTerm = Term.NA;
 	}
 	
 	/*
@@ -16,6 +45,7 @@ public class Course {
 	 * In other words, no one will be updating this info as a result of program execution. 
 	 * Database may change but those changes will be reflected since course is loaded from database query.
 	 */
+	public final Term recommendedTerm;
 	public final Department department;
 	public final int number;
 	public final String name;

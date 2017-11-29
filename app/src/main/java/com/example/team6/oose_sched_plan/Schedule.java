@@ -15,6 +15,7 @@ public class Schedule {
 		semesters = new ArrayList<>();
 		checkReqs = true;
 		checkElectives = true;
+		major = new DegreePlan("DEFAULT", 0, 0);
 	}
 
 	public Schedule(DegreePlan major) {
@@ -62,7 +63,7 @@ public class Schedule {
 	public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 		//Get courses offered in specified semester
 
-		ArrayList<Course> validCourses = Database.queryCoursesInTerm(term, year, mDbHelper); //TODO: Change to queryAllCourses
+		ArrayList<Course> validCourses = Database.QueryCourses(major.major, year, mDbHelper); //TODO: Change to queryAllCourses
 		//*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
 
 		//Loop through courses and remove invalid courses
@@ -286,7 +287,7 @@ public class Schedule {
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
 				int courseNumber = Course.parseNumber(tokens[1]);
 
-				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.Required));
+				this.addCourse(term, year, new Course(courseDepartment, courseNumber, "name", "desc", CreditCategory.OTHER));
 			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());

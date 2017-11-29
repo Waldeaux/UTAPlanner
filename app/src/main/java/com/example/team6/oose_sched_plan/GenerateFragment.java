@@ -412,7 +412,7 @@ public class GenerateFragment extends Fragment {
 
     public void LoadTerms(View view) {
 //Delete all entries to avoid duplicates
-        DegreePlanInfo.DeleteAllEntries(view);
+        //DegreePlanInfo.DeleteAllEntries(view);
 
         mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(view.getContext());
         db = mDbHelper.getWritableDatabase();
