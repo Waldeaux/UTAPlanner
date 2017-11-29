@@ -60,23 +60,25 @@ public class Schedule {
 		 * but will updated soon so that it is more versatile.
 		 */
 public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
-			//Get courses offered in specified semester
+	ArrayList<Course> validCourses = new ArrayList<>();
+	/*
+	//Get courses offered in specified semester
 
-			ArrayList<Course> validCourses = Database.queryCourses(term, year, mDbHelper); //TODO: Change to queryAllCourses
-      //*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
-      
-			//Loop through courses and remove invalid courses
-			//Remove courses that have already been taken
-			//TODO: make sure removing a course doesnt mess up iteration through list
-			for(int i = 0; i < validCourses.size(); i++) {
-				Course currentCourse = validCourses.get(i);
+	ArrayList<Course> validCourses = Database.QueryCourses(major.major, year, mDbHelper); //TODO: Change to queryAllCourses
 
-				//Remove courses that have already been taken
-				if(this.contains(currentCourse)) {
-					validCourses.remove(currentCourse);
-					i--;
-					continue; //already removed so don't need to check any other conditions for removal
-				}
+
+	//Loop through courses and remove invalid courses
+	//Remove courses that have already been taken
+	//TODO: make sure removing a course doesnt mess up iteration through list
+	for (int i = 0; i < validCourses.size(); i++) {
+		Course currentCourse = validCourses.get(i);
+
+		//Remove courses that have already been taken
+		if (this.contains(currentCourse)) {
+			validCourses.remove(currentCourse);
+			i--;
+			continue; //already removed so don't need to check any other conditions for removal
+		}
 				
 				/* COMMENT OUT FOR NOW SINCE QUERY ISN'T WORKING
 				//Remove courses that don't have requisites met
@@ -121,21 +123,23 @@ public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePla
 						continue;
 					}
 				}
-				*/
 
-				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
-				if(checkElectives) {
-					int electiveCoursesRequired = 999; //TODO: remove arbitrary value; only here to prevent uninitialized int error
-					//electiveCoursesRequired = Database.queryNumberOfElectiveCourses(currentCourse, major, mDbHelper); //TODO: Implement query
 
-					if(countCreditCategory(currentCourse.creditCategory) >= electiveCoursesRequired) {
-						validCourses.remove(currentCourse); //elective requirements met for course; it is not needed
-						i--;
-						continue;
-					}
+		//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
+		if (checkElectives) {
+			int electiveCoursesRequired = 999; //TODO: remove arbitrary value; only here to prevent uninitialized int error
+			//electiveCoursesRequired = Database.queryNumberOfElectiveCourses(currentCourse, major, mDbHelper); //TODO: Implement query
 
-			return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
+			if (countCreditCategory(currentCourse.creditCategory) >= electiveCoursesRequired) {
+				validCourses.remove(currentCourse); //elective requirements met for course; it is not needed
+				i--;
+				continue;
+			}
 		}
+	}
+	*/
+	return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
+}
 
 	//GET COURSES THAT ARE ADDED TO A CERTAIN SEMESTER
 	public ArrayList<Course> getCoursesInSemester(Term term, int year) {

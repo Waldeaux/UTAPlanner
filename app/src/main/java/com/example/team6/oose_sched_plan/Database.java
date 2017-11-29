@@ -16,9 +16,9 @@ public class Database {
 
 	// Returns list of courses that are offered in specified term. Used when getting courses that user can add to a certain semester.
 
-	public static ArrayList<Course> QueryElectives(String major, int year, String electiveType, Context context){
+	public static ArrayList<Course> QueryElectives(String major, int year, String electiveType,  DegreePlanAdapter.FeedReaderDbHelper mDbHelper){
 		ArrayList<Course> results = new ArrayList<Course>();
-		DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
+		//DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
 		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
 
 		//Queries major based on input*****************************************************************************
@@ -89,9 +89,9 @@ public class Database {
 	 * @return
 	 */
 
-	public static ArrayList<Course> QueryCourses(String major, int year, Context context){
+	public static ArrayList<Course> QueryCourses(String major, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper){
 		ArrayList<Course> results = new ArrayList<Course>();
-		DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
+		//DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
 		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
 
 		//Queries major based on input*****************************************************************************
