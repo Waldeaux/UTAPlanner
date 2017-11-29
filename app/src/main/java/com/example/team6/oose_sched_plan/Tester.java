@@ -6,7 +6,7 @@ package com.example.team6.oose_sched_plan;
 public class Tester {
 	public static void main(String[] args) {
 		try {
-			Schedule s = new Schedule();
+			Schedule s = new Schedule(new DegreePlan("Computer Science", 2017, 120));
 			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1100, "test1", "testdesc1", CreditCategory.Required));
 			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1200, "test1", "testdesc1", CreditCategory.Required));
 			s.addCourse(Term.SPRING, 2017, new Course(Department.CSE, 1300, "test1", "testdesc1", CreditCategory.Required));

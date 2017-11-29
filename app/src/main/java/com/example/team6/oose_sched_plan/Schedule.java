@@ -13,6 +13,16 @@ import java.io.FileReader;
 public class Schedule {
 	public Schedule() {
 		semesters = new ArrayList<>();
+		checkReqs = true;
+		checkElectives = true;
+	}
+
+	public Schedule(DegreePlan major) {
+		this.major = major;
+
+		semesters = new ArrayList<>();
+		checkReqs = true;
+		checkElectives = true;
 	}
 
 	//------------------------------------------------------------------------------
@@ -57,7 +67,6 @@ public class Schedule {
 
 		//Loop through courses and remove invalid courses
 		//Remove courses that have already been taken
-		//TODO: make sure removing a course doesnt mess up iteration through list
 		for(int i = 0; i < validCourses.size(); i++) {
 			Course currentCourse = validCourses.get(i);
 
@@ -68,56 +77,62 @@ public class Schedule {
 				continue; //already removed so don't need to check any other conditions for removal
 			}
 
-				/* -----DONT DO THIS FOR THE TIME BEING-----
+				/* COMMENT OUT FOR NOW SINCE QUERY ISN'T WORKING
 				//Remove courses that don't have requisites met
-				//if reqsuities toggle is on
-				ReqQueryResult requisiteGroups = Database.queryReqs(currentCourse, mDbHelper);//List of list of courses; Outer list is list of requisite credits for curse, each inner list is course options that meet each requisite credit
-				if(requisiteGroups.flag == 4000) {
-					//if professional toggle on
-					//check for professional program met
-				} else { //DISCUSSION: only other options is hours requirement?
-					if(this.calculateCreditHours() < requisiteGroups.flag) {
-						validCourses.remove(currentCourse);
+				if(checkReqs) {
+					ReqQueryResult requisiteGroups = Database.queryReqs(currentCourse, mDbHelper);//List of list of courses; Outer list is list of requisite credits for curse, each inner list is course options that meet each requisite credit
+					if (requisiteGroups.flag == 4000) {
+						//TODO: check for professional program met
+					} else { //DISCUSSION: only other options is hours requirement?
+						if (this.calculateCreditHours() < requisiteGroups.flag) {
+							validCourses.remove(currentCourse);
+							i--;
+							continue;
+						}
+					}
+
+					boolean requisitesMet = true; //assume true till proven false
+					for (ArrayList<ReqCourseEntry> requisiteGroup : requisiteGroups.reqs) {
+						boolean requisiteGroupMet = false;
+
+						//loop through requisite options in group and check if schedule contains any of them
+						for (ReqCourseEntry requisite : requisiteGroup) {
+							if (requisite.coreq) { //requisite is a coreq
+								if (this.meetsCoreq(requisite.course, term, year)) {
+									requisiteGroupMet = true;
+								}
+							} else { //requisite is a prereq
+								if (this.meetsPrereq(requisite.course, term, year)) {
+									requisiteGroupMet = true;
+								}
+							}
+						}
+
+						if (!requisiteGroupMet) {
+							requisitesMet = false;
+							break;
+						}
+					}
+
+					if (!requisitesMet) {
+						validCourses.remove(currentCourse); //not all reqs met for course
 						i--;
 						continue;
 					}
 				}
-
-				boolean requisitesMet = true; //assume true till proven false
-				for(ArrayList<ReqCourseEntry> requisiteGroup : requisiteGroups.reqs) {
-					boolean requisiteGroupMet = false;
-
-					//loop through requisite options in group and check if schedule contains any of them
-					for(ReqCourseEntry requisite : requisiteGroup) {
-						if(requisite.coreq) { //requisite is a coreq
-							if(this.meetsCoreq(requisite.course, term, year)) {
-								requisiteGroupMet = true;
-							}
-						} else { //requisite is a prereq
-							if(this.meetsPrereq(requisite.course, term, year)) {
-								requisiteGroupMet = true;
-							}
-						}
-					}
-
-					if(!requisiteGroupMet) {
-						requisitesMet = false;
-						break;
-					}
-				}
-
-				if(!requisitesMet) {
-					validCourses.remove(currentCourse); //not all reqs met for course
-					i--;
-					continue;
-				}
+				*/
 
 				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
-				//use crouse.creditCategory
-				//Database.queryNumberOfElectiveCourses(currentCourse, major, mDbHelper);
-				//this.hasMetElectiveHours(int hours)
-				//remove if above function returns false
-				*/
+				if(checkElectives) {
+					int electiveCoursesRequired = 999; //TODO: remove arbitrary value; only here to prevent uninitialized int error
+					//electiveCoursesRequired = Database.queryNumberOfElectiveCourses(currentCourse, major, mDbHelper); //TODO: Implement query
+
+					if(countCreditCategory(currentCourse.creditCategory) >= electiveCoursesRequired) {
+						validCourses.remove(currentCourse); //elective requirements met for course; it is not needed
+						i--;
+						continue;
+					}
+				}
 		}
 
 		return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
@@ -144,6 +159,18 @@ public class Schedule {
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
 			//-----Write Data-----
+			//Major
+			bufferedWriter.write(major.toString());
+			bufferedWriter.newLine();
+
+			//Toggle Preferences
+			bufferedWriter.write(Boolean.toString(checkReqs));
+			bufferedWriter.newLine();
+
+			bufferedWriter.write(Boolean.toString(checkElectives));
+			bufferedWriter.newLine();
+
+			//-----Write Courses------
 			for(Semester s : semesters) {
 				for(Course c : s.getCourses()) {
 					bufferedWriter.write(s.toString() + "," + c.toString());
@@ -169,8 +196,21 @@ public class Schedule {
 			//-----Read Data-----
 			//TODO: Read major
 			String line;
+
+			//Major
+			line = bufferedReader.readLine();
+			String[] tokens = line.split(",");
+			major = new DegreePlan(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+
+			//toggles
+			line = bufferedReader.readLine();
+			checkReqs = Boolean.parseBoolean(line);
+			line = bufferedReader.readLine();
+			checkElectives = Boolean.parseBoolean(line);
+
+			//Courses
 			while((line = bufferedReader.readLine()) != null) {
-				String[] tokens = line.split(",");
+				tokens = line.split(",");
 				Term term = Semester.parseTerm(tokens[0]);
 				int year = Semester.parseYear(tokens[0]);
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
@@ -192,7 +232,16 @@ public class Schedule {
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
 			//-----Write Data-----
+			//Major
+			bufferedWriter.write(major.toString());
+			bufferedWriter.newLine();
 
+			//Toggle Preferences
+			bufferedWriter.write(Boolean.toString(checkReqs));
+			bufferedWriter.newLine();
+
+			bufferedWriter.write(Boolean.toString(checkElectives));
+			bufferedWriter.newLine();
 			//TODO: Save major (will be stored in semester)
 			for(Semester s : semesters) {
 				for(Course c : s.getCourses()) {
@@ -217,10 +266,21 @@ public class Schedule {
 			BufferedReader bufferedReader = new BufferedReader((fileReader));
 
 			//-----Read Data-----
-			//TODO: Read major
 			String line;
+			//Major
+			line = bufferedReader.readLine();
+			String[] tokens = line.split(",");
+			major = new DegreePlan(tokens[0], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+
+			//toggles
+			line = bufferedReader.readLine();
+			checkReqs = Boolean.parseBoolean(line);
+			line = bufferedReader.readLine();
+			checkElectives = Boolean.parseBoolean(line);
+
+
 			while((line = bufferedReader.readLine()) != null) {
-				String[] tokens = line.split(",");
+				tokens = line.split(",");
 				Term term = Semester.parseTerm(tokens[0]);
 				int year = Semester.parseYear(tokens[0]);
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
@@ -246,6 +306,7 @@ public class Schedule {
 	//Using in Tester
 	public String toString() {
 		String result = "";
+		result+= major.toString() + "\n" + String.valueOf(checkReqs) + "\n" + String.valueOf(checkElectives) + "\n";
 		for(Semester s : semesters) {
 			for(Course c : s.getCourses()) {
 				result += s.toString() + "," + c.toString() + "\n";
@@ -261,8 +322,8 @@ public class Schedule {
     * If remove student since assume only one student will use this app since it is on phone, have degreeplan as member of schedule and then has direct access.
     * Also, just occurred that Major is better name for DegreePlan?
     */
-	public int calculateRemainingCreditHours(DegreePlan major) {
-		return (degreeplan.totalCreditHours - this.calculateCreditHours());
+	public int calculateRemainingCreditHours() {
+		return (major.totalCreditHours - this.calculateCreditHours());
 	}
 
 	public boolean isValid() {
@@ -276,15 +337,41 @@ public class Schedule {
 	//Methods on back burner for Iteration 3
 	public void removeConflicts() {}
 
+	public void setMajor(DegreePlan major) {
+		this.major = major;
+	}
+	public DegreePlan getMajor() {
+		return major;
+	}
 
+	public void enableCheckReqs() {
+		checkReqs = true;
+	}
 
+	public void disableCheckReqs() {
+		checkReqs = false;
+	}
 
+	public void enableCheckElectives() {
+		checkElectives = true;
+	}
+
+	public void disableCheckElectives() {
+		checkElectives = false;
+	}
+
+	public void changeMajor(DegreePlan major) {
+		this.major = major;
+		resetSchedule();
+	}
 
 	//---------------------------------------------------------------------
 	//------------------------------ PRIVATE ------------------------------
 	//---------------------------------------------------------------------
 	private ArrayList<Semester> semesters;
-	private DegreePlan degreeplan;
+	private DegreePlan major;
+	private boolean checkReqs;
+	private boolean checkElectives;
 
 	private void addSemester(Term term, int year) {
 		semesters.add(new Semester(term, year));
@@ -350,5 +437,25 @@ public class Schedule {
 		}
 
 		return containsCoreq;
+	}
+
+	private int countCreditCategory(CreditCategory credCat) {
+		int count = 0;
+		for(Semester s : semesters) {
+			for(Course c : s.getCourses()) {
+				if(c.creditCategory.equals(credCat)) {
+					count++;
+				}
+			}
+		}
+
+		return count;
+	}
+
+	private void resetSchedule() {
+		//skip first semester since it is trasnfer stuff
+		Semester tempCopy = semesters.get(0);
+		semesters.clear();
+		semesters.add(tempCopy);
 	}
 }
