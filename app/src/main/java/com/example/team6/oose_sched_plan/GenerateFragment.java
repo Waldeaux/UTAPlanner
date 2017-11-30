@@ -411,11 +411,12 @@ public class GenerateFragment extends Fragment {
     }
 
     public void LoadTerms(View view) {
-//Delete all entries to avoid duplicates
+    //Delete all entries to avoid duplicates
         //DegreePlanInfo.DeleteAllEntries(view);
 
         mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(view.getContext());
         db = mDbHelper.getWritableDatabase();
+        mDbHelper.onUpgrade(db, 1, 1);
         DegreePlanInfo.PopulateDatabase(db);
 
 

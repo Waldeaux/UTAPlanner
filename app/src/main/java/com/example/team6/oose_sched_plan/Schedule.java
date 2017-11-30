@@ -15,7 +15,7 @@ public class Schedule {
 		semesters = new ArrayList<>();
 		checkReqs = true;
 		checkElectives = true;
-		major = new DegreePlan("DEFAULT", 0, 0);
+		major = new DegreePlan("CSE", 0, 0);
 	}
 
 	public Schedule(DegreePlan major) {
@@ -65,7 +65,7 @@ public class Schedule {
 
 		ArrayList<Course> validCourses = Database.QueryCourses(major.major, year, mDbHelper); //TODO: Change to queryAllCourses
 		//*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
-
+		/*
 		//Loop through courses and remove invalid courses
 		//Remove courses that have already been taken
 		for(int i = 0; i < validCourses.size(); i++) {
@@ -121,7 +121,7 @@ public class Schedule {
 						continue;
 					}
 				}
-				*/
+
 
 				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
 				if(checkElectives) {
@@ -136,6 +136,7 @@ public class Schedule {
 				}
 		}
 
+		*/
 		return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
 	}
 

@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 public class Database {
 
-
+	//TODO: Query that returns degree plan object
+	//TODO: Query all degree plans
 	// Returns list of courses that are offered in specified term. Used when getting courses that user can add to a certain semester.
 
 	public static ArrayList<Course> QueryElectives(String major, int year, String electiveType,  DegreePlanAdapter.FeedReaderDbHelper mDbHelper){

@@ -6,6 +6,7 @@ public class DegreePlan {
 		this.major = major;
 		this.startingYear = startingYear;
 		this.totalCreditHours = totalCreditHours;
+		//TODO: Store elective types and number of courses per elective type
 	}
 
 	public String major; //DISCUSSION: Can this be the enum department or will that not always work? Maybe not since Software Engineering isn't a department
