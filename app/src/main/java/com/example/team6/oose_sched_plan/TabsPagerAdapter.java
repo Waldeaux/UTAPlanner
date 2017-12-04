@@ -30,9 +30,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if (ViewFragment.str_uniqueYears[position].equals("0")) {
-            return "Other";
-        }
         return ViewFragment.str_uniqueYears[position];
     }
 

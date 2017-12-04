@@ -17,6 +17,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,19 +125,9 @@ public class GenerateFragment extends Fragment {
     public void addItemsOnSpinTerm() {
         spinner_term = spinTerm;
         List<String> list_terms = new ArrayList<String>();
-
-        int spin_year;
-        if (spinner_year.getSelectedItem().equals("Other")) {
-            list_terms.add("Transfer");
-            list_terms.add("High School");
-            list_terms.add("Placement Exam");
-        }
-        else {
-            list_terms.add("SPRING");
-            list_terms.add("SUMMER");
-            list_terms.add("FALL");
-        }
-
+        list_terms.add("Spring");
+        list_terms.add("Summer");
+        list_terms.add("Fall");
         dataAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, list_terms);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_term.setAdapter(dataAdapter);
@@ -143,15 +135,8 @@ public class GenerateFragment extends Fragment {
         spinner_term.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                int spin_year;
-                if (spinner_year.getSelectedItem().equals("Other")) {
-                    spin_year = 0;
-                }
-                else {
-                    spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
-                }
-                Term spin_term = Term.valueOf(StringToEnum(spinner_term.getSelectedItem().toString()));
+                int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
                 list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
                 list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
 
@@ -179,8 +164,7 @@ public class GenerateFragment extends Fragment {
     ||=================================================================*/
     public void addItemsOnSpinYear() {
         spinner_year = spinYear;
-        final List<String> list_years = new ArrayList<String>();
-        list_years.add("Other");
+        List<String> list_years = new ArrayList<String>();
         list_years.add("2017");
         list_years.add("2018");
         list_years.add("2019");
@@ -192,21 +176,9 @@ public class GenerateFragment extends Fragment {
 
         spinner_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {;
-
-                int spin_year;
-                if (spinner_year.getSelectedItem().equals("Other")) {
-                    spin_year = 0;
-                }
-                else {
-                    spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
-                }
-
-                //Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
-                updateGUI(); // Updates the terms when year is selected
-                spinner_term.setSelection(0);
-                Term spin_term = Term.valueOf(StringToEnum(spinner_term.getSelectedItem().toString()));
-
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
                 list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
                 list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
 
@@ -218,7 +190,6 @@ public class GenerateFragment extends Fragment {
                 // ONLY NEEDS COURSE/NAME TO UPDATE THE LISTVIEWS
                 listview_current.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Current, nativeLayout, from, to));
                 listview_available.setAdapter(new SimpleAdapter(view.getContext(), list_HashMap_Available, nativeLayout, from, to));
-
             }
 
             @Override
@@ -293,15 +264,9 @@ public class GenerateFragment extends Fragment {
                 if (selected_item != null) {
 
                     //Get info from spinner term/ year
-                    int spin_year;
-                    if (spinner_year.getSelectedItem().equals("Other")) {
-                        spin_year = 0;
-                    }
-                    else {
-                        spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
-                    }
-                    //Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
-                    Term spin_term = Term.valueOf(StringToEnum(spinner_term.getSelectedItem().toString()));
+                    int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                    Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
+
                     // Add the course to the SCHEDULE
                     schedule.addCourse(spin_term, spin_year, list_course_available.get(selected_position));
                     schedule.Save(arg0.getContext(), Config.FILENAME);
@@ -338,15 +303,8 @@ public class GenerateFragment extends Fragment {
             public void onClick(View arg0) {
                 if (selected_item != null) {
                     // GET SPINNER INFORMATION
-                    int spin_year;
-                    if (spinner_year.getSelectedItem().equals("Other")) {
-                        spin_year = 0;
-                    }
-                    else {
-                        spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
-                    }
-                    //Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
-                    Term spin_term = Term.valueOf(StringToEnum(spinner_term.getSelectedItem().toString()));
+                    int spin_year = Integer.parseInt(spinner_year.getSelectedItem().toString());
+                    Term spin_term = Term.valueOf(spinner_term.getSelectedItem().toString());
                     schedule.removeCourse(spin_term,spin_year,list_course_current.get(selected_position));
                     schedule.Save(arg0.getContext(), Config.FILENAME);
 
@@ -419,9 +377,9 @@ public class GenerateFragment extends Fragment {
         mDbHelper.onUpgrade(db, 1, 1);
         DegreePlanInfo.PopulateDatabase(db);
 
-
-        addItemsOnSpinYear();
         addItemsOnSpinTerm();
+        addItemsOnSpinYear();
+
         // Uses array list Courses enum
         list_course_available = schedule.generateAvailableCourses(Term.SPRING, 2017, mDbHelper);
         list_HashMap_Available = convertToHashMap(list_course_available);
@@ -493,27 +451,6 @@ public class GenerateFragment extends Fragment {
     }
 
     public void updateGUI() {
-        List<String> list_terms = new ArrayList<String>();
-        int spin_year;
-        if (spinner_year.getSelectedItem().equals("Other")) {
-            list_terms.add("Transfer");
-            list_terms.add("High School");
-            list_terms.add("Placement Exam");
-        }
-        else {
-            list_terms.add("SPRING");
-            list_terms.add("SUMMER");
-            list_terms.add("FALL");
-        }
 
-        dataAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, list_terms);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_term.setAdapter(dataAdapter);
-    }
-
-    private String StringToEnum(String str) {
-        str = str.toUpperCase();
-        str = str.replace(" ","");
-        return str;
     }
 }
