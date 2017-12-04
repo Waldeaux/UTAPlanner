@@ -471,7 +471,7 @@ public class Database {
 				null                               		  // The sort order
 		);
 		cursor.moveToNext();
-		return new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.valueOf("Required")); //REMOVE: just here to remove error that result may not be initialized;
+		return new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.valueOf("OTHER")); //TODO: Not loading creditcategory??? //REMOVE: just here to remove error that result may not be initialized;
 	}
 
 	public static ReqQueryResult queryReqs(Course course, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
