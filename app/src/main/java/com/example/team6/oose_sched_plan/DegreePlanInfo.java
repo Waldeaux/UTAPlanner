@@ -4550,14 +4550,14 @@ public class DegreePlanInfo {
 
         DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(view.getContext());
         SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
-        dbRead.execSQL(("DELETE FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME));
+        dbRead.execSQL("DELETE FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME);
 
-        dbRead.execSQL(("DELETE FROM " + DegreePlanAdapter.ElectiveTable.TABLE_NAME));
+        dbRead.execSQL("DELETE FROM " + DegreePlanAdapter.ElectiveTable.TABLE_NAME);
 
-        dbRead.execSQL(("DELETE FROM " + DegreePlanAdapter.DegreePlanTable.TABLE_NAME));
+        dbRead.execSQL("DELETE FROM " + DegreePlanAdapter.DegreePlanTable.TABLE_NAME);
 
-        dbRead.execSQL(("DELETE FROM " + DegreePlanAdapter.RequiredCourseTable.TABLE_NAME));
+        dbRead.execSQL("DELETE FROM " + DegreePlanAdapter.RequiredCourseTable.TABLE_NAME);
 
-        dbRead.execSQL(("DELETE FROM " + DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME));
+        dbRead.execSQL("DELETE FROM " + DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME);
     }
 }

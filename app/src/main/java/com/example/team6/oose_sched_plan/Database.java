@@ -12,8 +12,9 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 public class Database {
-	
 
+	//TODO: Query that returns degree plan object
+	//TODO: Query all degree plans
 	// Returns list of courses that are offered in specified term. Used when getting courses that user can add to a certain semester.
 
 	public static ArrayList<Course> QueryElectives(String major, int year, String electiveType,  DegreePlanAdapter.FeedReaderDbHelper mDbHelper){
@@ -276,40 +277,45 @@ public class Database {
 				null
 		);
 
-		Cursor nestedCursor;
-		String[] nestedProjection = {
-				DegreePlanAdapter.CourseEntry.COURSE_NAME,
-				DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
-		};
-		String[] nestedSelectionArgs = new String[2];
-		String nestedSelection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " = ?";
+		if (cursor != null && cursor.getCount() != 0) {
 
-		//Gather information of each requisite from course entry table**************************************************
-		while(cursor.moveToNext()) {
-			dummyDepartment = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT)));
-			dummyNumber = cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER));
-			if(dummyKey != Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)))) {
-				result.reqs.add(new ArrayList<ReqCourseEntry>());
-				dummyKey = Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow((DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY))));
-			}
-			nestedSelectionArgs[0] =  dummyDepartment.toString();
-			nestedSelectionArgs[1] = Integer.toString(dummyNumber);
+			Cursor nestedCursor;
+			String[] nestedProjection = {
+					DegreePlanAdapter.CourseEntry.COURSE_NAME,
+					DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
+			};
+			String[] nestedSelectionArgs = new String[2];
+			String nestedSelection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " = ?";
 
-			nestedCursor = dbRead.query(
-					DegreePlanAdapter.CourseEntry.TABLE_NAME,
-					nestedProjection,
-					nestedSelection,
-					nestedSelectionArgs,
-					null,
-					null,
-					null
-			);
-			nestedCursor.moveToNext();
-			if(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)) < 0) {
-				result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), true));
-			}
-			else {
-				result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), false));
+			//Gather information of each requisite from course entry table**************************************************
+			while (cursor.moveToNext()) {
+				dummyDepartment = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT)));
+				dummyNumber = cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER));
+				if (dummyKey != Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)))) {
+					result.reqs.add(new ArrayList<ReqCourseEntry>());
+					dummyKey = Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow((DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY))));
+				}
+				nestedSelectionArgs[0] = dummyDepartment.toString();
+				nestedSelectionArgs[1] = Integer.toString(dummyNumber);
+
+				nestedCursor = dbRead.query(
+						DegreePlanAdapter.CourseEntry.TABLE_NAME,
+						nestedProjection,
+						nestedSelection,
+						nestedSelectionArgs,
+						null,
+						null,
+						null
+				);
+
+				if (nestedCursor != null && nestedCursor.getCount() != 0) {
+					nestedCursor.moveToNext();
+					if (cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)) < 0) {
+						result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), true));
+					} else {
+						result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), false));
+					}
+				}
 			}
 		}
 		cursor.close();
@@ -354,8 +360,8 @@ public class Database {
 				"FROM " + DegreePlanAdapter.CourseEntry.TABLE_NAME, null);
 
 		while(cursor.moveToNext()) {
-            coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.OTHER));
-        }
+			coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.OTHER));
+		}
 //        selectionArgs[0] = "";
 //        cursor = db.query(
 //                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
@@ -371,33 +377,33 @@ public class Database {
 //        }
 		return coursesInSemester;
 	}
-	
+
 	//Given department and course number, returns course class with all info about course. Used when loading course from file, when only have this given info.
 	public static Course queryCourse(Department department, int number, DegreePlanAdapter.FeedReaderDbHelper mDbHelper)
 	{
-        SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
-        //SQL QUERY
-        String[] projection = {
-                DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
-                DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
-                DegreePlanAdapter.CourseEntry.COURSE_NAME
-        };
+		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+		//SQL QUERY
+		String[] projection = {
+				DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
+				DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
+				DegreePlanAdapter.CourseEntry.COURSE_NAME
+		};
 
-        String selection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + "= ?";
-        String[] selectionArgs = {department.toString(), String.valueOf(number)};
-        Cursor cursor = dbRead.query(
-                DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                               		  // The sort order
-        );
-        cursor.moveToNext();
+		String selection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + "= ?";
+		String[] selectionArgs = {department.toString(), String.valueOf(number)};
+		Cursor cursor = dbRead.query(
+				DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
+				projection,                               // The columns to return
+				selection,                                // The columns for the WHERE clause
+				selectionArgs,                            // The values for the WHERE clause
+				null,                                     // don't group the rows
+				null,                                     // don't filter by row groups
+				null                               		  // The sort order
+		);
+		cursor.moveToNext();
 		return new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.valueOf("Required")); //REMOVE: just here to remove error that result may not be initialized;
 	}
-	
+
 	public static ReqQueryResult queryReqs(Course course, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 
 		ReqQueryResult result = new ReqQueryResult();
