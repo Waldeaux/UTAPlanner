@@ -277,40 +277,45 @@ public class Database {
 				null
 		);
 
-		Cursor nestedCursor;
-		String[] nestedProjection = {
-				DegreePlanAdapter.CourseEntry.COURSE_NAME,
-				DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
-		};
-		String[] nestedSelectionArgs = new String[2];
-		String nestedSelection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " = ?";
+		if (cursor != null && cursor.getCount() != 0) {
 
-		//Gather information of each requisite from course entry table**************************************************
-		while(cursor.moveToNext()) {
-			dummyDepartment = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT)));
-			dummyNumber = cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER));
-			if(dummyKey != Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)))) {
-				result.reqs.add(new ArrayList<ReqCourseEntry>());
-				dummyKey = Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow((DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY))));
-			}
-			nestedSelectionArgs[0] =  dummyDepartment.toString();
-			nestedSelectionArgs[1] = Integer.toString(dummyNumber);
+			Cursor nestedCursor;
+			String[] nestedProjection = {
+					DegreePlanAdapter.CourseEntry.COURSE_NAME,
+					DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
+			};
+			String[] nestedSelectionArgs = new String[2];
+			String nestedSelection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + " = ?";
 
-			nestedCursor = dbRead.query(
-					DegreePlanAdapter.CourseEntry.TABLE_NAME,
-					nestedProjection,
-					nestedSelection,
-					nestedSelectionArgs,
-					null,
-					null,
-					null
-			);
-			nestedCursor.moveToNext();
-			if(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)) < 0) {
-				result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), true));
-			}
-			else {
-				result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), false));
+			//Gather information of each requisite from course entry table**************************************************
+			while (cursor.moveToNext()) {
+				dummyDepartment = Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT)));
+				dummyNumber = cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER));
+				if (dummyKey != Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)))) {
+					result.reqs.add(new ArrayList<ReqCourseEntry>());
+					dummyKey = Math.abs(cursor.getInt(cursor.getColumnIndexOrThrow((DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY))));
+				}
+				nestedSelectionArgs[0] = dummyDepartment.toString();
+				nestedSelectionArgs[1] = Integer.toString(dummyNumber);
+
+				nestedCursor = dbRead.query(
+						DegreePlanAdapter.CourseEntry.TABLE_NAME,
+						nestedProjection,
+						nestedSelection,
+						nestedSelectionArgs,
+						null,
+						null,
+						null
+				);
+
+				if (nestedCursor != null && nestedCursor.getCount() != 0) {
+					nestedCursor.moveToNext();
+					if (cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY)) < 0) {
+						result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), true));
+					} else {
+						result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), false));
+					}
+				}
 			}
 		}
 		cursor.close();

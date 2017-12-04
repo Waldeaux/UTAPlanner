@@ -65,7 +65,7 @@ public class Schedule {
 
 		ArrayList<Course> validCourses = Database.QueryCourses(major.major, year, mDbHelper); //TODO: Change to queryAllCourses
 		//*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
-		/*
+
 		//Loop through courses and remove invalid courses
 		//Remove courses that have already been taken
 		for(int i = 0; i < validCourses.size(); i++) {
@@ -78,10 +78,10 @@ public class Schedule {
 				continue; //already removed so don't need to check any other conditions for removal
 			}
 
-				/* COMMENT OUT FOR NOW SINCE QUERY ISN'T WORKING
+				// COMMENT OUT FOR NOW SINCE QUERY ISN'T WORKING
 				//Remove courses that don't have requisites met
 				if(checkReqs) {
-					ReqQueryResult requisiteGroups = Database.queryReqs(currentCourse, mDbHelper);//List of list of courses; Outer list is list of requisite credits for curse, each inner list is course options that meet each requisite credit
+					ReqQueryResult requisiteGroups = Database.QueryPrereqs(mDbHelper, currentCourse);//List of list of courses; Outer list is list of requisite credits for curse, each inner list is course options that meet each requisite credit
 					if (requisiteGroups.flag == 4000) {
 						//TODO: check for professional program met
 					} else { //DISCUSSION: only other options is hours requirement?
@@ -136,7 +136,7 @@ public class Schedule {
 				}
 		}
 
-		*/
+
 		return validCourses; //return list of courses that have passed all checks for validity and not been removed from list
 	}
 
