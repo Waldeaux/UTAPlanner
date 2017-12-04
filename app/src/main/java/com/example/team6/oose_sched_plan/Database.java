@@ -1,22 +1,92 @@
 package com.example.team6.oose_sched_plan;
 
-import android.content.ContentResolver;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
+import android.content.Context;
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 
 public class Database {
 
-	//TODO: Query that returns degree plan object
-	//TODO: Query all degree plans
-	// Returns list of courses that are offered in specified term. Used when getting courses that user can add to a certain semester.
 
+	public static DegreePlan QueryDegreePlan(String degreePlanName, int degreePlanYear, Context context) {
+		DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
+		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+
+		//Queries major based on input*****************************************************************************
+		String[] projection = {
+				DegreePlanAdapter.DegreePlanTable.MAJOR_NAME,
+				DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR,
+				DegreePlanAdapter.DegreePlanTable.REQUIRED_COURSE_HOURS,
+				DegreePlanAdapter.DegreePlanTable.MATH_ELECTIVE_HOURS,
+				DegreePlanAdapter.DegreePlanTable.SCIENCE_ELECTIVE_HOURS,
+				DegreePlanAdapter.DegreePlanTable.TECHNICAL_ELECTIVE_HOURS,
+				DegreePlanAdapter.DegreePlanTable.CREATIVE_ARTS_ELECTIVE_HOURS,
+				DegreePlanAdapter.DegreePlanTable.PHILOSOPHICAL_ELECTIVE_HOURS
+		};
+
+		String selection = DegreePlanAdapter.DegreePlanTable.MAJOR_NAME + " = ? AND " + DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR + " = ?";
+		String[] selectionArgs = {
+				degreePlanName,
+				String.valueOf(degreePlanYear)
+		};
+		Cursor cursor = dbRead.query(
+				DegreePlanAdapter.DegreePlanTable.TABLE_NAME,
+				projection,
+				selection,
+				selectionArgs,
+				null,
+				null,
+				null
+
+		);
+		int totalHours = 0;
+		DegreePlan result = new DegreePlan("NULL", 0, 0);
+		while (cursor.moveToNext()) {
+			totalHours = 0;
+			totalHours += cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.REQUIRED_COURSE_HOURS));
+			totalHours += cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.MATH_ELECTIVE_HOURS));
+			totalHours += cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.SCIENCE_ELECTIVE_HOURS));
+			totalHours += cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.TECHNICAL_ELECTIVE_HOURS));
+			totalHours += cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.CREATIVE_ARTS_ELECTIVE_HOURS));
+			totalHours += cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.PHILOSOPHICAL_ELECTIVE_HOURS));
+			result = new DegreePlan(
+					cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.MAJOR_NAME)),
+					cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR)),
+					totalHours
+			);
+
+		}
+		return result;
+	}
+		public static ArrayList<String> QueryDegreePlanNames(Context context){
+		ArrayList<String> results = new ArrayList<String>();
+		DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
+		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+
+		//Queries major based on input*****************************************************************************
+		String[] projection = {
+				DegreePlanAdapter.DegreePlanTable.MAJOR_NAME
+		};
+
+
+		Cursor cursor = dbRead.query(
+				DegreePlanAdapter.DegreePlanTable.TABLE_NAME,
+				projection,
+				null,
+				null,
+				null,
+				null,
+				null
+
+		);
+
+		while(cursor.moveToNext()) {
+			results.add(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.DegreePlanTable.MAJOR_NAME)));
+
+		}
+		return results;
+	}
 	public static ArrayList<Course> QueryElectives(String major, int year, String electiveType,  DegreePlanAdapter.FeedReaderDbHelper mDbHelper){
 		ArrayList<Course> results = new ArrayList<Course>();
 		//DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
