@@ -126,7 +126,7 @@ public class Schedule {
 				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
 				if(checkElectives) {
 					int electiveCoursesRequired = 999; //TODO: remove arbitrary value; only here to prevent uninitialized int error
-					//electiveCoursesRequired = Database.queryNumberOfElectiveCourses(currentCourse, major, mDbHelper); //TODO: Implement query
+					//electiveCoursesRequired = Database.queryNumberOfElectiveCourses(currentCourse.dreditcategory, major, mDbHelper); //TODO: Implement query
 
 					if(countCreditCategory(currentCourse.creditCategory) >= electiveCoursesRequired) {
 						validCourses.remove(currentCourse); //elective requirements met for course; it is not needed
@@ -218,7 +218,7 @@ public class Schedule {
 				Department courseDepartment = Course.parseDepartment(tokens[1]);
 				int courseNumber = Course.parseNumber(tokens[1]);
 
-				Course tempCourse = Database.queryCourse(courseDepartment, courseNumber, mDbHelper);
+				Course tempCourse = Database.QueryCourse(courseDepartment.toString(), courseNumber, mDbHelper);
 				this.addCourse(term, year, tempCourse);
 			}
 		} catch(Exception e) {

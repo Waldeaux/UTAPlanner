@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Database {
 
-
+	//TODO: Given major, year?, and creditCategory, give number of electives required
 	public static DegreePlan QueryDegreePlan(String degreePlanName, int degreePlanYear, Context context) {
 		DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
 		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
