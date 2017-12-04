@@ -63,7 +63,7 @@ public class Schedule {
 	public ArrayList<Course> generateAvailableCourses(Term term, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
 		//Get courses offered in specified semester
 
-		ArrayList<Course> validCourses = Database.QueryCourses(major.major, major.startingYear, mDbHelper); //TODO: Change to queryAllCourses
+		ArrayList<Course> validCourses = Database.QueryCoursesByMajor(major.major, major.startingYear, mDbHelper); //TODO: Change to queryAllCourses
 		//*****FROM MASTER:ArrayList<Course> validCourses = Database.QueryCourses(String major, int year, getApplicationContext());
 
 		//Loop through courses and remove invalid courses

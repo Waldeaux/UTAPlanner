@@ -160,7 +160,7 @@ public class Database {
 	 * @return
 	 */
 
-	public static ArrayList<Course> QueryCourses(String major, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper){
+	public static ArrayList<Course> QueryCoursesByMajor(String major, int year, DegreePlanAdapter.FeedReaderDbHelper mDbHelper){
 		ArrayList<Course> results = new ArrayList<Course>();
 		//DegreePlanAdapter.FeedReaderDbHelper mDbHelper = new DegreePlanAdapter.FeedReaderDbHelper(context);
 		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
@@ -265,11 +265,16 @@ public class Database {
 
 		requiredCourseSelection = DegreePlanAdapter.ElectiveTable.MAJOR_NAME + " = ? AND " + DegreePlanAdapter.ElectiveTable.MAJOR_YEAR + " = ?";
 
+		String[] electiveCourseProjection = {
+				DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT,
+				DegreePlanAdapter.ElectiveTable.COURSE_NUMBER,
+				DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE
+		};
 
 		//Query electives for input major****************************************************************************
 		cursor = dbRead.query(
 				DegreePlanAdapter.ElectiveTable.TABLE_NAME,
-				requiredCourseProjection,
+				electiveCourseProjection,
 				requiredCourseSelection,
 				requiredCourseSelectionArgs,
 				null,
@@ -297,7 +302,8 @@ public class Database {
 					Department.valueOf(nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT))),
 					nestedCursor.getInt(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)),
 					nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)),
-					nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)))
+					nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)),
+					CreditCategory.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE))))
 			);
 		}
 		return results;
@@ -448,17 +454,83 @@ public class Database {
 		return coursesInSemester;
 	}
 
-	//Given department and course number, returns course class with all info about course. Used when loading course from file, when only have this given info.
-	public static Course queryCourse(Department department, int number, DegreePlanAdapter.FeedReaderDbHelper mDbHelper)
+
+	public static Course QueryCourse(String department, int number, String major, int majorYear, DegreePlanAdapter.FeedReaderDbHelper mDbHelper)
 	{
 		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
 		//SQL QUERY
 		String[] projection = {
 				DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
 				DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
-				DegreePlanAdapter.CourseEntry.COURSE_NAME
+				DegreePlanAdapter.CourseEntry.COURSE_NAME,
+				DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
+		};
+		String selection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + "= ?";
+		String[] selectionArgs = {department, String.valueOf(number)};
+		Cursor cursor = dbRead.query(
+				DegreePlanAdapter.CourseEntry.TABLE_NAME,                     // The table to query
+				projection,                               // The columns to return
+				selection,                                // The columns for the WHERE clause
+				selectionArgs,                            // The values for the WHERE clause
+				null,                                     // don't group the rows
+				null,                                     // don't filter by row groups
+				null                               		  // The sort order
+		);
+
+
+		String[] creditCategoryProjection = {
+				DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE
 		};
 
+		String creditSelection = DegreePlanAdapter.ElectiveTable.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.ElectiveTable.COURSE_NUMBER + "= ? AND " +
+				DegreePlanAdapter.ElectiveTable.MAJOR_NAME + "= ? AND " + DegreePlanAdapter.ElectiveTable.MAJOR_YEAR + "= ?";
+
+		String[] creditSelectionArgs = {department, String.valueOf(number), major, String.valueOf(majorYear)};
+
+		Course result = new Course(Department.AAST, 0, "NULL COURSE", "");
+		if(cursor.getCount() > 0) {
+			cursor.moveToNext();
+			Cursor electiveCursor = dbRead.query(
+					DegreePlanAdapter.ElectiveTable.TABLE_NAME,
+					creditCategoryProjection,
+					creditSelection,
+					creditSelectionArgs,
+					null,
+					null,
+					null
+			);
+			if(electiveCursor.getCount() > 0){
+				electiveCursor.moveToNext();
+				result = new Course(
+						Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT))),
+						cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)),
+						cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)),
+						cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)),
+						CreditCategory.valueOf(electiveCursor.getString(electiveCursor.getColumnIndexOrThrow(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE)))
+				);}
+			else{
+				result = new Course(
+						Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT))),
+						cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)),
+						cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)),
+						cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))
+				);
+			}
+		}
+		return result;
+	}
+	//Given department and course number, returns course class with all info about course. Used when loading course from file, when only have this given info.
+
+	public static Course QueryCourse(String department, int number, DegreePlanAdapter.FeedReaderDbHelper mDbHelper)
+	{
+		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+		//SQL QUERY
+		String[] projection = {
+				DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT,
+				DegreePlanAdapter.CourseEntry.COURSE_NUMBER,
+				DegreePlanAdapter.CourseEntry.COURSE_NAME,
+				DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION
+		};
 		String selection = DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT + " = ? AND " + DegreePlanAdapter.CourseEntry.COURSE_NUMBER + "= ?";
 		String[] selectionArgs = {department.toString(), String.valueOf(number)};
 		Cursor cursor = dbRead.query(
@@ -470,8 +542,18 @@ public class Database {
 				null,                                     // don't filter by row groups
 				null                               		  // The sort order
 		);
-		cursor.moveToNext();
-		return new Course(Department.valueOf(cursor.getString(0)), cursor.getInt(1), cursor.getString(2), "", CreditCategory.valueOf("OTHER")); //TODO: Not loading creditcategory??? //REMOVE: just here to remove error that result may not be initialized;
+		Course result = new Course(Department.AAST, 0, "NULL COURSE", "");
+		if(cursor.getCount() > 0) {
+			cursor.moveToNext();
+
+			result = new Course(
+					Department.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DEPARTMENT))),
+					cursor.getInt(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NUMBER)),
+					cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)),
+					cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))
+			);
+		}
+		return result;
 	}
 
 	public static ReqQueryResult queryReqs(Course course, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
