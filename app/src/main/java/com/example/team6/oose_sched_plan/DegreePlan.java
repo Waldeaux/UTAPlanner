@@ -4,7 +4,7 @@ package com.example.team6.oose_sched_plan;
 public class DegreePlan {
 	public DegreePlan(String major, int startingYear, int totalCreditHours) {
 		this.major = major;
-		this.startingYear = startingYear;
+		this.startingYear = 2017; //TODO: Workaround since this was being passed to as 0
 		this.totalCreditHours = totalCreditHours;
 		//TODO: Store elective types and number of courses per elective type
 	}
