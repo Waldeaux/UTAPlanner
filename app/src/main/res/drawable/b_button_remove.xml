@@ -23,7 +23,7 @@
             <corners android:radius="5dp" />
             <gradient
                 android:type="radial"
-                android:gradientRadius="100dp"
+                android:gradientRadius="1000dp"
                 android:startColor="#c68b8c"
                 android:centerColor="#bf6062"
                 android:endColor="#ac484a" />

@@ -30,28 +30,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="20dp"
-                android:text="Change Degree Plan"
+                android:text="Reset Degree Plan"
                 android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
-            <LinearLayout
+            <Button
+                android:id="@+id/Reset"
+                android:background="@drawable/b_button_remove"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/spinner_degreePlan"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/spinner_DegreeYear"
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                android:textColor="@color/white"
+                android:text="RESET" />
 
         </LinearLayout>
 
