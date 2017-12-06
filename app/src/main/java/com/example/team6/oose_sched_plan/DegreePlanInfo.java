@@ -4343,7 +4343,7 @@ public class DegreePlanInfo {
 
         String courseDepartment;
         int courseNumber;
-        Cursor nestedCursor;
+        Cursor nestedCursor = null;
 
         //Iterate through each required course and gather that course's information from course entry table**********
         while(cursor.moveToNext()){
@@ -4410,6 +4410,8 @@ public class DegreePlanInfo {
                     nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)))
             );
         }
+        cursor.close();
+        nestedCursor.close();
         return results;
     }
 

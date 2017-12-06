@@ -13,8 +13,8 @@ import java.io.FileReader;
 public class Schedule {
 	public Schedule() {
 		semesters = new ArrayList<>();
-		checkReqs = true;
-		checkElectives = true;
+		checkReqs = false;
+		checkElectives = false;
 		major = new DegreePlan("CSE", 0, 0);
 	}
 
@@ -22,8 +22,8 @@ public class Schedule {
 		this.major = major;
 
 		semesters = new ArrayList<>();
-		checkReqs = true;
-		checkElectives = true;
+		checkReqs = false;
+		checkElectives = false;
 	}
 
 	//------------------------------------------------------------------------------

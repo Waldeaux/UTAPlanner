@@ -233,7 +233,7 @@ public class Database {
 
 		String courseDepartment;
 		int courseNumber;
-		Cursor nestedCursor;
+		Cursor nestedCursor = null;
 
 		//Iterate through each required course and gather that course's information from course entry table**********
 		while(cursor.moveToNext()){
@@ -306,6 +306,9 @@ public class Database {
 					CreditCategory.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE))))
 			);
 		}
+		cursor.close();
+		nestedCursor.close();
+		dbRead.close();
 		return results;
 	}
 
@@ -392,6 +395,7 @@ public class Database {
 						result.reqs.get(result.reqs.size() - 1).add(new ReqCourseEntry(new Course(dummyDepartment, dummyNumber, nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_NAME)), nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))), false));
 					}
 				}
+				nestedCursor.close();
 			}
 		}
 		cursor.close();
@@ -451,6 +455,7 @@ public class Database {
 //        while(cursor.moveToNext()) {
 //            coursesInSemester.add(new Course(Department.valueOf(cursor.getString(1)), cursor.getInt(3), cursor.getString(2), "", CreditCategory.Required));
 //        }
+		db.close();
 		return coursesInSemester;
 	}
 
@@ -517,6 +522,7 @@ public class Database {
 				);
 			}
 		}
+		dbRead.close();
 		return result;
 	}
 	//Given department and course number, returns course class with all info about course. Used when loading course from file, when only have this given info.
@@ -553,6 +559,8 @@ public class Database {
 					cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION))
 			);
 		}
+		dbRead.close();
+		cursor.close();
 		return result;
 	}
 

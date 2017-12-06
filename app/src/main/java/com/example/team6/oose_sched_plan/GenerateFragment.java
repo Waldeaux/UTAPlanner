@@ -113,6 +113,7 @@ public class GenerateFragment extends Fragment {
         else {
             alertDegreePlan(view, tinydb);
         }
+        mDbHelper.close();
         return view;
     }
 
@@ -154,7 +155,7 @@ public class GenerateFragment extends Fragment {
                 Term spin_term = Term.valueOf(StringToEnum(spinner_term.getSelectedItem().toString()));
                 list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
                 list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
-
+                mDbHelper.close();
                 // CONVERT SCHEDULE TO HASHMAP
                 list_HashMap_Current = convertToHashMap(list_course_current);
                 list_HashMap_Available = convertToHashMap(list_course_available);
@@ -209,7 +210,7 @@ public class GenerateFragment extends Fragment {
 
                 list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
                 list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
-
+                mDbHelper.close();
                 // CONVERT SCHEDULE TO HASHMAP
                 list_HashMap_Current = convertToHashMap(list_course_current);
                 list_HashMap_Available = convertToHashMap(list_course_available);
@@ -312,7 +313,7 @@ public class GenerateFragment extends Fragment {
                     list_HashMap_Current = convertToHashMap(list_course_current);
                     list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
                     list_HashMap_Available = convertToHashMap(list_course_available);
-
+                    mDbHelper.close();
                     //list_HashMap_Current.add(selected_item);
                     //list_HashMap_Available.remove(selected_position);
                     String[] from = new String[]{"course", "name"};
@@ -354,7 +355,7 @@ public class GenerateFragment extends Fragment {
                     // UPDATE CURRENT COURSES
                     list_course_current = schedule.getCoursesInSemester(spin_term,spin_year);
                     list_course_available = schedule.generateAvailableCourses(spin_term,spin_year,mDbHelper); //FIX: Update variable then pass it to convert hashmap
-
+                    mDbHelper.close();
                     // CONVERT SCHEDULE TO HASHMAP
                     list_HashMap_Current = convertToHashMap(list_course_current);
                     list_HashMap_Available = convertToHashMap(list_course_available);
