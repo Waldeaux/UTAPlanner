@@ -38,11 +38,11 @@ public class DegreePlanAdapter {
         public static final String MAJOR_NAME = "MajorName";
         public static final String MAJOR_YEAR = "MajorYear";
         public static final String REQUIRED_COURSE_HOURS = "RequiredCourseHours";
-        public static final String TECHNICAL_ELECTIVE_HOURS = "TechnicalElectiveHours";
-        public static final String MATH_ELECTIVE_HOURS = "MathElectiveHours";
-        public static final String SCIENCE_ELECTIVE_HOURS = "ScienceElectiveHours";
-        public static final String PHILOSOPHICAL_ELECTIVE_HOURS = "PhilosophicalElectiveHours";
-        public static final String CREATIVE_ARTS_ELECTIVE_HOURS = "CreativeArtsElectiveHours";
+        public static final String TECHNICAL_ELECTIVE_HOURS = "TECHNICAL";
+        public static final String MATH_ELECTIVE_HOURS = "MATH";
+        public static final String SCIENCE_ELECTIVE_HOURS = "SCIENCE";
+        public static final String PHILOSOPHICAL_ELECTIVE_HOURS = "PHILOSOPHICAL";
+        public static final String CREATIVE_ARTS_ELECTIVE_HOURS = "CREATIVE_ARTS";
     }
 
     public static class RequiredCourseTable implements BaseColumns{
