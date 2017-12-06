@@ -1,5 +1,7 @@
 package com.example.team6.oose_sched_plan;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,5 +21,4 @@ public class Config {
     public static final String SHARED_CURRENT_COURSELIST = "currentcourses";
     public static final String SHARED_AVAILABLE_COURSELIST = "availablecourses";
     public static final String SHARED_FULL_SCHEDULE = "fullsched";
-
 }

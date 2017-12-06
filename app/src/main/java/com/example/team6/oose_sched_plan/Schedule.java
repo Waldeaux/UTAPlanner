@@ -367,6 +367,9 @@ public class Schedule {
 		resetSchedule();
 	}
 
+	public boolean getCheckReqs() {return checkReqs;}
+	public boolean getCheckElectives() {return checkElectives;}
+
 	//---------------------------------------------------------------------
 	//------------------------------ PRIVATE ------------------------------
 	//---------------------------------------------------------------------
@@ -454,7 +457,7 @@ public class Schedule {
 		return count;
 	}
 
-	private void resetSchedule() {
+	public void resetSchedule() {
 		//skip first semester since it is trasnfer stuff
 		Semester tempCopy = semesters.get(0);
 		semesters.clear();
