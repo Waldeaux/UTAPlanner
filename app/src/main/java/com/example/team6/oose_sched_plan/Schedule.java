@@ -125,9 +125,9 @@ public class Schedule {
 
 
 				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
-				if(checkElectives) {
+				if(checkElectives && !currentCourse.creditCategory.toString().equals("OTHER")) {
 					int electiveCoursesRequired = Database.QueryElectiveCount(currentCourse.creditCategory.toString(), major.major, major.startingYear, mDbHelper);
-
+					System.out.println(currentCourse.creditCategory.toString() + ": " + electiveCoursesRequired + ". Have: " + countCreditCategory(currentCourse.creditCategory));
 					if(countCreditCategory(currentCourse.creditCategory) >= electiveCoursesRequired) {
 						validCourses.remove(currentCourse); //elective requirements met for course; it is not needed
 						i--;
@@ -449,7 +449,7 @@ public class Schedule {
 		for(Semester s : semesters) {
 			for(Course c : s.getCourses()) {
 				if(c.creditCategory.equals(credCat)) {
-					count++;
+					count += c.creditHours;
 				}
 			}
 		}
