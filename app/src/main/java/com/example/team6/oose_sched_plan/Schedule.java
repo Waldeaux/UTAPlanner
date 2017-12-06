@@ -101,10 +101,12 @@ public class Schedule {
 							if (requisite.coreq) { //requisite is a coreq
 								if (this.meetsCoreq(requisite.course, term, year)) {
 									requisiteGroupMet = true;
+									break;
 								}
 							} else { //requisite is a prereq
 								if (this.meetsPrereq(requisite.course, term, year)) {
 									requisiteGroupMet = true;
+									break;
 								}
 							}
 						}
