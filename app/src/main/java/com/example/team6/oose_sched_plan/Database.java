@@ -312,6 +312,41 @@ public class Database {
 		return results;
 	}
 
+	public static int QueryElectiveCount(String creditCategory, String degreePlanName, int degreePlanYear, DegreePlanAdapter.FeedReaderDbHelper mDbHelper) {
+		SQLiteDatabase dbRead = mDbHelper.getReadableDatabase();
+
+		String[] projection = {
+				creditCategory
+		};
+		String selection = DegreePlanAdapter.DegreePlanTable.MAJOR_NAME + " = ? AND " + DegreePlanAdapter.DegreePlanTable.MAJOR_YEAR + " = ?";
+		String[] selectionArgs = {
+				degreePlanName,
+				String.valueOf(degreePlanYear)
+		};
+
+		try{
+			Cursor cursor = dbRead.query(
+					DegreePlanAdapter.DegreePlanTable.TABLE_NAME,
+					projection,
+					selection,
+					selectionArgs,
+					null,
+					null,
+					null
+
+			);
+			if(cursor.getCount() > 0) {
+				cursor.moveToNext();
+				return cursor.getInt(cursor.getColumnIndexOrThrow(creditCategory));
+			}
+			return 0;
+		}
+		catch(Exception e){
+			return 0;
+		}
+
+
+	}
 
 	/****************************************************************************
 	 *
