@@ -2742,6 +2742,13 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 4344);
         db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
 
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CSE");
+        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
+        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 1310);
+        db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
+
 
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CE");
@@ -2837,13 +2844,6 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
         values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT, "CSE");
         values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 1105);
-        db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CSE");
-        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
-        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT, "CSE");
-        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 1310);
         db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
 
 
