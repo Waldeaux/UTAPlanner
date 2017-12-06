@@ -342,7 +342,7 @@ public class Database {
 			return 0;
 		}
 		catch(Exception e){
-			return 0;
+			return 999;
 		}
 
 

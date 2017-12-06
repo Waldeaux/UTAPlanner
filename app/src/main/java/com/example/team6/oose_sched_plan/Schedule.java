@@ -78,7 +78,6 @@ public class Schedule {
 				continue; //already removed so don't need to check any other conditions for removal
 			}
 
-				// COMMENT OUT FOR NOW SINCE QUERY ISN'T WORKING
 				//Remove courses that don't have requisites met
 				if(checkReqs) {
 					ReqQueryResult requisiteGroups = Database.QueryPrereqs(mDbHelper, currentCourse);//List of list of courses; Outer list is list of requisite credits for curse, each inner list is course options that meet each requisite credit
@@ -126,10 +125,9 @@ public class Schedule {
 
 
 				//Remove course if it is an elective and have already met credits for that elective (such as already having 3 technical electives) (also if toggle is on)
-				if(checkElectives) {
-					int electiveCoursesRequired = 999; //TODO: remove arbitrary value; only here to prevent uninitialized int error
-					//electiveCoursesRequired = Database.queryNumberOfElectiveCourses(currentCourse.dreditcategory, major, mDbHelper); //TODO: Implement query
-
+				if(checkElectives && !currentCourse.creditCategory.toString().equals("OTHER")) {
+					int electiveCoursesRequired = Database.QueryElectiveCount(currentCourse.creditCategory.toString(), major.major, major.startingYear, mDbHelper);
+					System.out.println(currentCourse.creditCategory.toString() + ": " + electiveCoursesRequired + ". Have: " + countCreditCategory(currentCourse.creditCategory));
 					if(countCreditCategory(currentCourse.creditCategory) >= electiveCoursesRequired) {
 						validCourses.remove(currentCourse); //elective requirements met for course; it is not needed
 						i--;
@@ -451,7 +449,7 @@ public class Schedule {
 		for(Semester s : semesters) {
 			for(Course c : s.getCourses()) {
 				if(c.creditCategory.equals(credCat)) {
-					count++;
+					count += c.creditHours;
 				}
 			}
 		}
