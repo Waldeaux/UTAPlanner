@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -448,25 +449,65 @@ public class GenerateFragment extends Fragment {
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this.getContext());
         builderSingle.setTitle("Select a Degree Plan: ");
         final ArrayAdapter<String> list_majors = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice);
-        list_majors.add("CSE - Computer Science Engineering");
-        list_majors.add("SE - Software Engineering");
-        list_majors.add("CPE - Computer Engineering");
+        final AlertDialog.Builder builderYear = new AlertDialog.Builder(this.getContext());
+        builderYear.setTitle("Select a Degree Plan Year: ");
+        final ArrayAdapter<String> list_years = new ArrayAdapter<String>(this.getContext(), android.R.layout.select_dialog_singlechoice);
 
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+        ArrayList<String> queryMajors = Database.QueryDegreePlanNames(view.getContext());
+
+        for (String s : queryMajors) {
+            if (s.equals("CE")) {
+                list_majors.add("CPE - Computer Engineering");
             }
-        });
+            else if (s.equals("SE")) {
+                list_majors.add("SE - Software Engineering");
+            }
+            else {
+                list_majors.add("CSE - Computer Science Engineering");
+            }
+        }
 
         builderSingle.setAdapter(list_majors, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (which == 0)
+                    schedule.setMajor(new DegreePlan("CSE",0,0));
+                else if (which == 1)
+                    schedule.setMajor(new DegreePlan("CS",0,0));
+                else if (which == 2)
+                    schedule.setMajor(new DegreePlan("SE",0,0));
+
+                int chosen_Degree = which;
+                builderYear.show();
+            }
+        });
+        builderSingle.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                builderSingle.show();
+            }
+        });
+        
+        list_years.add("2017");
+        list_years.add("2016");
+        list_years.add("2015");
+
+
+        builderYear.setAdapter(list_years, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
                 LoadTerms(view);
             }
         });
 
-            builderSingle.show();
+        builderYear.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                builderYear.show();
+            }
+        });
+
+        builderSingle.show();
 
     }
 

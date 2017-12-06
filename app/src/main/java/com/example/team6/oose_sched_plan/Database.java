@@ -305,9 +305,9 @@ public class Database {
 					nestedCursor.getString(nestedCursor.getColumnIndexOrThrow(DegreePlanAdapter.CourseEntry.COURSE_DESCRIPTION)),
 					CreditCategory.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DegreePlanAdapter.ElectiveTable.ELECTIVE_TYPE))))
 			);
+			nestedCursor.close();
 		}
 		cursor.close();
-		nestedCursor.close();
 		dbRead.close();
 		return results;
 	}

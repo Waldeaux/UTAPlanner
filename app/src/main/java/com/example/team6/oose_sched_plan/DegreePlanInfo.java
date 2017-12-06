@@ -2798,6 +2798,10 @@ public class DegreePlanInfo {
         db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
 
 
+        //
+        // CSE-REQUIRED
+        //
+
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CSE");
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
@@ -3015,6 +3019,20 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 2312);
         db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
 
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CSE");
+        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
+        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 1301);
+        db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "CSE");
+        values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_YEAR, 2017);
+        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 1302);
+        db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
+
 
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "SE");
@@ -3023,6 +3041,10 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.RequiredCourseTable.COURSE_NUMBER, 1301);
         db.insert(DegreePlanAdapter.RequiredCourseTable.TABLE_NAME, null, values);
 
+
+        //
+        // SE-REQUIRED
+        //
 
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequiredCourseTable.MAJOR_NAME, "SE");
@@ -3255,6 +3277,12 @@ public class DegreePlanInfo {
 
 
         //Requisite Courses: 3167 - 4263
+
+        /*==========================================================================================================
+        |  REQ-COURSETABLE
+        ================================================================================================================
+        */
+
         values = new ContentValues();
         values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CHEM");
         values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1441);
@@ -4350,6 +4378,213 @@ public class DegreePlanInfo {
         values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "PHYS");
         values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1443);
         values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CHIN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CHIN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"FREN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "FREN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"GERM");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "GERM");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"GREK");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "GREK");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"KORE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "KORE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"LATN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "LATN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"PORT");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "PORT");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"RUSS");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "RUSS");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"SPAN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1442);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "SPAN");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1441);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1426);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1302);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,1302);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 1301);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4323);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3320);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4331);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3330);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "IE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3301);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 2320);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 2);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3380);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 3);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3330);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 3);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,3311);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 2320);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,3311);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3310);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 2);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,3313);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 2320);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,3313);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3380);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 2);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,3313);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3330);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 2);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"IE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,3315);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 2326);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "IE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3301);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 1);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 2320);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 2);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3380);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 3);
+        db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
+        values = new ContentValues();
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_DEPARTMENT,"CSE");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.COURSE_NUMBER,4345);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_DEPARTMENT, "MATH");
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_COURSE_NUMBER, 3330);
+        values.put(DegreePlanAdapter.RequisiteCourseTable.REQUISITE_KEY, 3);
         db.insert(DegreePlanAdapter.RequisiteCourseTable.TABLE_NAME, null, values);
     }
 
